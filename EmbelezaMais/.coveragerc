@@ -1,0 +1,5 @@
+[run]
+branch = True
+
+source = user, exercise, forum, ranking, theory, achievement
+omit = */apps.py, */migrations/*, */__init__.py
