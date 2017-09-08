@@ -48,6 +48,7 @@ jobs:
             . venv/bin/activate
             python3 EmbelezaMais/manage.py makemigrations
             python3 EmbelezaMais/manage.py migrate
+
       # run tests!
       - run:
           name: run tests
@@ -55,6 +56,12 @@ jobs:
             . venv/bin/activate
             cd EmbelezaMais
             coverage run ./manage.py test
+            coverage report
+            coveralls
+
       - store_artifacts:
-          path: test-reports
-          destination: test-reports
+          path: test-reports/
+          destination: tr1
+
+      - store_test_results:
+          path: test-reports/
