@@ -1,2 +1,2 @@
 web: gunicorn djangobasico.wsgi --log-file -
-python manage.py makemigrations && python manage.py migrate
+python3 EmbelezaMais/manage.py makemigrations && python3 EmbelezaMais/manage.py migrate
