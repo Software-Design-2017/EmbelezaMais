@@ -1,0 +1,36 @@
+
+<!DOCTYPE html>
+<head>
+      {% load staticfiles %}
+      {% csrf_token %}
+      {% include "landing/head.html" %}
+
+</head>
+
+<body>
+    <div>
+        <!-- navigation bar -->
+        {% include "landing/navigation_bar.html" %}
+    </div>
+    <div>
+        <!-- Campo do meio -->
+        {% block content %} {% endblock %}
+    </div>
+
+    <div>
+        <!-- parte de baixo -->
+        {% include "landing/footer.html" %}
+    </div>
+
+</body>
+
+
+{% load static %}
+<script src= "{% static "landing/assets/js/vendor/jquery-1.11.2.min.js" %}"></script>
+<script src= "{% static "landing/assets/js/vendor/bootstrap.min.js" %}"></script>
+
+<script src= "{% static "landing/assets/js/plugins.js" %}"></script>
+<script src= "{% static "landing/assets/js/modernizr.js" %}"></script>
+<script src= "{% static "landing/assets/js/modernizr.js" %}"></script>
+
+{% block javascript %}{% endblock %}
