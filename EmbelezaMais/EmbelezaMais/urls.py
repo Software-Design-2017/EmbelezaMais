@@ -17,7 +17,9 @@ from django.conf.urls import url
 from django.contrib import admin
 
 from landing.views import home
+from companyDashboard.views import dashboardRender
 
 urlpatterns = [
      url(r'^$', home, name="landing_home"),
+     url(r'dashboard/', dashboardRender, name="dashboard"),
 ]

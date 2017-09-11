@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'landing',
+    'companyDashboard',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'EmbelezaMais.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates', 'landing/template'],
+        'DIRS': ['templates', 'landing/template', 'companyDashboard/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
