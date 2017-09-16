@@ -16,6 +16,9 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from user import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^register/', views.register_view, name='register_view'),
 ]

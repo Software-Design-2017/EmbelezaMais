@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models import EmailField
 from django.contrib.auth.models import PermissionsMixin
 from django.core import validators
+# from django.utils.translation import ugettext_lazy as _
 
 
 class UserManager(BaseUserManager):
@@ -73,11 +74,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     objects = UserManager()
 
-    def get_email(self):
+    def get_full_name(self):
         return self.email
 
-    def get_name(self):
-        return self.name
+    def get_short_name(self):
+        return self.email
 
 
 class TargetGenre(models.Model):

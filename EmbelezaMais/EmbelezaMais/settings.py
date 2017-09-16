@@ -55,7 +55,7 @@ ROOT_URLCONF = 'EmbelezaMais.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['user/templates', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -81,6 +81,12 @@ DATABASES = {
     }
 }
 
+AUTH_USER_MODEL = "user.User"
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
