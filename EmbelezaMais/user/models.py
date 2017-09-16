@@ -8,7 +8,7 @@ from django.core import validators
 
 
 class UserManager(BaseUserManager):
-    def _create_user(self, email, password, name, **kwargs):
+    def create_client(self, email, password, name, phone_number, **kwargs):
 
         if not email:
             raise ValueError('The given email must be set')
@@ -17,14 +17,12 @@ class UserManager(BaseUserManager):
         user = self.model(email=email,
                           name=name,
                           is_active=True,
+                          phone_number=phone_number,
                           **kwargs)
         user.set_password(password)
         user.save(using=self.db)
 
         return user
-
-    def create_user(self, username, email=None, password=None, **extra_fields):
-        return self._create_user(username, email, password, False, False, **extra_fields)
 
     def create_superuser(self, email, password, name, **kwargs):
 

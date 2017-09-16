@@ -28,7 +28,7 @@ SECRET_KEY = 'f201l__o()nz)dl=lfa(rz0e34z)_-erbn7p4b*!dvze#la=ht'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['embelezamais.herokuapp.com', 'localhost:8000']
+ALLOWED_HOSTS = ['embelezamais.herokuapp.com', 'localhost:8000', '127.0.0.1']
 
 
 # Application definition
