@@ -3,6 +3,95 @@
 
 {% load static %}
 
-<h1>Exibindo resultados para: busca</h1>
+<header id="home" class="home" style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
+    <div class="header-title">
+      <div class="title">
+          <h1 > Você pesquisou por : XXXX </h1>
+      </div>
+    </div>
+  <br>
+</header>
+<br>
+
+  <div class="row">
+
+    <div class="sidebar">
+        <div class="col-xs-3 col-md-3">
+            <div class="panel panel-default">
+              <div class="panel-heading">Filtrar Resultados</div>
+              <div class="panel-body">
+                <form method="POST" action"">
+
+                  <div class="form-group">
+                    <h7 align="center">Nome do estabelecimento</h7>
+                    <input type="search" name="nome" id="nome" class="form-control" placeholder="Ex: Salão do Zé" >
+                    <button type="button" class="btn btn-secondary btn-sm" style="width: 50%">Pesquisar</button>
+                  </div>
+                  <hr>
+
+                  <div class="form-group">
+                    <h7 align="center">Gênero Alvo</h7>
+                    <br>
+
+                      <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="feminino" id="unissex">
+                          <span class="custom-control-indicator"></span>
+                          <span class="custom-control-description">Unissex</span>
+                      </label>
+                      <br>
+                      <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="masculino" id="masculino">
+                          <span class="custom-control-indicator"></span>
+                          <span class="custom-control-description">Masculino</span>
+                      </label>
+                      <br>
+                      <label class="custom-control custom-checkbox">
+                          <input type="checkbox" class="custom-control-input" name="feminino" id="feminino">
+                          <span class="custom-control-indicator"></span>
+                          <span class="custom-control-description">Feminino</span>
+                      </label>
+                  </div>
+                  <hr>
+
+                  <div class="form-group">
+                    <h7>Facilidades</h7>
+                    <br>
+
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="unissex" id="unissex">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Cartão De Crédito</span>
+                    </label>
+                    <br>
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="masculino" id="masculino">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Cartão De Débito</span>
+                    </label>
+                    <br>
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="feminino" id="feminino">
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Dinheiro</span>
+                    </label>
+
+                  </div>
+                  <hr>
+
+                </form>
+
+              </div>
+            </div>
+        </div>
+      </div>
+
+
+    <div class="col-xs-9 col-md-9">
+
+    </div>
+
+
+  </div>
+
 
 {% endblock %}
