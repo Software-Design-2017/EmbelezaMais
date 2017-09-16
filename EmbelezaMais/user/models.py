@@ -88,10 +88,12 @@ class TargetGenre(models.Model):
         return self.description
 
 
-class Company(models.Model):
+class Company(User):
     description = models.CharField(max_length=100)
     target_genre = models.ManyToManyField(TargetGenre)
     location = models.CharField(max_length=100)
+
+    objects = UserManager()
 
     def __str__(self):
         return self.description
