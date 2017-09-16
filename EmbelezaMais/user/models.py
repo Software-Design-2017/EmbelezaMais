@@ -4,7 +4,6 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.db.models import EmailField
 from django.contrib.auth.models import PermissionsMixin
 from django.core import validators
-# from django.utils.translation import ugettext_lazy as _
 
 
 class UserManager(BaseUserManager):
