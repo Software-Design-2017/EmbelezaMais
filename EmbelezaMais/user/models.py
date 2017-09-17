@@ -1,3 +1,6 @@
+# standard library
+import datetime
+
 # Django.
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
@@ -8,7 +11,7 @@ from django.core import validators
 
 
 class UserManager(BaseUserManager):
-    def create_client(self, email, password, name, phone_number, **kwargs):
+    def create_user(self, email, password, name, **kwargs):
 
         if not email:
             raise ValueError('The given email must be set')
@@ -16,8 +19,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email,
                           name=name,
-                          is_active=True,
-                          phone_number=phone_number,
+                          is_active=False,
                           **kwargs)
         user.set_password(password)
         user.save(using=self.db)
@@ -54,7 +56,7 @@ class Email(EmailField):
 
 class Name(models.CharField):
     validator_max_length = validators.MaxLengthValidator(60,
-                                                         message='Your name exceeds 30 characteres')
+                                                         message='Your name exceeds 60 characteres')
     validator_format = validators.RegexValidator(regex=r'^[A-Za-z ]+$',
                                                  message='Your name can\'t have special characters')
     default_validators = [validator_max_length, validator_format]
@@ -80,6 +82,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_short_name(self):
         return self.email
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
+
+    def __str__(self):
+        return self.user.email
+
+    class Meta:
+        verbose_name_plural = u'Perfil de Usuario'
 
 
 class Client(User):

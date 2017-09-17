@@ -8,7 +8,7 @@ from .models import Client
 class ClientRegisterForm(forms.ModelForm):
     # Form Fields.
     name = forms.CharField(label='NAME',
-                           max_length=12)
+                           max_length=60)
 
     email = forms.EmailField(label='EMAIL')
 
