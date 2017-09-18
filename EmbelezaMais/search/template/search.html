@@ -6,7 +6,7 @@
 <header id="home" class="home" style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
     <div class="header-title">
       <div class="title">
-          <h1 > Você pesquisou por : XXXX </h1>
+          <h1 > Você pesquisou pela localização : XXXX </h1>
       </div>
     </div>
   <br>
@@ -15,17 +15,38 @@
 
   <div class="row">
 
-    <div class="sidebar">
+
         <div class="col-xs-3 col-md-3">
+          <div class="sidebar">
             <div class="panel panel-default">
               <div class="panel-heading">Filtrar Resultados</div>
               <div class="panel-body">
                 <form method="POST" action"">
 
                   <div class="form-group">
+                    <h7 align="center">Localização</h7>
+                    <div class="row">
+                      <div class="col-xs-8 col-md-8">
+                        <input type="search" name="nome" id="nome" class="form-control" placeholder="Ex: Salão do Zé" >
+                      </div>
+                      <div class="col-xs-4 col-md-4">
+                        <button type="button" class="btn" style="width: 75%"><i class="fa fa-map-marker "></i></button>
+                      </div>
+                    </div>
+                    <br>
+                    <div  align="center" >
+                      <button type="button" class="btn btn-secondary btn-sm" style="width: 90 %">Pesquisar</button>
+                    </div>
+                  </div>
+                  <hr>
+
+                  <div class="form-group">
                     <h7 align="center">Nome do estabelecimento</h7>
                     <input type="search" name="nome" id="nome" class="form-control" placeholder="Ex: Salão do Zé" >
-                    <button type="button" class="btn btn-secondary btn-sm" style="width: 50%">Pesquisar</button>
+                    <br>
+                    <div  align="center" >
+                      <button type="button" class="btn btn-secondary btn-sm" style="width: 50%">Pesquisar</button>
+                    </div>
                   </div>
                   <hr>
 
@@ -59,20 +80,23 @@
 
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="unissex" id="unissex">
+                        <i class="fa fa-credit-card"></i>
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Cartão De Crédito</span>
                     </label>
                     <br>
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="masculino" id="masculino">
+                        <i class="fa fa-credit-card-alt "></i>
                         <span class="custom-control-indicator"></span>
                         <span class="custom-control-description">Cartão De Débito</span>
                     </label>
                     <br>
                     <label class="custom-control custom-checkbox">
                         <input type="checkbox" class="custom-control-input" name="feminino" id="feminino">
+                        <i class="fa fa-money"></i>
                         <span class="custom-control-indicator"></span>
-                        <span class="custom-control-description">Dinheiro</span>
+                        <span class="custom-control-description">  Dinheiro</span>
                     </label>
 
                   </div>
@@ -81,12 +105,16 @@
                 </form>
 
               </div>
-            </div>
+          </div>
         </div>
       </div>
 
 
     <div class="col-xs-9 col-md-9">
+      <!-- Put the number os results finded -->
+      <div class="alert alert-info">
+        <strong>Busca!</strong> Foram encontrados X resultados.
+      </div>
 
     </div>
 
