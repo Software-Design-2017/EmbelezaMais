@@ -14,6 +14,13 @@ import os
 from decouple import config
 from dj_database_url import parse as dburl
 
+# Information needed to send the email
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'embelezamais@gmail.com'
+EMAIL_HOST_PASSWORD = 'embelezamais666'
+EMAIL_PORT = 587
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -28,7 +35,7 @@ SECRET_KEY = 'f201l__o()nz)dl=lfa(rz0e34z)_-erbn7p4b*!dvze#la=ht'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['embelezamais.herokuapp.com','localhost:8000']
+ALLOWED_HOSTS = ['embelezamais.herokuapp.com', 'localhost:8000', '127.0.0.1']
 
 
 # Application definition
@@ -73,12 +80,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'EmbelezaMais.wsgi.application'
 
+AUTH_USER_MODEL = 'user.User'
 
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
-DATABASES = { 'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
+DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
 
 
 # Password validation

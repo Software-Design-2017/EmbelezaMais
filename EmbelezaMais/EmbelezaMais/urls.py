@@ -16,6 +16,12 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from user import views
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^register_client/', views.register_client_view, name='register_client_view'),
+
+    url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm,
+        name='confirm_account'),
 ]
