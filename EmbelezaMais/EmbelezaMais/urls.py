@@ -21,4 +21,6 @@ from user import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^register/', views.register_view, name='register_view'),
+    url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm,
+        name='confirm_account'),
 ]

@@ -1,10 +1,11 @@
+import datetime
+
 # Django.
-from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db.models import EmailField
-from django.contrib.auth.models import PermissionsMixin
 from django.core import validators
-# from django.utils.translation import ugettext_lazy as _
+from django.db import models
+from . import constants
 
 
 class UserManager(BaseUserManager):
@@ -16,7 +17,7 @@ class UserManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email,
                           name=name,
-                          is_active=True,
+                          is_active=False,
                           **kwargs)
         user.set_password(password)
         user.save(using=self.db)
@@ -40,22 +41,22 @@ class UserManager(BaseUserManager):
 
 
 class Email(EmailField):
-    validator = validators.EmailValidator(message='Enter a valid email address')
+    validator = validators.EmailValidator(message=constants.EMAIL_FORMAT)
 
     default_validators = [validator]
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = 30
+        kwargs['max_length'] = constants.EMAIL_FIELD_LENGTH
         kwargs['default'] = ''
         kwargs['unique'] = True
         super(EmailField, self).__init__(*args, **kwargs)
 
 
 class Name(models.CharField):
-    validator_max_length = validators.MaxLengthValidator(60,
-                                                         message='Your name exceeds 30 characteres')
-    validator_format = validators.RegexValidator(regex=r'^[A-Za-z ]+$',
-                                                 message='Your name can\'t have special characters')
+    validator_max_length = validators.MaxLengthValidator(constants.NAME_FIELD_LENGTH,
+                                                         message=constants.NAME_SIZE)
+    validator_format = validators.RegexValidator(regex=r'^[a-zA-Zá-úÀ-Úã-õ-Ã-Õ ]+$',
+                                                 message=constants.NAME_CHARACTERS)
     default_validators = [validator_max_length, validator_format]
 
     def __init__(self, *args, **kwargs):
@@ -88,15 +89,28 @@ class TargetGenre(models.Model):
         return self.description
 
 
+class UserProfile(models.Model):
+    user = models.OneToOneField(User)
+    activation_key = models.CharField(max_length=40, blank=True)
+    key_expires = models.DateTimeField(default=datetime.date.today())
+
+    def __str__(self):
+        return self.user.email
+
+    class Meta:
+        verbose_name_plural = u'Perfil de Usuario'
+
+
 class Company(User):
     description = models.CharField(max_length=100)
-    target_genre = models.ManyToManyField(TargetGenre)
+    target_genre = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
 
     objects = UserManager()
 
-    def __str__(self):
-        return self.description
+    class Meta:
+        verbose_name = ('company')
+        verbose_name_plural = ('companies')
 
 
 class PhoneCompany(models.Model):
