@@ -1,0 +1,165 @@
+{% extends "landing/template.html" %} {% block content %}
+{% load staticfiles %}
+
+{% load static %}
+
+<!--Home page style-->
+<header id="home" class="home" style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
+    <div class="overlay-fluid-block">
+        <div class="container text-center">
+            <div class="row">
+                <div class="home-wrapper">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="home-content">
+
+                            <h1>Encontre os serviços de beleza mais próximos de você</h1>
+                            <!-- <p>Encontre o serviço desejado!</p> -->
+
+                            <div class="row">
+                              <div class="home-contact">
+                                <div class="col-md-12 ">
+
+                                      <div class="col-md-3">
+                                        <button type="submit" class="btn">
+                                                <i class="fa fa-map-marker "></i>
+                                        </button>
+                                      </div>
+
+                                      <div class="col-md-1">
+                                          <p> ou </p>
+                                      </div>
+
+                                      <div class="col-md-5">
+                                          <input type="text" class="form-control" placeholder="Digite a sua localização!">
+                                      </div><!-- /input-group -->
+
+                                      <div class="col-md-3">
+                                            <input type="submit" class="btn" value="Buscar">
+                                      </div>
+                                </div>
+                             </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Sections -->
+<section id="business" class="portfolio sections">
+    <div class="container">
+        <div class="head_title text-center">
+            <h1>Principais serviços</h1>
+            <p>Entre os principais serviços que se pode encontrar em nossa plataforma temos:</p>
+        </div>
+
+        <div class="row">
+            <div class="portfolio-wrapper text-center">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="community-edition">
+                        <i class="fa fa-book"></i>
+                        <div class="separator"></div>
+                        <h4>Corte de Cabelo</h4>
+                        <p>Corte de cabelo masculino e feminino</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="community-edition">
+                        <i class="fa fa-bug"></i>
+                        <div class="separator"></div>
+                        <h4>Hidratação</h4>
+                        <p>Hidratação de cabelo.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="community-edition">
+                        <i class="fa fa-gears"></i>
+                        <div class="separator"></div>
+                        <h4>Manicure</h4>
+                        <p>Serviços de manicure.</p>
+                    </div>
+                </div>
+
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="community-edition">
+                        <i class="fa fa-external-link"></i>
+                        <div class="separator"></div>
+                        <h4>Serviço X</h4>
+                        <p>Serviço X.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+</section>
+
+<!-- Sections -->
+<section id="features" class="features sections">
+    <div class="container">
+        <div class="row">
+            <div class="main_features_content2">
+
+                <div class="col-sm-6">
+                    <div class="single_features_left text-center">
+                        <img src="{% static "landing/assets/images/feature-2.jpg" %}"></img>
+                    </div>
+                </div>
+
+                <div class="col-sm-6 margin-top-60">
+                    <div class="single_features_right ">
+                        <h2 align="center">Sobre o produto</h2>
+                        <p>O embeleza mais é uma plataforma que integra os clientes aos estabelecimentos.Divulgando o seu estabelecimento de forma gratuita e permitindo o gerenciamento de agendamentos locais e online no serviço premium.</p>
+                        <ul>
+                            <li>Quisque volutpat mattis eros.</li>
+                            <li>Nullam malesuada erat ut turpis.</li>
+                            <li>Suspendisse urna nibh.</li>
+                        </ul>
+                        <div class="features_buttom" align="center">
+                            <a href="" class="btn btn-default">Saiba mais</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section><!--End of Features 2 Section -->
+
+<section id="features" class="features sections">
+  <div class="container">
+    <div class="row">
+      <div class="main_features_content2">
+
+        <div class="col-sm-6 margin-top-60">
+            <div class="single_features_right ">
+                <h2>Dono de um estabelecimento de beleza?</h2>
+                <p>Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum. Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                <ul>
+                    <li>Quisque volutpat mattis eros.</li>
+                    <li>Nullam malesuada erat ut turpis.</li>
+                    <li>Suspendisse urna nibh.</li>
+                </ul>
+                <div class="features_buttom" align="center">
+                    <a href="" class="btn btn-default">Saiba mais</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="single_features_left text-center">
+                <img src="{% static "landing/assets/images/feature-1.jpg" %}"></img>
+            </div>
+        </div>
+        <br>
+    </div>
+  <br>
+  </div>
+  <br>
+ </div>
+</section>
+
+{% endblock %}

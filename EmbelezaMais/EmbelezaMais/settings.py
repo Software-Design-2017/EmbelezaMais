@@ -35,8 +35,7 @@ SECRET_KEY = 'f201l__o()nz)dl=lfa(rz0e34z)_-erbn7p4b*!dvze#la=ht'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['embelezamais.herokuapp.com', 'localhost:8000', '127.0.0.1']
-
+ALLOWED_HOSTS = ['embelezamais.herokuapp.com', 'localhost:8000', 'localhost', '127.0.0.1']
 
 # Application definition
 
@@ -48,6 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'landing',
+    'companyDashboard',
+    'search',
 ]
 
 MIDDLEWARE = [
@@ -65,7 +67,7 @@ ROOT_URLCONF = 'EmbelezaMais.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['templates', 'landing/template', 'companyDashboard/template', 'search/template'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +129,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static/'),
+]

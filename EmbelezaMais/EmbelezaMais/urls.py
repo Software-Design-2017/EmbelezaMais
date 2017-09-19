@@ -16,6 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
+from landing.views import home
+from companyDashboard.views import dashboardRender
+from search.views import searchPageRender
+
 from user import views
 
 urlpatterns = [
@@ -24,4 +28,7 @@ urlpatterns = [
 
     url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm,
         name='confirm_account'),
+    url(r'^$', home, name="landing_home"),
+    url(r'dashboard/', dashboardRender, name="dashboard"),
+    url(r'search/', searchPageRender, name="search"),
 ]
