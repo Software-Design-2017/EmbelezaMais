@@ -16,3 +16,7 @@ header .header-title{
 .sidebar{
 	margin-left: 15px;
 }
+
+.slider-selection {
+	background: blue;
+}
