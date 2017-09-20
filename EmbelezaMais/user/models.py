@@ -1,13 +1,11 @@
-# standard library
 import datetime
 
 # Django.
 from django.db import models
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.db.models import EmailField
-from django.contrib.auth.models import PermissionsMixin
 from django.core import validators
-# from django.utils.translation import ugettext_lazy as _
+from . import constants
 
 
 class UserManager(BaseUserManager):
@@ -43,22 +41,23 @@ class UserManager(BaseUserManager):
 
 
 class Email(EmailField):
-    validator = validators.EmailValidator(message='Enter a valid email address')
+    validator = validators.EmailValidator(message=constants.EMAIL_FORMAT)
 
     default_validators = [validator]
 
     def __init__(self, *args, **kwargs):
-        kwargs['max_length'] = 30
+        kwargs['max_length'] = constants.EMAIL_FIELD_LENGTH
         kwargs['default'] = ''
         kwargs['unique'] = True
         super(EmailField, self).__init__(*args, **kwargs)
 
 
 class Name(models.CharField):
-    validator_max_length = validators.MaxLengthValidator(60,
-                                                         message='Your name exceeds 60 characteres')
-    validator_format = validators.RegexValidator(regex=r'^[A-Za-z ]+$',
-                                                 message='Your name can\'t have special characters')
+    validator_max_length = validators.MaxLengthValidator(constants.NAME_FIELD_LENGTH,
+                                                         message=constants.NAME_SIZE)
+    validator_format = validators.RegexValidator(regex=r'^[a-zA-Zá-úÀ-Úã-õ-Ã-Õ ]+$',
+                                                 message=constants.NAME_CHARACTERS)
+
     default_validators = [validator_max_length, validator_format]
 
     def __init__(self, *args, **kwargs):
@@ -84,6 +83,13 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.email
 
 
+class TargetGenre(models.Model):
+    description = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.description
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User)
     activation_key = models.CharField(max_length=40, blank=True)
@@ -103,3 +109,39 @@ class Client(User):
 
     def __str__(self):
         return self.phone_number
+
+
+class Company(User):
+    description = models.CharField(max_length=100)
+    target_genre = models.CharField(max_length=100)
+    location = models.CharField(max_length=100)
+
+    objects = UserManager()
+
+    class Meta:
+        verbose_name = ('company')
+        verbose_name_plural = ('companies')
+
+
+class PhoneCompany(models.Model):
+    number_phone = models.CharField(max_length=100)
+    company = models.ForeignKey(Company)
+
+    def __str__(self):
+        return self.number_phone
+
+
+class PicturesCompany(models.Model):
+    picture = models.ImageField(default=None, editable=True)
+    company = models.ForeignKey(Company)
+
+
+class OperatingHours(models.Model):
+    opening_time = models.TimeField()
+    closing_time = models.TimeField()
+    day_of_week = models.CharField(max_length=100)
+    company = models.ForeignKey(Company)
+
+    # TODO change "/" to constant
+    def __str__(self):
+        return str(self.opening_time) + " / " + str(self.closing_time)

@@ -21,7 +21,6 @@ EMAIL_HOST_USER = 'embelezamais@gmail.com'
 EMAIL_HOST_PASSWORD = 'embelezamais666'
 EMAIL_PORT = 587
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -67,7 +66,7 @@ ROOT_URLCONF = 'EmbelezaMais.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates', 'landing/template', 'companyDashboard/template', 'search/template'],
+        'DIRS': ['templates', 'landing/template', 'companyDashboard/template', 'search/template', 'user/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -90,6 +89,12 @@ AUTH_USER_MODEL = 'user.User'
 default_dburl = 'sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3')
 DATABASES = {'default': config('DATABASE_URL', default=default_dburl, cast=dburl), }
 
+AUTH_USER_MODEL = "user.User"
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+        'django.contrib.auth.backends.ModelBackend',
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators

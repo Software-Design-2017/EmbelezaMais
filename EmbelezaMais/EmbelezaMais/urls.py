@@ -25,10 +25,11 @@ from user import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^register_client/', views.register_client_view, name='register_client_view'),
-
+    url(r'^register_company/', views.register_company_view, name='register_view'),
     url(r'^confirm/(?P<activation_key>\w+)/', views.register_confirm,
         name='confirm_account'),
     url(r'^$', home, name="landing_home"),
     url(r'dashboard/', dashboardRender, name="dashboard"),
     url(r'search/', searchPageRender, name="search"),
+
 ]

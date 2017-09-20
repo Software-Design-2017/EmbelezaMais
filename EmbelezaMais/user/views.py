@@ -3,6 +3,7 @@ import logging
 import hashlib
 import datetime
 import random
+
 # Django
 
 from django.shortcuts import (
@@ -14,10 +15,10 @@ from django.http import HttpResponse
 
 # local Django
 from .forms import (
-    ClientRegisterForm
+    ClientRegisterForm, CompanyRegisterForm
 )
 from .models import (
-    Client, UserProfile
+    Client, Company, UserProfile
 )
 
 from . import constants
@@ -46,12 +47,35 @@ def register_client_view(request):
     return render(request, "client_register_form.html", {"form": form})
 
 
+def register_company_view(request):
+    form = CompanyRegisterForm(request.POST or None)
+    if form.is_valid():
+        email = form.cleaned_data.get('email')
+        password = form.cleaned_data.get('password')
+        name = form.cleaned_data.get('name')
+        description = form.cleaned_data.get('description')
+        target_genre = form.cleaned_data.get('target_genre')
+        location = form.cleaned_data.get('location')
+        Company.objects.create_user(email=email, password=password, name=name, target_genre=target_genre,
+                                    description=description, location=location)
+
+        user = Company.objects.get(email=email)
+
+        return send_email_confirmation(user)
+
+    else:
+        pass
+
+    return render(request, "company_register_form.html", {"form": form})
+
+
 def send_email_confirmation(user):
-	# Prepare the information needed to send the account verification
+    # Prepare the information needed to send the account verification
     # email.
     salt = hashlib.sha1(str(random.random()).
                         encode('utf-8')).hexdigest()[:5]
     email = user.email
+
     activation_key = hashlib.sha1(str(salt+email).
                                   encode('utf‌​-8')).hexdigest()
     key_expires = datetime.datetime.today() + datetime.timedelta(2)
@@ -74,6 +98,7 @@ def send_email_confirmation(user):
 def register_confirm(request, activation_key):
     # Verify if user is already confirmed.
     if request.user.id is not None:
+
         logger.info("Logged user: " + request.user.name)
 
         HttpResponse('Conta ja confirmada')
