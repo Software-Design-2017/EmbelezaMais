@@ -1,22 +1,39 @@
-<html>
-<head>
-  <title>Client Login</title>
-</head>
+{% extends "landing/template.html" %}
 
-<body>
-  <h1>Client Login</h1>
-  {% if message is not None %}
-  <p>{{ message }}</p>
-  {% endif %}
+{% block content %}
+<h2 style = "text-align:center" > Login Company </h2>
+<div class= "container" style = "text-align:center">
+  <div class = "row" >
+    <div class="form">
+      {% if message %}
+        <div class="alert alert-danger"role="alert">{{message}}</div>
+      {% endif %}
+        <form style = "text-align:center" method="post" action=".">
+            {% csrf_token %}
+            <div class="form-group">
+              {% for error in form.email.errors %}
+              <div class="alert alert-danger"role="alert">{{error}}</div>
+              {% endfor %}
+              <label for="{{ form.email.id_for_label }}">Email:</label>
+              {{ form.email }}
+            </div>
 
-  <form method="post" action=".">
-      {% csrf_token %}
-       {{ form.as_p }}
+            <div class="form-group">
+              {% for error in form.password.errors %}
+              <div class="alert alert-danger"role="alert">{{error}}</div>
+              {% endfor %}
+              <label for="{{ form.password.id_for_label }}" >Senha:</label>
+              {{ form.password }}
+            </div>
 
-      <input type="hidden" name="next" value="/" />
-      <input type="submit" value="Login" />
-  </form>
+            <input type="hidden" name="next" value="/" />
+            <input class="btn btn-outline-success" type="submit" value="Entrar" />
+        </form>
+        <div class = "link">
+          <a href="#">Esqueceu sua Senha?</a>
+        </div>
+    </div>
+  </div>
+</div>
 
-</body>
-
-</html>
+{% endblock %}

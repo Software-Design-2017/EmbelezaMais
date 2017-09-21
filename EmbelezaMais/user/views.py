@@ -14,7 +14,6 @@ from django.core.mail import send_mail
 from django.utils import timezone
 from django.http import HttpResponse
 from django.contrib import auth
-from django.utils.decorators import method_decorator
 from django.views.generic import (
     FormView, View
 )
@@ -102,6 +101,7 @@ def send_email_confirmation(user):
 
 
 def register_confirm(request, activation_key):
+    # Check if activation token is valid, if not valid return an 404 error.
     # Verify if user is already confirmed.
     if request.user.id is not None:
 
@@ -112,7 +112,6 @@ def register_confirm(request, activation_key):
         # Nothing to do
         pass
 
-    # Check if activation token is valid, if not valid return an 404 error.
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
 
@@ -134,13 +133,14 @@ def register_confirm(request, activation_key):
 
     return redirect('/')
 
+
 class LoginView(FormView):
     form_class = None
     template_name = None
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -153,13 +153,15 @@ class LoginView(FormView):
             if user is not None:
                 return self._verify_user_is_especific_type(request, user, form)
             else:
-                return redirect('/')
+                return render(request, self.template_name, {'form': form,
+                                                            'message': constants.MESSAGE_LOGIN_ERROR})
         else:
             return render(request, self.template_name, {'form': form})
 
     @abc.abstractmethod
     def _verify_user_is_especific_type(self, request, user):
         return
+
 
 class LoginCompanyView(LoginView):
     form_class = CompanyLoginForm
@@ -177,8 +179,9 @@ class LoginCompanyView(LoginView):
             else:
                 return HttpResponse('User is not active')
         else:
-            message = 'You are not registered with the company.'
-            return render(request, self.template_name, {'form': form, 'message':message})
+            return render(request, self.template_name, {'form': form,
+                                                        'message': constants.MESSAGE_LOGIN_COMPANY_ERROR})
+
 
 class LogoutCompanyView(View):
     def get(self, request):
