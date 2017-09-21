@@ -3,6 +3,7 @@ import logging
 import hashlib
 import datetime
 import random
+import abc
 
 # Django
 
@@ -12,10 +13,15 @@ from django.shortcuts import (
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.http import HttpResponse
+from django.contrib import auth
+from django.utils.decorators import method_decorator
+from django.views.generic import (
+    FormView, View
+)
 
 # local Django
 from .forms import (
-    ClientRegisterForm, CompanyRegisterForm
+    ClientRegisterForm, CompanyRegisterForm, CompanyLoginForm
 )
 from .models import (
     Client, Company, UserProfile
@@ -127,3 +133,54 @@ def register_confirm(request, activation_key):
     user.save()
 
     return redirect('/')
+
+class LoginView(FormView):
+    form_class = None
+    template_name = None
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form':form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            user = auth.authenticate(
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password'],
+                )
+            if user is not None:
+                return self._verify_user_is_especific_type(request, user, form)
+            else:
+                return redirect('/')
+        else:
+            return render(request, self.template_name, {'form': form})
+
+    @abc.abstractmethod
+    def _verify_user_is_especific_type(self, request, user):
+        return
+
+class LoginCompanyView(LoginView):
+    form_class = CompanyLoginForm
+    template_name = 'login_company.html'
+    message = None
+
+    def _verify_user_is_especific_type(self, request, user, form):
+        success_url = '/dashboard'
+        is_company = hasattr(user, 'company')
+
+        if is_company:
+            if user.is_active:
+                auth.login(request, user)
+                return redirect(str(success_url))
+            else:
+                return HttpResponse('User is not active')
+        else:
+            message = 'You are not registered with the company.'
+            return render(request, self.template_name, {'form': form, 'message':message})
+
+class LogoutCompanyView(View):
+    def get(self, request):
+        auth.logout(request)
+        return redirect('/')

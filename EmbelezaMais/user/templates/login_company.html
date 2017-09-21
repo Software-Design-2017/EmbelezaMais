@@ -1,0 +1,22 @@
+<html>
+<head>
+  <title>Client Login</title>
+</head>
+
+<body>
+  <h1>Client Login</h1>
+  {% if message is not None %}
+  <p>{{ message }}</p>
+  {% endif %}
+
+  <form method="post" action=".">
+      {% csrf_token %}
+       {{ form.as_p }}
+
+      <input type="hidden" name="next" value="/" />
+      <input type="submit" value="Login" />
+  </form>
+
+</body>
+
+</html>
