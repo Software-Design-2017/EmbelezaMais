@@ -134,6 +134,7 @@ def register_confirm(request, activation_key):
 
     return redirect('/')
 
+
 class LoginView(FormView):
     form_class = None
     template_name = None
@@ -161,6 +162,7 @@ class LoginView(FormView):
     def _verify_user_is_especific_type(self, request, user):
         return
 
+
 class LoginCompanyView(LoginView):
     form_class = CompanyLoginForm
     template_name = 'login_company.html'
@@ -178,7 +180,8 @@ class LoginCompanyView(LoginView):
                 return HttpResponse('User is not active')
         else:
             message = 'You are not registered with the company.'
-            return render(request, self.template_name, {'form': form, 'message':message})
+            return render(request, self.template_name, {'form': form, 'message': message})
+
 
 class LogoutCompanyView(View):
     def get(self, request):
