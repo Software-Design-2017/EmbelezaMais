@@ -141,7 +141,7 @@ class LoginView(FormView):
 
     def get(self, request, *args, **kwargs):
         form = self.form_class(initial=self.initial)
-        return render(request, self.template_name, {'form':form})
+        return render(request, self.template_name, {'form': form})
 
     def post(self, request, *args, **kwargs):
         form = self.form_class(request.POST)
@@ -183,7 +183,27 @@ class LoginCompanyView(LoginView):
             return render(request, self.template_name, {'form': form, 'message': message})
 
 
-class LogoutCompanyView(View):
+class LoginClientView(LoginView):
+    form_class = CompanyLoginForm
+    template_name = 'login_client.html'
+    message = None
+
+    def _verify_user_is_especific_type(self, request, user, form):
+        success_url = '/search'
+        is_client = hasattr(user, 'client')
+
+        if is_client:
+            if user.is_active:
+                auth.login(request, user)
+                return redirect(str(success_url))
+            else:
+                return HttpResponse('User is not active')
+        else:
+            message = 'You are not registered as a client.'
+            return render(request, self.template_name, {'form': form, 'message': message})
+
+
+class LogoutView(View):
     def get(self, request):
         auth.logout(request)
         return redirect('/')
