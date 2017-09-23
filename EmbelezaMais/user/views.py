@@ -154,7 +154,9 @@ class LoginView(FormView):
             if user is not None:
                 return self._verify_user_is_especific_type(request, user, form)
             else:
-                return redirect('/')
+                # return redirect('/user/login_client')
+                message = "Usuário não cadastrado!"
+                return render(request, self.template_name, {'form': form, 'message': message})
         else:
             return render(request, self.template_name, {'form': form})
 
@@ -183,6 +185,7 @@ class LoginCompanyView(LoginView):
             return render(request, self.template_name, {'form': form, 'message': message})
 
 
+# TODO(JOAO) CHANGE THE REDIRECT WHEN USER DON'T EXISTS
 class LoginClientView(LoginView):
     form_class = CompanyLoginForm
     template_name = 'login_client.html'
@@ -199,7 +202,7 @@ class LoginClientView(LoginView):
             else:
                 return HttpResponse('User is not active')
         else:
-            message = 'You are not registered as a client.'
+            message = 'Hey, parece que você não é um cliente.'
             return render(request, self.template_name, {'form': form, 'message': message})
 
 
