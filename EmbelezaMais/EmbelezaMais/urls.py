@@ -31,5 +31,6 @@ urlpatterns = [
     url(r'^$', home, name="landing_home"),
     url(r'dashboard/', dashboardRender, name="dashboard"),
     url(r'search/', searchPageRender, name="search"),
+    url(r'^delete_company/(?P<id>[0-9]+)/$', views.CompanyAction.delete_company_view, name='delete_company_view'),
 
 ]

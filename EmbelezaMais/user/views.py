@@ -18,7 +18,7 @@ from .forms import (
     ClientRegisterForm, CompanyRegisterForm
 )
 from .models import (
-    Client, Company, UserProfile
+    Client, Company, UserProfile, User
 )
 
 from . import constants
@@ -67,6 +67,16 @@ def register_company_view(request):
         pass
 
     return render(request, "company_register_form.html", {"form": form})
+
+
+class CompanyAction(object):
+    def delete_company_view(request, id):
+        company = User.objects.get(id=id)
+        logger.debug("Chegou aqui")
+        company.delete()
+
+        # TODO (Thiago)Create confirm delete page
+        return redirect('/')
 
 
 def send_email_confirmation(user):
