@@ -1,39 +1,59 @@
-{% extends "landing/template.html" %}
+{% extends "landing/template.html" %} {% block content %} {% load staticfiles %} {% load static %}
 
-{% block content %}
-<h2 style = "text-align:center" > Login Company </h2>
-<div class= "container" style = "text-align:center">
-  <div class = "row" >
-    <div class="form">
-      {% if message %}
-        <div class="alert alert-danger"role="alert">{{message}}</div>
-      {% endif %}
-        <form style = "text-align:center" method="post" action=".">
+<body>
+
+  <div style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
+      <br>
+      <br>
+      <div class="form" >
+        <div id="center-image">
+          <a class="" href="#"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div>
+          {% if message is not None %}
+          <div class="alert alert-warning">
+            <strong>Ops!</strong>
+            <p>{{ message }}</p>
+            <p>Caso seja não seja um estabelecimento se logue clicando: <a href=""> aqui </a></p>
+          </div>
+
+          {% endif %}
+
+          <form style="text-align:left" method="post" action=".">
             {% csrf_token %}
             <div class="form-group">
               {% for error in form.email.errors %}
-              <div class="alert alert-danger"role="alert">{{error}}</div>
+              <div class="alert alert-danger" role="alert">{{error}}</div>
               {% endfor %}
-              <label for="{{ form.email.id_for_label }}">Email:</label>
-              {{ form.email }}
+              <label for="{{ form.email.id_for_label }}">Email:</label> {{ form.email }}
             </div>
 
             <div class="form-group">
               {% for error in form.password.errors %}
-              <div class="alert alert-danger"role="alert">{{error}}</div>
+              <div class="alert alert-danger" role="alert">{{error}}</div>
               {% endfor %}
-              <label for="{{ form.password.id_for_label }}" >Senha:</label>
-              {{ form.password }}
+              <label for="{{ form.password.id_for_label }}">Senha:</label> {{ form.password }}
             </div>
 
             <input type="hidden" name="next" value="/" />
             <input class="btn btn-outline-success" type="submit" value="Entrar" />
-        </form>
-        <div class = "link">
-          <a href="#">Esqueceu sua Senha?</a>
+          </form>
+          <div class="link">
+            <a href="">Esqueceu sua Senha?</a>
+          </div>
+          <div class="link">
+            <a href="">Cadastre já seu estabelecimento !</a>
+          </div>
         </div>
-    </div>
+      </div>
+    <br>
   </div>
-</div>
+
+</body>
+
+
 
 {% endblock %}
