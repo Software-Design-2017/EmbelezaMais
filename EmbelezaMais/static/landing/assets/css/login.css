@@ -1,147 +1,186 @@
-/* #####################################################################
-   #
-   #   Project       : Modal Login with jQuery Effects
-   #   Author        : Rodrigo Amarante (rodrigockamarante)
-   #   Version       : 1.0
-   #   Created       : 07/28/2015
-   #   Last Change   : 08/02/2015
-   #
-   ##################################################################### */
-   
-@import url(http://fonts.googleapis.com/css?family=Roboto);
-
-* {
-    font-family: 'Roboto', sans-serif;
+/* Text Boxes Addition Template */
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+#center-image {
+    width:100px;
+    height:100px;
+    position:absolute;
+    left:50%;
+    margin-top:0px;
+    margin-left:-50px;
 }
 
-#login-modal .modal-dialog {
-    width: 350px;
+.recovery-password {
+  width: 360px;
+  padding: 8% 0 0;
+  margin: auto;
 }
 
-#login-modal input[type=text], input[type=password] {
-	margin-top: 10px;
+.link{
+  position: bottom;
+  font-size: 15px;
+  text-align: center;
 }
 
-#div-login-msg,
-#div-lost-msg,
-#div-register-msg {
-    border: 1px solid #dadfe1;
-    height: 30px;
-    line-height: 28px;
-    transition: all ease-in-out 500ms;
+.form {
+  position: relative;
+  z-index: 1;
+  background: #FFFFFF;
+  max-width: 750px;
+  margin: 0 auto 100px;
+  padding: 45px;
+  text-align: relative;
+  font-size: 20px;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  border-color:#FFFFFF;
+ border-style: solid;
+ border-width: 10px;
+ border-radius: 15px;
+ -moz-border-radius: 15px;
+ -webkit-border-radius: 15px;
 }
 
-#div-login-msg.success,
-#div-lost-msg.success,
-#div-register-msg.success {
-    border: 1px solid #68c3a3;
-    background-color: #c8f7c5;
+.form input {
+  font-family: "Roboto", sans-serif;
+  outline: 0;
+  background: #FFFFFF;
+  width: 100%;
+  border: 0;
+  margin: 0 0 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border-color:#D3D3D3;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
 }
 
-#div-login-msg.error,
-#div-lost-msg.error,
-#div-register-msg.error {
-    border: 1px solid #eb575b;
-    background-color: #ffcad1;
+.form button {
+  font-family: "Roboto", sans-serif;
+  text-transform: uppercase;
+  outline: 0;
+  background: #A6FF9A;
+  width: 30%;
+  border: 0;
+  padding: 10px;
+  color: #000000;
+  font-size: 14px;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+  cursor: pointer;
+  border-color:#3CB371;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 15px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
 }
 
-#icon-login-msg,
-#icon-lost-msg,
-#icon-register-msg {
-    width: 30px;
-    float: left;
-    line-height: 28px;
-    text-align: center;
-    background-color: #dadfe1;
-    margin-right: 5px;
-    transition: all ease-in-out 500ms;
+.form button:hover,.form button:active,.form button:focus {
+  background: #5cb85c ;
 }
 
-#icon-login-msg.success,
-#icon-lost-msg.success,
-#icon-register-msg.success {
-    background-color: #68c3a3 !important;
+/* set border roundness */
+ border-radius: 15px;
+ -moz-border-radius: 15px;
+ -webkit-border-radius: 15px;
 }
 
-#icon-login-msg.error,
-#icon-lost-msg.error,
-#icon-register-msg.error {
-    background-color: #eb575b !important;
+.container .info h1 {
+  margin: 0 0 15px;
+  padding: 0;
+  font-size: 36px;
+  font-weight: 300;
+  color: #000000;
+  border-color: black;
+ border-style: solid;
+ border-width: 10px;
+
+ /* set border roundness */
+ border-radius: 15px;
+ -moz-border-radius: 15px;
+ -webkit-border-radius: 15px;
 }
 
-#img_logo {
-    max-height: 100px;
-    max-width: 100px;
+.container .info span {
+  color: #4d4d4d;
+  font-size: 12px;
+  border-color: black;
+ border-style: solid;
+ border-width: 10px;
+
+ /* set border roundness */
+ border-radius: 15px;
+ -moz-border-radius: 15px;
+ -webkit-border-radius: 15px;
 }
 
-/* #########################################
-   #    override the bootstrap configs     #
-   ######################################### */
+.container .info span a {
+  color: #000000;
+  text-decoration: none;
+  border-color: black;
+ border-style: solid;
+ border-width: 10px;
 
-.modal-backdrop.in {
-    filter: alpha(opacity=50);
-    opacity: .8;
+ /* set border roundness */
+ border-radius: 15px;
+ -moz-border-radius: 15px;
+ -webkit-border-radius: 15px;
 }
 
-.modal-content {
-    background-color: #ececec;
-    border: 1px solid #bdc3c7;
-    border-radius: 0px;
-    outline: 0;
+.container .info span .fa {
+  color: #EF3B3A;
 }
 
-.modal-header {
-    min-height: 16.43px;
-    padding: 15px 15px 15px 15px;
-    border-bottom: 0px;
+body {
+  background: #FFFFFF; /* fallback for old browsers */
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.modal-body {
-    position: relative;
-    padding: 5px 15px 5px 15px;
+.imageBackground {
+    color: #000000;
 }
 
-.modal-footer {
-    padding: 15px 15px 15px 15px;
-    text-align: left;
-    border-top: 0px;
+.form .message {
+  margin: 15px 0 0;
+  color: #b3b3b3;
+  font-size: 12px;
 }
 
-.checkbox {
-    margin-bottom: 0px;
+.form .message a {
+  color: #000000;
+  text-decoration: none;
 }
 
-.btn {
-    border-radius: 0px;
+.container:before, .container:after {
+  content: "";
+  display: block;
+  clear: both;
 }
 
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-    outline: none;
-}
-
-.btn-lg, .btn-group-lg>.btn {
-    border-radius: 0px;
-}
-
-.btn-link {
-    padding: 5px 10px 0px 0px;
-    color: #95a5a6;
-}
-
-.btn-link:hover, .btn-link:focus {
-    color: #2c3e50;
-    text-decoration: none;
-}
-
-.glyphicon {
-    top: 0px;
+.container .info {
+  margin: 50px auto;
+  text-align: center;
+  border-color: black;
+ border-style: solid;
+ border-width: 10px;
 }
 
 .form-control {
-  border-radius: 0px;
+    font-size: 14px;
+    line-height: 1.571429;
+    display: block;
+    width: 100%;
+    padding: .429rem .929rem;
+    color: #757575;
+    border: 1px solid #e0e0e0;
+    border-radius: .215rem;
+    background-color: #FFFFFF;
+    background-image: none;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
 }
