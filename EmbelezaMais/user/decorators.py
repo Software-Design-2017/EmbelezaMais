@@ -28,8 +28,7 @@ def user_is_logged(method):
             elif is_client:
                 return redirect('/search')  # TODO make dashboard client
             else:
-                # Nothing to do.
-                pass
+                return redirect('/search')
         else:
             return method(request, *args, **kwargs)
 

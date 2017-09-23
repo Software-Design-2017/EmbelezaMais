@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^$', home, name="landing_home"),
     url(r'^admin/', admin.site.urls),
     url('^user/', include('user.urls')),
+    url('^service/', include('service.urls')),
     url(r'dashboard/', dashboardRender, name="dashboard"),
     url(r'search/', searchPageRender, name="search"),
 
