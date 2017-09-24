@@ -1,5 +1,12 @@
-<div class="client">
+<div class="show_client">
   <h1>{{ client.name }}</h1>
   <p>{{ client.email }}</p>
   <p>{{ client.phone }}</p>
+
+  {% if user.is_authenticated %}
+    <a class="btn btn-default" href="{% url 'remove_client_view' %}">
+      <span class="glyphicon glyphicon-remove"></span>
+    </a>
+  {% endif %}
+
 </div>

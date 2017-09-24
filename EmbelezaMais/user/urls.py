@@ -3,6 +3,7 @@ from .views import (
     register_client_view,
     register_company_view,
     register_confirm,
+    remove_client_view,
     show_client_view,
     LoginCompanyView,
     LogoutView,
@@ -19,5 +20,6 @@ urlpatterns = (
     url(r'^confirm/(?P<activation_key>\w+)/', register_confirm,
         name='confirm_account'),
     url(r'view_client/', show_client_view, name="show_client_view"),
+    url(r'remove_client/', remove_client_view, name="remove_client_view"),
 
 )

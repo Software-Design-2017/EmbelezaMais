@@ -136,13 +136,13 @@ def register_confirm(request, activation_key):
     return redirect('/')
 
 
-def show_client_view(request, pk):
-    client = get_object_or_404(Client, pk=pk)
-    return render(request, 'view_client.html', {'client': client})
+def show_client_view(request):
+    client = request.user
+    return render(request, 'show_client_view.html', {'client': client})
 
 
-def client_remove(request, pk):
-    client = get_object_or_404(Client, pk=pk)
+def remove_client_view(request):
+    client = request.user
     client.delete()
     return redirect('/')
 
