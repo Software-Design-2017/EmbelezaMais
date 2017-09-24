@@ -1,7 +1,6 @@
 {% extends "companyDashboard/template.html" %} {% block content %}
 {% load staticfiles %}
 {% load static %}
-
 <div class="col-md-10 col-md-offset-1">
       <div class="panel panel-default panel-table">
           <div class="panel-heading">
@@ -28,13 +27,36 @@
                 <td>{{ service.name }}</td>
                 <td>{{ service.description }}</td>
                 <td>{{ service.price }}</td>
-                <td>Editar</td>
-                <td><a href="{% url 'delete_service' service.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                <td><a href="{% url 'delete_service' service.id %}" data-confirm="true"></a></td>
+                <td><a href="#" data-href="{% url 'delete_service' service.id %}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
               </tr>
             {% empty %}
                 <li>Não existe serviços cadastrados.</li>
             {% endfor %}
         </table>
+
+          <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                      <div class="modal-content">
+                        <br>
+                          <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                              <h4 class="modal-title" id="myModalLabel">Confirmar Exclusão</h4>
+                          </div>
+
+                          <div class="modal-body">
+                              <p>Está é uma ação irreversível</p>
+                              <p>Você quer excluir o serviço?</p>
+                          </div>
+
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                              <a class="btn btn-danger btn-ok">Excluir</a>
+                          </div>
+                      </div>
+                  </div>
+
+          </div>
       </div>
     </div>
 </div>
@@ -61,4 +83,11 @@
             </div>
           </ul>
       {% endif %}
+
+    <!--TODO Ver com a professora onde é melhor local pra isso-->
+    <script>
+        $('#confirm-delete').on('show.bs.modal', function(e) {
+            $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+        });
+    </script>
 {% endblock %}
