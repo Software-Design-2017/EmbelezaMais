@@ -56,7 +56,8 @@ def register_company_view(request):
         description = form.cleaned_data.get('description')
         target_genre = form.cleaned_data.get('target_genre')
         location = form.cleaned_data.get('location')
-        Company.objects.create_user(email=email, password=password, name=name, target_genre=target_genre,
+        Company.objects.create_user(email=email, password=password, name=name,
+                                    target_genre=target_genre,
                                     description=description, location=location)
 
         user = Company.objects.get(email=email)
@@ -115,7 +116,8 @@ def register_confirm(request, activation_key):
     if user_profile.key_expires < timezone.now():
         user_profile.delete()
 
-        return HttpResponse("Tempo para confirmar conta expirou. Crie sua conta novamente")
+        return HttpResponse("Tempo para confirmar conta expirou." +
+                            "Crie sua conta novamente")
     else:
         # Nothing to do.
         pass
@@ -126,4 +128,15 @@ def register_confirm(request, activation_key):
     user.is_active = True
     user.save()
 
+    return redirect('/')
+
+
+def view_client(request, pk):
+    client = get_object_or_404(Client, pk=pk)
+    return render(request, 'view_client.html', {'client': client})
+
+
+def client_remove(request, pk):
+    client = get_object_or_404(Client, pk=pk)
+    client.delete()
     return redirect('/')
