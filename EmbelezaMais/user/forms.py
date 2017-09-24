@@ -108,3 +108,26 @@ class CompanyLoginForm(forms.Form):
 
     class Meta:
         model = Company
+
+
+class ClientLoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(
+        widget=forms.PasswordInput, label=_(constants.PASSWORD))
+
+    def clean(self, *args, **kwargs):
+        password = self.cleaned_data.get("password")
+
+        if len(password) < constants.PASSWORD_MIN_LENGTH:
+            raise forms.ValidationError(
+                {'password': [_(constants.PASSWORD_SIZE)]})
+        elif len(password) > constants.PASSWORD_MAX_LENGTH:
+            raise forms.ValidationError(
+                {'password': [_(constants.PASSWORD_SIZE)]})
+        else:
+            pass
+
+        return super(CompanyLoginForm, self).clean(*args, **kwargs)
+
+    class Meta:
+        model = Company

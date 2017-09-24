@@ -183,7 +183,28 @@ class LoginCompanyView(LoginView):
                                                         'message': constants.MESSAGE_LOGIN_COMPANY_ERROR})
 
 
-class LogoutCompanyView(View):
+# TODO(JOAO) CHANGE THE REDIRECT WHEN USER DON'T EXISTS
+class LoginClientView(LoginView):
+    form_class = CompanyLoginForm
+    template_name = 'login_client.html'
+    message = None
+
+    def _verify_user_is_especific_type(self, request, user, form):
+        success_url = '/search'
+        is_client = hasattr(user, 'client')
+
+        if is_client:
+            if user.is_active:
+                auth.login(request, user)
+                return redirect(str(success_url))
+            else:
+                return HttpResponse('User is not active')
+        else:
+            message = 'Hey, parece que você não é um cliente.'
+            return render(request, self.template_name, {'form': form, 'message': message})
+
+
+class LogoutView(View):
     def get(self, request):
         auth.logout(request)
         return redirect('/')
