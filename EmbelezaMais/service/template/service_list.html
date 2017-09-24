@@ -18,6 +18,8 @@
                   <th>Nome</th>
                   <th>Descrição</th>
                   <th>Preço</th>
+                  <th>Editar</th>
+                  <th>Excluir</th>
               </thead>
               <tbody>
 
@@ -26,6 +28,8 @@
                 <td>{{ service.name }}</td>
                 <td>{{ service.description }}</td>
                 <td>{{ service.price }}</td>
+                <td>Editar</td>
+                <td><a href="{% url 'delete_service' service.id %}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
               </tr>
             {% empty %}
                 <li>Não existe serviços cadastrados.</li>

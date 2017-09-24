@@ -15,4 +15,5 @@ urlpatterns = (
         url(r'^create/makeup/$', ServiceMakeUpCreate.as_view(), name='makeup_service_create'),
         url(r'^create/hair/$', ServiceHairCreate.as_view(), name='hair_service_create'),
         url(r'^list/$', ServiceList.as_view(), name='service_list'),
+        url(r'^delete/(?P<id>[0-9]+)/$', ServiceList.delete_service, name='delete_service'),
 )

@@ -3,6 +3,7 @@ from django.db import transaction
 from django.views.generic import CreateView, ListView, FormView
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.http import HttpResponseRedirect
 
 from .models import (
     Service, Combo, ServicesCombo
@@ -24,6 +25,12 @@ class ServiceList(ListView):
 
     def get_queryset(self):
         return Service.objects.filter(company=self.request.user.company)
+    
+    def delete_service(request, id):
+        service = Service.objects.get(id=id)
+        service.delete()
+
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
 class ServiceComboCreate(CreateView):
