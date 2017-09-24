@@ -1,5 +1,8 @@
 <html>
     <head>
+        <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+        <script data-require="bootstrap@*" data-semver="3.1.1" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+        <script src="script.js"></script>
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
         <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
         <link href="https://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
@@ -10,9 +13,37 @@
       <p>{{ client.email }}</p>
       <p>{{ client.phone }}</p>
 
-      <a class="btn btn-default" href="{% url 'remove_client_view' %}">
-        <span class="glyphicon glyphicon-remove"></span>
-      </a>
+      <td><a href="{% url 'remove_client_view' %}" data-confirm="true"></a></td>
+      <a class="btn btn-default" href="#" data-href="{% url 'remove_client_view' %}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i><span class="glyphicon glyphicon-remove"></span></a>
+
+      <div class="modal fade" id="confirm-delete" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                  <br>
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Confirmar Exclusão</h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p>Está é uma ação irreversível</p>
+                        <p>Você quer excluir a sua conta?</p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        <a class="btn btn-danger btn-ok">Excluir</a>
+                    </div>
+                </div>
+            </div>
+          </div>
     </div>
   </body>
 </html>
+
+<!--TODO Ver com a professora onde é melhor local pra isso-->
+<script>
+  $('#confirm-delete').on('show.bs.modal', function(e) {
+      $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+  });
+</script>
