@@ -134,6 +134,14 @@ def register_confirm(request, activation_key):
     return redirect('/')
 
 
+def company_profile(request):
+    is_company = hasattr(request.user, 'company')
+    if is_company:
+        if request.user.is_active:
+            args = {'user': request.user}
+            return render(request, 'company_profile.html', args)
+
+
 class LoginView(FormView):
     form_class = None
     template_name = None
