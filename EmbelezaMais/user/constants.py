@@ -24,3 +24,15 @@ EMAIL_CONFIRMATION_BODY = """
                            """
 
 EMBELEZAMAIS_EMAIL = 'embelezamais@gmail.com'
+
+# PASSWORD FIELDS
+PASSWORD = 'Password'
+PASSWORD_MIN_LENGTH = 8
+PASSWORD_MAX_LENGTH = 12
+
+# PASSWORD VALIDATION MESSAGES.
+PASSWORD_SIZE = 'Password must be between 8 and 12 characters'
+
+# ERROR LOGIN
+MESSAGE_LOGIN_COMPANY_ERROR = 'You are not registered as a company.'
+MESSAGE_LOGIN_ERROR = 'Password and/or Email invalid.'

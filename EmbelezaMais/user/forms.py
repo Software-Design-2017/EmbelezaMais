@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 
 # Local Django.
 from .models import Client, Company
+from . import constants
 
 
 class ClientRegisterForm(forms.ModelForm):
@@ -87,3 +88,23 @@ class CompanyRegisterForm(forms.ModelForm):
         elif password != password_confirmation:
             raise forms.ValidationError(_("Passwords don't match."))
         return super(CompanyRegisterForm, self).clean(*args, **kwargs)
+
+
+class CompanyLoginForm(forms.Form):
+    email = forms.EmailField()
+    password = forms.CharField(widget=forms.PasswordInput, label=_(constants.PASSWORD))
+
+    def clean(self, *args, **kwargs):
+        password = self.cleaned_data.get("password")
+
+        if len(password) < constants.PASSWORD_MIN_LENGTH:
+            raise forms.ValidationError({'password': [_(constants.PASSWORD_SIZE)]})
+        elif len(password) > constants.PASSWORD_MAX_LENGTH:
+            raise forms.ValidationError({'password': [_(constants.PASSWORD_SIZE)]})
+        else:
+            pass
+
+        return super(CompanyLoginForm, self).clean(*args, **kwargs)
+
+    class Meta:
+        model = Company
