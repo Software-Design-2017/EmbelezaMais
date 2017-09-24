@@ -136,7 +136,7 @@ def register_confirm(request, activation_key):
     return redirect('/')
 
 
-def view_client(request, pk):
+def show_client_view(request, pk):
     client = get_object_or_404(Client, pk=pk)
     return render(request, 'view_client.html', {'client': client})
 
