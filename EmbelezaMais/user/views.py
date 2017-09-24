@@ -3,6 +3,7 @@ import logging
 import hashlib
 import datetime
 import random
+import abc
 
 # Django
 
@@ -12,10 +13,14 @@ from django.shortcuts import (
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.http import HttpResponse
+from django.contrib import auth
+from django.views.generic import (
+    FormView, View
+)
 
 # local Django
 from .forms import (
-    ClientRegisterForm, CompanyRegisterForm
+    ClientRegisterForm, CompanyRegisterForm, CompanyLoginForm
 )
 from .models import (
     Client, Company, UserProfile
@@ -97,6 +102,7 @@ def send_email_confirmation(user):
 
 
 def register_confirm(request, activation_key):
+    # Check if activation token is valid, if not valid return an 404 error.
     # Verify if user is already confirmed.
     if request.user.id is not None:
 
@@ -107,7 +113,6 @@ def register_confirm(request, activation_key):
         # Nothing to do
         pass
 
-    # Check if activation token is valid, if not valid return an 404 error.
     user_profile = get_object_or_404(UserProfile,
                                      activation_key=activation_key)
 
@@ -140,3 +145,80 @@ def client_remove(request, pk):
     client = get_object_or_404(Client, pk=pk)
     client.delete()
     return redirect('/')
+
+
+class LoginView(FormView):
+    form_class = None
+    template_name = None
+
+    def get(self, request, *args, **kwargs):
+        form = self.form_class(initial=self.initial)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            user = auth.authenticate(
+                email=form.cleaned_data['email'],
+                password=form.cleaned_data['password'],
+                )
+            if user is not None:
+                return self._verify_user_is_especific_type(request, user, form)
+            else:
+                return render(request, self.template_name, {'form': form,
+                                                            'message': constants.MESSAGE_LOGIN_ERROR})
+        else:
+            return render(request, self.template_name, {'form': form})
+
+    @abc.abstractmethod
+    def _verify_user_is_especific_type(self, request, user):
+        return
+
+
+class LoginCompanyView(LoginView):
+    form_class = CompanyLoginForm
+    template_name = 'login_company.html'
+    message = None
+
+    def _verify_user_is_especific_type(self, request, user, form):
+        success_url = '/dashboard'
+        is_company = hasattr(user, 'company')
+
+        if is_company:
+            if user.is_active:
+                auth.login(request, user)
+                return redirect(str(success_url))
+            else:
+                return HttpResponse('User is not active')
+        else:
+            return render(request, self.template_name, {'form': form,
+                                                        'message': constants.MESSAGE_LOGIN_COMPANY_ERROR})
+
+
+# TODO(JOAO) CHANGE THE REDIRECT WHEN USER DON'T EXISTS
+class LoginClientView(LoginView):
+    form_class = CompanyLoginForm
+    template_name = 'login_client.html'
+    message = None
+
+    def _verify_user_is_especific_type(self, request, user, form):
+        success_url = '/search'
+        is_client = hasattr(user, 'client')
+
+        if is_client:
+            if user.is_active:
+                auth.login(request, user)
+                return redirect(str(success_url))
+            else:
+                return HttpResponse('User is not active')
+        else:
+            message = 'Hey, parece que você não é um cliente.'
+            return render(request, self.template_name, {'form': form,
+                                                        'message': message})
+
+
+class LogoutView(View):
+    def get(self, request):
+        auth.logout(request)
+        return redirect('/')
