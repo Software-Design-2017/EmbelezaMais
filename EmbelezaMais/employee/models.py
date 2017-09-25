@@ -40,7 +40,7 @@ class OperatingHours(models.Model):
         self.closing_time=closing_time
 
 class EmployeeManager(BaseUserManager):
-    def create_user(self, name, specialty,
+    def create_employee(self, name, specialty,
                     opening_time, closing_time, **kwargs):
 
         if not name:
