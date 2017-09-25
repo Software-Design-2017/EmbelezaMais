@@ -47,7 +47,7 @@ class EmployeeManager(BaseUserManager):
             raise ValueError('The given name must be set')
 
         name = self.normalize_name(name)
-        operatingHours = OperatingHours(opening_time, closing_time)
+        operating_hours = OperatingHours(opening_time, closing_time)
         employee = self.model(name, specialty, operatingHours, **kwargs)
         employee.save(using=self.db)
 
@@ -57,7 +57,7 @@ class EmployeeManager(BaseUserManager):
 class Employee(models.Model):
     name = Name()
     specialty = Specialty()
-    operatingHours = OperatingHours()
+    operating_hours = OperatingHours()
 
     objects = EmployeeManager()
 
