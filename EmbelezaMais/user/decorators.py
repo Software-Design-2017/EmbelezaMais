@@ -3,6 +3,25 @@ from django.shortcuts import (
     redirect
 )
 
+from service.models import (
+    Service
+)
+
+
+def define_author_service(method):
+    """
+    Verify if user is author service.
+    """
+    def wrap(request, id, *args, **kwargs):
+        service = Service.objects.get(id=id)
+        is_author_service = request.user.email == service.company.email
+        if is_author_service:
+            return method(request, id, *args, **kwargs)
+        else:
+            return redirect('/')
+
+    return wrap
+
 
 def user_is_company(method):
     """

@@ -14,7 +14,9 @@ from .forms import (
 )
 
 from . import constants
-from user.decorators import user_is_company
+from user.decorators import (
+    user_is_company, define_author_service
+)
 
 
 class ServiceList(ListView):
@@ -26,6 +28,9 @@ class ServiceList(ListView):
     def get_queryset(self):
         return Service.objects.filter(company=self.request.user.company)
 
+    @login_required
+    @user_is_company
+    @define_author_service
     def delete_service(request, id):
         service = Service.objects.get(id=id)
         service.delete()
