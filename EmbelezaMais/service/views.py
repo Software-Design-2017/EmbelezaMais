@@ -70,7 +70,7 @@ class ServiceComboCreate(CreateView):
             self.object.save()
 
             for service_in_combo in services_validate:
-                    self.object.combo.services.add(service_in_combo)
+                    self.object.combo.add(service_in_combo)
 
             self.object.combo.save()
             print(self.object.services)
