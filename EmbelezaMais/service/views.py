@@ -25,7 +25,7 @@ class ServiceList(ListView):
 
     def get_queryset(self):
         return Service.objects.filter(company=self.request.user.company)
-    
+
     def delete_service(request, id):
         service = Service.objects.get(id=id)
         service.delete()
@@ -70,10 +70,10 @@ class ServiceComboCreate(CreateView):
             self.object.save()
 
             for service_in_combo in services_validate:
-                    service_general = ServicesCombo(service_combo=self.object,
-                                                    service_in_combo=service_in_combo)
-                    service_general.save()
+                    self.object.combo.services.add(service_in_combo)
 
+            self.object.combo.save()
+            print(self.object.services)
         return super(ServiceComboCreate, self).form_valid(form)
 
     def _validate_quantity(self, services, form):
