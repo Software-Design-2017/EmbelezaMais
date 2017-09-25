@@ -36,7 +36,7 @@ def register_employee(request):
 
         Employee.objects.create_employee(name=name, specialty=specialty,
                                         opening_time=opening_time, closing_time=closing_time)
-
+        return redirect('/')
     else:
         logger.debug("Register form was invalid.")
 

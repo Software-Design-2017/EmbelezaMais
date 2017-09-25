@@ -1,6 +1,11 @@
 from django.db import models
 from . import constants
 
+from django.contrib.auth.models import BaseUserManager
+from django.core import validators
+from django.db.models import TimeField
+
+
 class Name(models.CharField):
     validator_max_length = validators.MaxLengthValidator(constants.NAME_FIELD_LENGTH,
                                                          message=constants.NAME_SIZE)
@@ -39,16 +44,16 @@ class OperatingHours(models.Model):
         self.opening_time=opening_time
         self.closing_time=closing_time
 
+
 class EmployeeManager(BaseUserManager):
-    def create_employee(self, name, specialty,
-                    opening_time, closing_time, **kwargs):
+    def create_employee(self, name, specialty, opening_time, closing_time, **kwargs):
 
         if not name:
             raise ValueError('The given name must be set')
 
-        name = self.normalize_name(name)
+        name = self.name
         operating_hours = OperatingHours(opening_time, closing_time)
-        employee = self.model(name, specialty, operatingHours, **kwargs)
+        employee = self.model(name, specialty, operating_hours, **kwargs)
         employee.save(using=self.db)
 
         return employee
@@ -57,7 +62,11 @@ class EmployeeManager(BaseUserManager):
 class Employee(models.Model):
     name = Name()
     specialty = Specialty()
-    operating_hours = OperatingHours()
+
+    opening_time = models.TimeField()
+    closing_time = models.TimeField()
+
+    operating_hours = OperatingHours(opening_time, closing_time)
 
     objects = EmployeeManager()
 

@@ -28,5 +28,7 @@ urlpatterns = [
     url('^user/', include('user.urls')),
     url(r'dashboard/', dashboardRender, name="dashboard"),
     url(r'search/', searchPageRender, name="search"),
+    url(r'employee/', include('employee.urls'), name="employee.urls"),
+
 
 ]

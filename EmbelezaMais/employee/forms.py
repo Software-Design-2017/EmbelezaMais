@@ -13,7 +13,7 @@ class EmployeeRegisterForm(forms.ModelForm):
     name = forms.CharField(label='NAME',
                            max_length=60)
 
-    specialty = forms.CharField(label='NAME',
+    specialty = forms.CharField(label='SPECIALTY',
                            max_length=30)
 
     opening_time = forms.TimeField()
