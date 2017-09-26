@@ -113,7 +113,9 @@ class Client(User):
 
 class Company(User):
     description = models.CharField(max_length=100)
-    target_genre = models.CharField(max_length=100)
+
+    target_genre = models.CharField(choices=constants.GENRE_CHOICES, max_length=100)
+
     location = models.CharField(max_length=100)
 
     objects = UserManager()

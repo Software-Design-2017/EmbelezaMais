@@ -151,7 +151,7 @@ class CompanyAction(View):
     def company_edit_profile_view(request, email):
         logger.info("Entering edit profile page.")
         company = Company.objects.get(email=email)
-        form = CompanyEditForm(request.POST or None)
+        form = CompanyEditForm(request.POST or None, instance=request.user.company)
 
         if request.user.email == company.email:
             if request.method == "POST":

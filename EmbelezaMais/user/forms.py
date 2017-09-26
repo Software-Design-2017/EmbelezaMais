@@ -103,8 +103,9 @@ class CompanyEditForm(forms.ModelForm):
     description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                                   label=_('Description'), max_length=100, required=False)
 
-    target_genre = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                                   label=_('Target Genre'), max_length=100, required=False)
+    target_genre = forms.ChoiceField(choices=(constants.GENRE_CHOICES),
+                                     widget=forms.Select(attrs={'class': 'form-control'}),
+                                     label=_('Target Genre'), required=False)
 
     location = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                                label=_('Location'), max_length=100, required=False)
