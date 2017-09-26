@@ -185,7 +185,7 @@ class CompanyAction(View):
 
                     company.save()
 
-                    return redirect('company_profile.html')
+                    return redirect('profile', email=email)
                 else:
                     logger.debug("Invalid edit form.")
                     pass

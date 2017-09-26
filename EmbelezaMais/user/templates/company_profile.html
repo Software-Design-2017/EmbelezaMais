@@ -3,20 +3,20 @@
 {% load static %}
 
   <!-- <body> -->
-  <div class="col-md-12">
-    <div class="row">
+  <div class="card" style="margin:20px">
+    <div class="row" style="margin:20px">
         <div class="container center-align"><br>
-          <h1 class="panel-title">Company Profile</h1>
+          <div class="col-md-12 lead"><b><font size="8" class="text">Company Profile</font></b>
                 {% if company.is_authenticated %}
-                  <a href="{% url 'edit' company.email %}"> Edit </a>    
-                {% endif %} <hr>
+                  <a href="{% url 'edit' company.email %}" class="btn btn-primary pull-right">Edit </a>
+                {% endif %}  <hr>
             <div class="col-md-12">
-              <div class="row">
+              <div class="row" style="margin:20px">
                 <div class="col-md-12">
                   <font size="6" class="text"><b>Nome: </b>{{ company.name }} </font>
                 </div>
-              </div>
-              <div class="row">
+
+
                 <div class="col-md-6">
                   <span class="text-muted"><b>Email:</b></span> {{ company.email }}<br>
                   <span class="text-muted"><b>Localização:</b></span> {{ company.location }}<br>
@@ -25,9 +25,10 @@
                 </div>
               </div>
             </div>
+          </div>
         </div>
+      </div>
     </div>
-  </div>
   <!-- </body> -->
 
 {% endblock %}

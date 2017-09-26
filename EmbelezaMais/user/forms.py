@@ -98,16 +98,16 @@ class CompanyRegisterForm(forms.ModelForm):
 class CompanyEditForm(forms.ModelForm):
 
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                           label=_('Name'), max_length=60, required=False)
+                           label=_('Name'), max_length=constants.NAME_FIELD_LENGTH, required=False)
 
     description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                                  label=_('Description'), max_length=60, required=False)
+                                  label=_('Description'), max_length=100, required=False)
 
     target_genre = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                                   label=_('Target Genre'), max_length=1, required=False)
+                                   label=_('Target Genre'), max_length=100, required=False)
 
     location = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                               label=_('Location'), max_length=60, required=False)
+                               label=_('Location'), max_length=100, required=False)
 
     class Meta:
         model = Company
