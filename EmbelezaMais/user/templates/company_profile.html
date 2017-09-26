@@ -1,16 +1,30 @@
-<html>
-<head>
-  <title>Profile</title>
-</head>
+{% extends "companyDashboard/template.html" %} {% block content %}
+{% load staticfiles %}
+{% load static %}
 
-<body>
-  <h1>Profile</h1>
+  <!-- <body> -->
+  <div class="col-md-12">
+    <div class="row">
+        <div class="container center-align"><br>
+          <center><h1 class="panel-title">Company Profile</h1></center> <hr>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-md-12">
+                  <font size="6" class="text"><b>Nome: </b>{{ company.name }} </font>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <span class="text-muted"><b>Email:</b></span> {{ company.email }}<br>
+                  <span class="text-muted"><b>Localização:</b></span> {{ company.location }}<br>
+                  <span class="text-muted"><b>Descrição:</b></span> {{ company.description }}<br>
+                  <span class="text-muted"><b>Público:</b></span> {{ company.target_genre }}<br>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- </body> -->
 
-{{ user.email }}<br>
-{{ user.name }}<br>
-{{ user.company.location }}<br>
-{{ user.company.description }}<br>
-
-</body>
-
-</html>
+{% endblock %}
