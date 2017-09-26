@@ -15,4 +15,5 @@ urlpatterns = (
     url(r'^register_company/', register_company_view, name='register_view'),
     url(r'^confirm/(?P<activation_key>\w+)/', register_confirm, name='confirm_account'),
     url(r'^profile/(?P<email>[\w|\W]+)/', CompanyAction.company_profile, name='profile'),
+    url(r'^edit/(?P<email>[\w|\W]+)/', CompanyAction.company_edit_profile_view, name='edit')
 )

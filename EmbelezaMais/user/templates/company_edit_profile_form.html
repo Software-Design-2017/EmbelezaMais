@@ -1,0 +1,18 @@
+<html>
+<head>
+  <title>Company Edit</title>
+</head>
+
+<body>
+  <h1>Company Edit</h1>
+
+  <form method="post" action=".">
+      {% csrf_token %}
+       {{ form.as_p }}
+      <input type="hidden" name="next" value="/" />
+      <input type="submit" value="Comfirmar" />
+  </form>
+
+</body>
+
+</html>

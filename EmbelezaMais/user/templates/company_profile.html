@@ -6,7 +6,10 @@
   <div class="col-md-12">
     <div class="row">
         <div class="container center-align"><br>
-          <center><h1 class="panel-title">Company Profile</h1></center> <hr>
+          <h1 class="panel-title">Company Profile</h1>
+                {% if company.is_authenticated %}
+                  <a href="{% url 'edit' company.email %}"> Edit </a>    
+                {% endif %} <hr>
             <div class="col-md-12">
               <div class="row">
                 <div class="col-md-12">
