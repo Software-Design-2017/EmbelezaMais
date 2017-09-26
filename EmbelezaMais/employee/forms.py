@@ -16,8 +16,8 @@ class EmployeeRegisterForm(forms.ModelForm):
     specialty = forms.CharField(label='SPECIALTY',
                            max_length=30)
 
-    opening_time = forms.TimeField()
-    closing_time = forms.TimeField()
+    opening_time = forms.CharField(label='OPENING TIME', max_length=5)
+    closing_time = forms.CharField(label='CLOSING TIME', max_length=5)
 
     class Meta:
         model = Employee
