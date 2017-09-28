@@ -13,6 +13,7 @@ from django.shortcuts import (
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.views.generic import (
     FormView, View
@@ -20,7 +21,7 @@ from django.views.generic import (
 
 # local Django
 from .forms import (
-    ClientRegisterForm, CompanyRegisterForm, CompanyLoginForm
+    ClientRegisterForm, CompanyRegisterForm, CompanyLoginForm, CompanyEditForm
 )
 from .models import (
     Client, Company, UserProfile
@@ -132,6 +133,85 @@ def register_confirm(request, activation_key):
     user.save()
 
     return redirect('/')
+
+
+class CompanyAction(View):
+
+    def show_edit_button(visitor_email, current_user_email):
+
+        editable_profile = False
+
+        if current_user_email == visitor_email:
+            logger.debug("Profile page should be editable")
+            editable_profile = True
+
+        else:
+            logger.debug("Profile page shouldn't be editable.")
+            # Nothing to do.
+
+        return editable_profile
+
+    @login_required
+    def company_profile(request, email):
+        if request.method == "GET":
+            company = Company.objects.get(email=email)
+            editable_profile = CompanyAction.show_edit_button(company.email, request.user.email)
+            logger.debug(company)
+        else:
+            company = Company()
+
+        return render(request, 'company_profile.html', {'company': company,
+                                                        'editable_profile': editable_profile})
+
+    @login_required
+    def company_edit_profile_view(request, email):
+        logger.info("Entering edit profile page.")
+        company = Company.objects.get(email=email)
+        form = CompanyEditForm(request.POST or None, instance=request.user.company)
+
+        if request.user.email == company.email:
+            if request.method == "POST":
+                logger.debug("Edit profile view request is POST.")
+                if form.is_valid():
+                    logger.debug("Valid edit form.")
+                    name = form.cleaned_data.get('name')
+                    description = form.cleaned_data.get('description')
+                    target_genre = form.cleaned_data.get('target_genre')
+                    location = form.cleaned_data.get('location')
+
+                    if len(name) != 0:
+                        company.name = name
+                    else:
+                        pass
+
+                    if len(target_genre) != 0:
+                        company.target_genre = target_genre
+                    else:
+                        pass
+
+                    if len(location) != 0:
+                        company.location = location
+                    else:
+                        pass
+
+                    if len(description) != 0:
+                        company.description = description
+                    else:
+                        pass
+
+                    company.save()
+
+                    return redirect('profile', email=email)
+                else:
+                    logger.debug("Invalid edit form.")
+                    pass
+            else:
+                logger.debug("Edit profile view request is GET.")
+                pass
+        else:
+            logger.debug("User can't edit other users information.")
+            return HttpResponse("Oops! You don't have acess to this page.")
+        return render(request, 'company_edit_profile_form.html', {'form': form, 'company': company})
 
 
 class LoginView(FormView):
