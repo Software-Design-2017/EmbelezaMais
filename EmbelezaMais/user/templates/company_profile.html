@@ -8,7 +8,9 @@
         <div class="container center-align"><br>
           <div class="col-md-12 lead"><b><font size="8" class="text">Company Profile</font></b>
                 {% if company.is_authenticated %}
-                  <a href="{% url 'edit' company.email %}" class="btn btn-primary pull-right">Edit </a>
+                  {% ifequal editable_profile 1 %}
+                    <a href="{% url 'edit' company.email %}" class="btn btn-primary pull-right">Edit </a>
+                  {% endifequal %}
                 {% endif %}  <hr>
             <div class="col-md-12">
               <div class="row" style="margin:20px">
