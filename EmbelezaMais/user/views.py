@@ -62,7 +62,8 @@ def register_company_view(request):
         description = form.cleaned_data.get('description')
         target_genre = form.cleaned_data.get('target_genre')
         location = form.cleaned_data.get('location')
-        Company.objects.create_user(email=email, password=password, name=name, target_genre=target_genre,
+        Company.objects.create_user(email=email, password=password, name=name,
+                                    target_genre=target_genre,
                                     description=description, location=location)
 
         user = Company.objects.get(email=email)
@@ -121,7 +122,8 @@ def register_confirm(request, activation_key):
     if user_profile.key_expires < timezone.now():
         user_profile.delete()
 
-        return HttpResponse("Tempo para confirmar conta expirou. Crie sua conta novamente")
+        return HttpResponse("Tempo para confirmar conta expirou." +
+                            "Crie sua conta novamente")
     else:
         # Nothing to do.
         pass
@@ -214,6 +216,17 @@ class CompanyAction(View):
         return render(request, 'company_edit_profile_form.html', {'form': form, 'company': company})
 
 
+def show_client_view(request):
+    client = request.user
+    return render(request, 'show_client_view.html', {'client': client})
+
+
+def remove_client_view(request):
+    client = request.user
+    client.delete()
+    return redirect('/')
+
+
 class LoginView(FormView):
     form_class = None
     template_name = None
@@ -281,7 +294,8 @@ class LoginClientView(LoginView):
                 return HttpResponse('User is not active')
         else:
             message = 'Hey, parece que você não é um cliente.'
-            return render(request, self.template_name, {'form': form, 'message': message})
+            return render(request, self.template_name, {'form': form,
+                                                        'message': message})
 
 
 class LogoutView(View):
