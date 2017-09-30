@@ -23,10 +23,10 @@ from companyDashboard.views import dashboardRender
 from search.views import searchPageRender
 
 urlpatterns = [
+    url(r'^admin/', admin.site.urls),
     url(r'^$', home, name="landing_home"),
     url(r'^admin/', admin.site.urls),
     url('^user/', include('user.urls')),
     url(r'dashboard/', dashboardRender, name="dashboard"),
     url(r'search/', searchPageRender, name="search"),
-
 ]
