@@ -135,6 +135,14 @@ def register_confirm(request, activation_key):
     return redirect('/')
 
 
+def client_profile(request):
+    is_client = hasattr(request.user, 'client')
+    if is_client:
+        if request.user.is_active:
+            args = {'user': request.user}
+            return render(request, 'client_profile.html', args)
+
+
 class CompanyAction(View):
 
     def show_edit_button(visitor_email, current_user_email):
