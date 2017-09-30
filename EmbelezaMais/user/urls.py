@@ -7,7 +7,7 @@ from .views import (
     LoginCompanyView,
     LogoutView,
     LoginClientView,
-    client_profile,
+    ClientProfile,
 )
 
 urlpatterns = (
@@ -19,5 +19,5 @@ urlpatterns = (
     url(r'^confirm/(?P<activation_key>\w+)/', register_confirm, name='confirm_account'),
     url(r'^profile/(?P<email>[\w|\W]+)/', CompanyAction.company_profile, name='profile'),
     url(r'^edit/(?P<email>[\w|\W]+)/', CompanyAction.company_edit_profile_view, name='edit'),
-    url(r'^client_profile/', client_profile, name='client_profile')
+    url(r'^client_profile/(?P<email>[\w|\W]+)/', ClientProfile.client_profile, name='client_profile'),
 )

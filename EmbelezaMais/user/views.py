@@ -135,12 +135,16 @@ def register_confirm(request, activation_key):
     return redirect('/')
 
 
-def client_profile(request):
-    is_client = hasattr(request.user, 'client')
-    if is_client:
-        if request.user.is_active:
-            args = {'user': request.user}
-            return render(request, 'client_profile.html', args)
+class ClientProfile(View):
+    @login_required
+    def client_profile(request, email):
+        if request.method == "GET":
+            client = Client.objects.get(email=email)
+            logger.debug(client)
+        else:
+            client = Client()
+        # args = {'company': company}
+        return render(request, 'client_profile.html', {'client': client})
 
 
 class CompanyAction(View):
