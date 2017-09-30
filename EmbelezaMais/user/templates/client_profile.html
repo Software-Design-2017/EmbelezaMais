@@ -1,4 +1,4 @@
-{% extends "companyDashboard/template.html" %} {% block content %}
+{% extends "landing/template.html" %} {% block content %}
 {% load staticfiles %}
 {% load static %}
 
@@ -6,15 +6,11 @@
 <div class="col-md-12">
     <div class="row">
         <div class="container center-align"><br>
-          <center><h1 class="panel-title">Client Profile</h1></center> <hr>
+          <center><h6 class="panel-title">Client Profile</h6></center> <hr>
             <div class="col-md-12">
               <div class="row">
-               <div class="col-md-12">
-                  <font size="6" class="text"><b>Nome: </b>{{ cient.name }} </font>
-                </div>
-              </div>
-              <div class="row">
                 <div class="col-md-6">
+                  <span class="text-muted"><b>Nome:</b></span> {{ client.name }}<br>
                   <span class="text-muted"><b>Email:</b></span> {{ client.email }}<br>
                   <span class="text-muted"><b>Localização:</b></span> {{ client.phone_number }}<br>
               </div>
