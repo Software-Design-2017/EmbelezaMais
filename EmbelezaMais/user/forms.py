@@ -1,3 +1,5 @@
+
+import logging
 # Django.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -6,6 +8,9 @@ from django.core.exceptions import ValidationError
 # Local Django.
 from .models import Client, Company
 from . import constants
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('EmbelezaMais')
 
 
 class ClientRegisterForm(forms.ModelForm):
@@ -88,6 +93,35 @@ class CompanyRegisterForm(forms.ModelForm):
         elif password != password_confirmation:
             raise forms.ValidationError(_("Passwords don't match."))
         return super(CompanyRegisterForm, self).clean(*args, **kwargs)
+
+
+class CompanyEditForm(forms.ModelForm):
+
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           label=_('Name'), max_length=constants.NAME_FIELD_LENGTH, required=False)
+
+    description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                  label=_('Description'), max_length=100, required=False)
+
+    target_genre = forms.ChoiceField(choices=(constants.GENRE_CHOICES),
+                                     widget=forms.Select(attrs={'class': 'form-control'}),
+                                     label=_('Target Genre'), required=False)
+
+    location = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                               label=_('Location'), max_length=100, required=False)
+
+    class Meta:
+        model = Company
+        fields = [
+            'name',
+            'description',
+            'target_genre',
+            'location',
+        ]
+
+    def clean(self, *args, **kwargs):
+
+        return super(CompanyEditForm, self).clean(*args, **kwargs)
 
 
 class CompanyLoginForm(forms.Form):
