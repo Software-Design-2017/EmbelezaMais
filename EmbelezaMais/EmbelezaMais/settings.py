@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'companyDashboard',
     'search',
     'service',
+    'promotion',
 ]
 
 MIDDLEWARE = [
@@ -68,7 +69,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': ['templates', 'landing/template', 'companyDashboard/template',
-                 'search/template', 'user/templates', 'service/template'],
+                 'search/template', 'user/templates', 'service/template',
+                 'promotion/template', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
