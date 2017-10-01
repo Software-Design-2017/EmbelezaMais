@@ -154,7 +154,7 @@ class ClientProfile(View):
     def client_edit_profile_view(request, email):
         logger.info("Entering edit client profile page.")
         client = Client.objects.get(email=email)
-        form = ClientEditForm(request.POST or None)
+        form = ClientEditForm(request.POST or None, instance=request.user.client)
 
         if request.user.email == client.email:
             if request.method == "POST":
