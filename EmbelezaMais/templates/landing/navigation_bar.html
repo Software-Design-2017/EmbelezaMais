@@ -27,7 +27,7 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a href="{% url 'client_profile' request.user.email%}">Perfil</a></li>
-                                <li><a href="">Configurar Conta</a></li>
+                                <li><a href="{% url 'edit_client' request.user.email%}">Configurar Conta</a></li>
                             </ul>
                         </li>
                         <li>
