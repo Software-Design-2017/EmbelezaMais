@@ -5,6 +5,6 @@ from .views import (
 )
 
 urlpatterns = (
-    url(r'^create/', PromotionRegister.as_view(), name='promotion_register'),
-    url(r'^list/', PromotionList.as_view(), name='promotion_list'),
+    url(r'^create/', PromotionRegister.as_view(), name='promotion_create'),
+    url(r'^list/$', PromotionList.as_view(), name='promotion_list'),
 )

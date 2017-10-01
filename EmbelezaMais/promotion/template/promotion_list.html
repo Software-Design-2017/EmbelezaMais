@@ -4,7 +4,7 @@
         <div class="panel-heading">
             <div class="row">
                 <div class="col col-xs-6">
-                    <h3 class="panel-title">Serviços</h3>
+                    <h3 class="panel-title">Promoções</h3>
                 </div>
             </div>
         </div>
@@ -19,6 +19,23 @@
                     <th>Excluir</th>
                 </thead>
                 <tbody>
+
+                    {% for promo in promotion %}
+                        <tr class='clickable-row'>
+                            <td>{{ promo.name }}</td>
+                            <td>{{ promo.description }}</td>
+                            <td>{{ promo.price }}</td>
+                            <td><a href="{% url 'delete_promotion' promotion.id %}" data-confirm="true"></a></td>
+                            <td><a href="#" data-href="{% url 'delete_promotion' promotion.id %}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                        </tr>
+
+                        {% empty %}
+
+                        <li>Não existem promoções cadastradas.</li>
+                        
+                    {% endfor %}
+                
+                </tbody>
 
             </table>
 
@@ -49,23 +66,23 @@
 </div>
 
 {% if is_paginated %}
-<ul class="pagination">
-    {% if page_obj.has_previous %}
-    <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-    {% else %}
-    <li class="disabled"><span>&laquo;</span></li>
-    {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
-    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
-    </li>
-    {% else %}
-    <li><a href="?page={{ i }}">{{ i }}</a></li>
-    {% endif %} {% endfor %} {% if page_obj.has_next %}
-    <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-    {% else %}
-    <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-    </div>
-</ul>
+    <ul class="pagination">
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+        {% endif %} {% for i in paginator.page_range %} {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span>
+        </li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %} {% endfor %} {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+        </div>
+    </ul>
 {% endif %}
 
 <!--TODO Ver com a professora onde é melhor local pra isso-->

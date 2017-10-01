@@ -23,7 +23,9 @@ class PromotionList(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return Promotion.objects.filter(company=self.request.user.company)
+        print("TESTE:")
+        promotion = Promotion.objects.filter(company=self.request.user.company)
+        return promotion
 
     @login_required
     @user_is_company
