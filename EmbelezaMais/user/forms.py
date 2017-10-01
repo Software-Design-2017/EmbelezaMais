@@ -94,6 +94,11 @@ class CompanyRegisterForm(forms.ModelForm):
             raise forms.ValidationError(_("Passwords don't match."))
         return super(CompanyRegisterForm, self).clean(*args, **kwargs)
 
+    def __init__(self, *args, **kwargs):
+        super(CompanyRegisterForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
 
 class ClientEditForm(forms.ModelForm):
 

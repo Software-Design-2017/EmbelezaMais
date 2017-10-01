@@ -15,12 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from django.conf.urls.i18n import i18n_patterns
-
 
 from landing.views import home
 from companyDashboard.views import dashboardRender
-from search.views import searchPageRender
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -28,6 +25,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url('^user/', include('user.urls')),
     url('^service/', include('service.urls')),
+    url('^search/', include('search.urls')),
     url(r'dashboard/', dashboardRender, name="dashboard"),
-    url(r'search/', searchPageRender, name="search"),
 ]
