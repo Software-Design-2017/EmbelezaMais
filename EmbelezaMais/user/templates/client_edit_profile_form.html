@@ -1,18 +1,33 @@
-<html>
-<head>
-  <title>CLient Edit</title>
-</head>
+{% extends "landing/template.html" %} {% block content %}
+{% load staticfiles %}
+{% load static %}
 
-<body>
-  <h1>Client Edit</h1>
+ <div class="card" style="margin:20px">
+  <div class="header">
+    <h4 class="title" style="margin:20px"><center>Edit Client</center></h4>
+  </div>
+  <div class="content table-responsive ">
+    <form method="post" action=".">
+        {% csrf_token %}
+         <div class="form-group" style="margin-left:40px; margin-right:40px">
+          {% for error in form.name.errors %}
+          <div class="alert alert-danger"role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.name.id_for_label }}">Nome:</label>
+          {{ form.name }}
+        </div>
 
-  <form method="post" action=".">
-      {% csrf_token %}
-       {{ form.as_p }}
-      <input type="hidden" name="next" value="/" />
-      <input type="submit" value="Confirmar" />
-  </form>
+        <div class="form-group" style="margin-left:40px; margin-right:40px">
+          {% for error in form.phone_number.errors %}
+          <div class="alert alert-danger"role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.phone_number.id_for_label }}">Telefone:</label>
+          {{ form.phone_number }}
+        </div>
 
-</body>
-
-</html>
+        <input type="hidden" name="next" value="/" />
+        <input type="submit" value="Confirmar" style="margin-left:40px; margin-right:580px"/>
+    </form>
+  </div>
+</div>
+{% endblock %}

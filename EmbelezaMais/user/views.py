@@ -176,7 +176,8 @@ class ClientProfile(View):
 
                     client.save()
 
-                    return redirect('client_profile.html')
+                    return redirect('client_profile', email=email)
+
                 else:
                     logger.debug("Invalid edit form.")
                     pass
