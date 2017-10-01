@@ -21,7 +21,11 @@ from django.views.generic import (
 
 # local Django
 from .forms import (
-    ClientRegisterForm, CompanyRegisterForm, CompanyLoginForm, CompanyEditForm
+    ClientRegisterForm,
+    CompanyRegisterForm,
+    CompanyLoginForm,
+    CompanyEditForm,
+    ClientEditForm,
 )
 from .models import (
     Client, Company, UserProfile
@@ -145,6 +149,44 @@ class ClientProfile(View):
             client = Client()
         # args = {'company': company}
         return render(request, 'client_profile.html', {'client': client})
+
+    @login_required
+    def client_edit_profile_view(request, email):
+        logger.info("Entering edit client profile page.")
+        client = Client.objects.get(email=email)
+        form = ClientEditForm(request.POST or None)
+
+        if request.user.email == client.email:
+            if request.method == "POST":
+                logger.debug("Edit profile view request is POST.")
+                if form.is_valid():
+                    logger.debug("Valid edit form.")
+                    name = form.cleaned_data.get('name')
+                    phone_number = form.cleaned_data.get('phone_number')
+
+                    if len(name) != 0:
+                        client.name = name
+                    else:
+                        pass
+
+                    if len(phone_number) != 0:
+                        client.phone_number = phone_number
+                    else:
+                        pass
+
+                    client.save()
+
+                    return redirect('client_profile.html')
+                else:
+                    logger.debug("Invalid edit form.")
+                    pass
+            else:
+                logger.debug("Edit profile view request is GET.")
+                pass
+        else:
+            logger.debug("User can't edit other users information.")
+            return HttpResponse("Oops! You don't have acess to this page.")
+        return render(request, 'client_edit_profile_form.html', {'form': form, 'client': client})
 
 
 class CompanyAction(View):

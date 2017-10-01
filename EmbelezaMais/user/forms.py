@@ -37,7 +37,7 @@ class ClientRegisterForm(forms.ModelForm):
             'phone_number'
             ]
 
-    # Front-end validation function for company register page.
+    # Front-end validation function for client register page.
     def clean(self, *args, **kwargs):
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
@@ -95,20 +95,39 @@ class CompanyRegisterForm(forms.ModelForm):
         return super(CompanyRegisterForm, self).clean(*args, **kwargs)
 
 
-class CompanyEditForm(forms.ModelForm):
+class ClientEditForm(forms.ModelForm):
 
     name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                            label=_('Name'), max_length=constants.NAME_FIELD_LENGTH, required=False)
 
-    description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                                  label=_('Description'), max_length=100, required=False)
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                   label=_('Phone'), max_length=14, required=False)
 
-    target_genre = forms.ChoiceField(choices=(constants.GENRE_CHOICES),
-                                     widget=forms.Select(attrs={'class': 'form-control'}),
-                                     label=_('Target Genre'), required=False)
+    class Meta:
+        model = Client
+        fields = [
+            'name',
+            'phone_number',
+        ]
+
+    def clean(self, *args, **kwargs):
+
+        return super(ClientEditForm, self).clean(*args, **kwargs)
+
+
+class CompanyEditForm(forms.ModelForm):
+
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           label=_('Name'), max_length=60, required=False)
+
+    description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                  label=_('Description'), max_length=60, required=False)
+
+    target_genre = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                   label=_('Target Genre'), max_length=1, required=False)
 
     location = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                               label=_('Location'), max_length=100, required=False)
+                               label=_('Location'), max_length=60, required=False)
 
     class Meta:
         model = Company

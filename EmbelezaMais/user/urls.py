@@ -20,4 +20,5 @@ urlpatterns = (
     url(r'^profile/(?P<email>[\w|\W]+)/', CompanyAction.company_profile, name='profile'),
     url(r'^edit/(?P<email>[\w|\W]+)/', CompanyAction.company_edit_profile_view, name='edit'),
     url(r'^client_profile/(?P<email>[\w|\W]+)/', ClientProfile.client_profile, name='client_profile'),
+    url(r'^edit_client/(?P<email>[\w|\W]+)/', ClientProfile.client_edit_profile_view, name='edit_client'),
 )
