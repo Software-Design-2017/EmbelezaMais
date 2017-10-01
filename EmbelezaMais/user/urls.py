@@ -3,12 +3,11 @@ from .views import (
     register_client_view,
     register_company_view,
     register_confirm,
-    remove_client_view,
-    show_client_view,
     CompanyAction,
     LoginCompanyView,
     LogoutView,
     LoginClientView,
+    ClientProfile,
 )
 
 urlpatterns = (
@@ -21,7 +20,6 @@ urlpatterns = (
     url(r'^confirm/(?P<activation_key>\w+)/', register_confirm, name='confirm_account'),
     url(r'^profile/(?P<email>[\w|\W]+)/', CompanyAction.company_profile, name='profile'),
     url(r'^edit/(?P<email>[\w|\W]+)/', CompanyAction.company_edit_profile_view, name='edit'),
-    url(r'view_client/', show_client_view, name="show_client_view"),
-    url(r'remove_client/', remove_client_view, name="remove_client_view"),
-
+    url(r'^client_profile/(?P<email>[\w|\W]+)/', ClientProfile.client_profile, name='client_profile'),
+    url(r'^edit_client/(?P<email>[\w|\W]+)/', ClientProfile.client_edit_profile_view, name='edit_client'),
 )
