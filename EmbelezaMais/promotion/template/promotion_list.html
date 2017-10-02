@@ -25,8 +25,13 @@
                             <td>{{ promo.name }}</td>
                             <td>{{ promo.description }}</td>
                             <td>{{ promo.price }}</td>
-                            <td><a href="{% url 'delete_promotion' promo.id %}" data-confirm="true"></a></td>
-                            <td><a href="#" data-href="{% url 'delete_promotion' promo.id %}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                            <td>
+                                <a href="{% url 'promotion_edition' promo.id %}">Editar</a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete_promotion' promo.id %}" data-confirm="true"></a>
+                                <a href="#" data-href="{% url 'delete_promotion' promo.id %}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                            </td>
                         </tr>
 
                         {% empty %}

@@ -8,7 +8,8 @@ from user.decorators import (
 )
 
 from .forms import (
-    PromotionRegisterForm
+    PromotionRegisterForm,
+    PromotionEditForm
 )
 
 from .models import (
@@ -56,4 +57,28 @@ class PromotionRegister(FormView):
 
     def get_context_data(self, **kwargs):
         context = super(PromotionRegister, self).get_context_data(**kwargs)
+        return context
+
+
+class PromotionEdit(FormView):
+    template_name = 'promotionEdit.html'
+    form_class = PromotionEditForm
+    success_url = '/promotion/list/'
+
+    def dispatch(self, *args, **kwargs):
+        return super(PromotionEdit, self).dispatch(*args, **kwargs)
+
+    @login_required
+    @user_is_company
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        self.promotion = form.save(commit=False)
+        self.promotion.company = self.request.user.company
+        self.promotion.save()
+
+        return super(PromotionEdit, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(PromotionEdit, self).get_context_data(**kwargs)
         return context
