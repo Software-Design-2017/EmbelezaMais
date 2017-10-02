@@ -6,14 +6,14 @@
 </head>
 
 <body>
-  <h1>Client Register</h1>
+  <h1 style="text-align:center">Client Register</h1>
 
   <div style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
       <br>
       <br>
       <div class="form" >
         <div id="center-image">
-          <a class="" href="#"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
+          <a class="" href="/"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
         </div>
         <br>
         <br>
@@ -60,7 +60,9 @@
             <input type="hidden" name="next" value="/" />
             <input type="submit" value="Register" />
         </form>
-
+        <div class="link">
+          <a href="{% url 'login_client' %} ">Já possui cadastro? Clique aqui para entrar.</a>
+        </div>
       </div>
   </div>
 
