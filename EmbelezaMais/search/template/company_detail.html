@@ -2,18 +2,22 @@
 {% load staticfiles %}
 
 {% load static %}
-<h1 class="panel-title">{{ company.name }}</h1>
-
-{{ company.description }}
-{{ company.target_genre }}
-{{ company.location }}
-
+<div class="col-md-10 col-md-offset-1">
+<div class="card">
+      <div class="row">
+          <h1 style="text-align:center">{{ company.name }}</h1>
+    </div>
+    <b>Descrição: </b>{{ company.description }}<br>
+    <b>Gênero Alvo: </b>{{ company.target_genre }}<br>
+    <b>Localização: </b>{{ company.location }}<br>
+</div>
+</div>
 <div class="col-md-10 col-md-offset-1">
       <div class="panel panel-default panel-table">
           <div class="panel-heading">
             <div class="row">
               <div class="col col-xs-6">
-                <h3 class="panel-title">{{ company.name }}</h3>
+                <h3 class="panel-title">Serviços</h3>
               </div>
           </div>
         </div>
