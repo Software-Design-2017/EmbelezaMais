@@ -19,6 +19,7 @@ from django.views.generic import (
     FormView, View
 )
 
+
 # local Django
 from .forms import (
     ClientRegisterForm,
