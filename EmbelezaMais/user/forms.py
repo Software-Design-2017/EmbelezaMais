@@ -35,7 +35,7 @@ class ClientRegisterForm(forms.ModelForm):
             'name',
             'email',
             'phone_number'
-            ]
+        ]
 
     # Front-end validation function for client register page.
     def clean(self, *args, **kwargs):
@@ -49,9 +49,11 @@ class ClientRegisterForm(forms.ModelForm):
         if email_from_database.exists():
             raise forms.ValidationError(('Email already registered'))
         elif len(password) < 8:
-            raise forms.ValidationError(('Password must be between 8 and 12 characters'))
+            raise forms.ValidationError(
+                ('Password must be between 8 and 12 characters'))
         elif len(password) > 12:
-            raise forms.ValidationError(('Password must be between 8 and 12 characters'))
+            raise forms.ValidationError(
+                ('Password must be between 8 and 12 characters'))
         elif password != password_confirmation:
             raise forms.ValidationError(('Passwords do not match.'))
         elif len(phone_number) > 14:
@@ -89,10 +91,16 @@ class CompanyRegisterForm(forms.ModelForm):
         if email_from_database.exists():
             raise ValidationError(_("This Email has been already registered"))
         elif len(password) < 8:
-            raise forms.ValidationError(('Password must be 8 or more characters'))
+            raise forms.ValidationError(
+                ('Password must be 8 or more characters'))
         elif password != password_confirmation:
             raise forms.ValidationError(_("Passwords don't match."))
         return super(CompanyRegisterForm, self).clean(*args, **kwargs)
+
+    def __init__(self, *args, **kwargs):
+        super(CompanyRegisterForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
 
 
 class ClientEditForm(forms.ModelForm):
@@ -145,15 +153,18 @@ class CompanyEditForm(forms.ModelForm):
 
 class CompanyLoginForm(forms.Form):
     email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput, label=_(constants.PASSWORD))
+    password = forms.CharField(
+        widget=forms.PasswordInput, label=_(constants.PASSWORD))
 
     def clean(self, *args, **kwargs):
         password = self.cleaned_data.get("password")
 
         if len(password) < constants.PASSWORD_MIN_LENGTH:
-            raise forms.ValidationError({'password': [_(constants.PASSWORD_SIZE)]})
+            raise forms.ValidationError(
+                {'password': [_(constants.PASSWORD_SIZE)]})
         elif len(password) > constants.PASSWORD_MAX_LENGTH:
-            raise forms.ValidationError({'password': [_(constants.PASSWORD_SIZE)]})
+            raise forms.ValidationError(
+                {'password': [_(constants.PASSWORD_SIZE)]})
         else:
             pass
 
