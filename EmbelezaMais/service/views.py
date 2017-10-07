@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from django.http import HttpResponseRedirect
 
 from .models import (
-    Service, Combo, ServicesCombo
+    Service, Combo
 )
 
 from .forms import (
