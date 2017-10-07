@@ -26,6 +26,12 @@
         <li><a href="{% url 'combo_service_create' %}"> Combo </a></li>
       </ul>
     </li>
+    <li><a href="#dashvariants2" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Promoções</a>
+      <ul id="dashvariants2" class="collapse list-unstyled">
+        <li><a href="{% url 'promotion_list' %}"> Ver Promoções </a></li>
+        <li><a href="{% url 'promotion_create' %}"> Criar Promoção </a></li>
+      </ul>
+    </li>
     <li> <a href=" {% url 'profile' request.user.email%} "> <i class="fa fa-user"></i> Profile </a></li>
     <li> <a href=""> <i class="fa fa-bar-chart"></i>Charts </a></li>
     <li> <a href=""> <i class="icon-padnote"></i>Forms </a></li>
