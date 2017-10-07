@@ -20,7 +20,6 @@ class UserCompanyAdmin(admin.ModelAdmin):
                     'name',
                     'description',
                     'target_genre',
-                    'location',
                     'is_active'
                     ]
 

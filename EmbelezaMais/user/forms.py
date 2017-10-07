@@ -77,7 +77,6 @@ class CompanyRegisterForm(forms.ModelForm):
             'email',
             'description',
             'target_genre',
-            'location',
         ]
 
     # Front-end validation function for company register page.
@@ -134,16 +133,12 @@ class CompanyEditForm(forms.ModelForm):
     target_genre = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                                    label=_('Target Genre'), max_length=1, required=False)
 
-    location = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
-                               label=_('Location'), max_length=60, required=False)
-
     class Meta:
         model = Company
         fields = [
             'name',
             'description',
             'target_genre',
-            'location',
         ]
 
     def clean(self, *args, **kwargs):

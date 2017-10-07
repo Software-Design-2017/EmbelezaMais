@@ -55,28 +55,12 @@
           <label for="{{ form.description.id_for_label }}">Descrição:</label> {{ form.description }}
         </div>
 
-<<<<<<< HEAD
         <div class="form-group">
-          {% for error in form.target_genre.errors %}
-          <div class="alert alert-danger" role="alert">{{error}}</div>
-          {% endfor %}
-          <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label> {{form.target_genre}}
-        </div>
-=======
-            <div class="form-group">
-               {% for error in form.target_genre.errors %}
-               <div class="alert alert-danger" role="alert">{{error}}</div>
-               {% endfor %}
-               <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label>
-                 {{form.target_genre}}
-            </div>
->>>>>>> origin/US09-ViewCompanyPage
-
-        <div class="form-group">
-          {% for error in form.location.errors %}
-          <div class="alert alert-danger" role="alert">{{error}}</div>
-          {% endfor %}
-          <label for="{{ form.location.id_for_label }}">Localização:</label> {{ form.location }}
+           {% for error in form.target_genre.errors %}
+           <div class="alert alert-danger" role="alert">{{error}}</div>
+           {% endfor %}
+           <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label>
+             {{form.target_genre}}
         </div>
 
         <input type="hidden" name="next" value="/" />

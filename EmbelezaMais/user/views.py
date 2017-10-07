@@ -66,10 +66,9 @@ def register_company_view(request):
         name = form.cleaned_data.get('name')
         description = form.cleaned_data.get('description')
         target_genre = form.cleaned_data.get('target_genre')
-        location = form.cleaned_data.get('location')
         Company.objects.create_user(email=email, password=password, name=name,
                                     target_genre=target_genre,
-                                    description=description, location=location)
+                                    description=description)
 
         user = Company.objects.get(email=email)
 

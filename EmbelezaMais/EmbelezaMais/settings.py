@@ -21,9 +21,15 @@ EMAIL_HOST_USER = 'embelezamais@gmail.com'
 EMAIL_HOST_PASSWORD = 'embelezamais666'
 EMAIL_PORT = 587
 
+# Information needed to config Maps plug-in
+GEOPOSITION_MARKER_OPTIONS = {
+    'cursor': 'move'
+}
+
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyB6kb6lLG73sKceqxRWleXZyA6UGUFuhcY'
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -51,6 +57,7 @@ INSTALLED_APPS = [
     'search',
     'service',
     'promotion',
+    "geoposition",
 ]
 
 MIDDLEWARE = [
