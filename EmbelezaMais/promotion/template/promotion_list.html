@@ -26,7 +26,7 @@
                             <td>{{ promo.description }}</td>
                             <td>{{ promo.price }}</td>
                             <td>
-                                <a href="#">Editar</a>
+                                <a href="{% url 'promotion_edit' promo.id %}">Editar</a>
                             </td>
                             <td>
                                 <a href="{% url 'delete_promotion' promo.id %}" data-confirm="true"></a>
