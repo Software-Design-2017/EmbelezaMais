@@ -1,6 +1,9 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.views.generic import ListView, FormView
+from django.shortcuts import (
+    render, redirect
+)
 
 
 from user.decorators import (
@@ -61,24 +64,61 @@ class PromotionRegister(FormView):
 
 
 class PromotionEdit(FormView):
-    template_name = 'promotionEdit.html'
-    form_class = PromotionEditForm
-    success_url = '/promotion/list/'
-
-    def dispatch(self, *args, **kwargs):
-        return super(PromotionEdit, self).dispatch(*args, **kwargs)
+    # template_name = 'promotionEdit.html'
+    # form_class = PromotionEditForm
+    # success_url = '/promotion/list/'
+    #
+    # def dispatch(self, *args, **kwargs):
+    #     return super(PromotionEdit, self).dispatch(*args, **kwargs)
+    #
+    # @login_required
+    # @user_is_company
+    # def form_valid(self, form):
+    #     # This method is called when valid form data has been POSTed.
+    #     # It should return an HttpResponse.
+    #     self.promotion = form.save(commit=False)
+    #     self.promotion.company = self.request.user.company
+    #     self.promotion.save()
+    #
+    #     return super(PromotionEdit, self).form_valid(form)
+    #
+    # def get_context_data(self, **kwargs):
+    #     context = super(PromotionEdit, self).get_context_data(**kwargs)
+    #     return context
 
     @login_required
     @user_is_company
-    def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        self.promotion = form.save(commit=False)
-        self.promotion.company = self.request.user.company
-        self.promotion.save()
+    def promotion_edit(request, id):
+        promotion = Promotion.objects.get(id=id)
+        form = PromotionEditForm(request.POST or None, instance=promotion)
 
-        return super(PromotionEdit, self).form_valid(form)
+        if request.method == "POST":
+            if form.is_valid():
+                name = form.cleaned_data.get('name')
+                description = form.cleaned_data.get('description')
+                price = form.cleaned_data.get('price')
 
-    def get_context_data(self, **kwargs):
-        context = super(PromotionEdit, self).get_context_data(**kwargs)
-        return context
+                if len(name) != 0:
+                    promotion.name = name
+                else:
+                    pass
+
+                if len(description) != 0:
+                    promotion.description = description
+                else:
+                    pass
+
+                if price >= 0:
+                    promotion.price = price
+                else:
+                    pass
+
+                promotion.save()
+
+                return redirect('promotion_list')
+            else:
+                pass
+        else:
+            pass
+
+        return render(request, 'promotionEdit.html', {'form': form, 'promotion': promotion})

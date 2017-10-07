@@ -2,21 +2,37 @@
 
 <div class="container">
     <div class="content table-responsive table-full-width">
-        <form method='POST' action=''>
-            {% csrf_token %} {% for field in form %}
-            <div class="form-group">
 
-                {% for error in field.errors %}
-                <div class="alert alert-danger" role="alert">{{error}}</div>
-                {% endfor %}
-                <label for="id_{{ field.name }}">{{ field.label }}</label>
-                <div class="form-control">
-                    {{field}}
-                </div>
-            </div>
+      <form method="post" action=".">
+          {% csrf_token %}
+           <div class="form-group" style="margin-left:40px; margin-right:40px">
+            {% for error in form.name.errors %}
+              <div class="alert alert-danger"role="alert">{{error}}</div>
             {% endfor %}
-            <input class="btn btn-sm btn-primary btn-create" type='submit' value='Criar' />
-        </form>
+            <label for="{{ form.name.id_for_label }}">Nome:</label>
+            {{ form.name }}
+          </div>
+
+          <div class="form-group" style="margin-left:40px; margin-right:40px">
+            {% for error in form.description.errors %}
+              <div class="alert alert-danger"role="alert">{{error}}</div>
+            {% endfor %}
+            <label for="{{ form.description.id_for_label }}">Descrição:</label>
+            {{ form.description }}
+          </div>
+
+          <div class="form-group" style="margin-left:40px; margin-right:40px">
+            {% for error in form.price.errors %}
+              <div class="alert alert-danger"role="alert">{{error}}</div>
+            {% endfor %}
+            <label for="{{ form.price.id_for_label }}">Preço:</label>
+            {{ form.price }}
+          </div>
+
+          <input type="hidden" name="next" value="/" />
+          <input type="submit" value="Confirmar" style="margin-left:40px; margin-right:580px"/>
+      </form>
+
     </div>
 </div>
 
