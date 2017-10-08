@@ -1,9 +1,10 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
+from django.shortcuts import get_object_or_404
 
 from user.models import Company
 
-from service.models import Service
+from service.models import ServiceNail, Combo, ServiceMakeUp, ServiceHair, ServiceBeard, Service
 
 
 # Create your views here.
@@ -30,29 +31,23 @@ class CompanyDetail(DetailView):
     def get_context_data(self, **kwargs):
         context = super(CompanyDetail, self).get_context_data(**kwargs)
         context['company'] = Company.objects.get(pk=self.kwargs.get('pk'))
-        services = Service.objects.filter(company=context['company'])
-        self.get_services(context, services)
+        self.get_services(context)
 
         return context
 
-    def get_services(self, context, services):
-        context['services_nail'] = []
-        context['services_combo'] = []
-        context['services_makeup'] = []
-        context['services_hair'] = []
-        context['services_beard'] = []
+    def get_services(self, context):
+        context['services_nail'] = ServiceNail.objects.filter(company=context['company'])
+        context['services_combo'] = Combo.objects.filter(company=context['company'])
+        context['services_makeup'] = ServiceMakeUp.objects.filter(company=context['company'])
+        context['services_hair'] = ServiceHair.objects.filter(company=context['company'])
+        context['services_beard'] = ServiceBeard.objects.filter(company=context['company'])
 
-        for service in services:
-            if hasattr(service, 'servicenail'):
-                context['services_nail'].append(service)
-            elif hasattr(service, 'combo'):
-                context['services_combo'].append(service)
-            elif hasattr(service, 'servicemakeup'):
-                context['services_makeup'].append(service)
-            elif hasattr(service, 'servicehair'):
-                context['services_hair'].append(service)
-            elif hasattr(service, 'servicebeard'):
-                context['services_beard'].append(service)
-            else:
-                # Nothing to do.
-                pass
+
+class ServiceDetail(DetailView):
+    model = Service
+    template_name = 'show_service.html'
+    allow_empty = True
+
+    def get_context_data(self, **kwargs):
+        context = super(ServiceDetail, self).get_context_data(**kwargs)
+        context['service'] = Service.objects.get(pk=self.kwargs.get('pk'))
