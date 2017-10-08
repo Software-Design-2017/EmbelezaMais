@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
+from django.template.loader import render_to_string
+
 
 from user.models import Company
 
@@ -48,6 +50,32 @@ class ServiceDetail(DetailView):
     template_name = 'show_service.html'
     allow_empty = True
 
-    def get_context_data(self, **kwargs):
-        context = super(ServiceDetail, self).get_context_data(**kwargs)
-        context['service'] = Service.objects.get(pk=self.kwargs.get('pk'))
+    def get(self, request, *args, **kwargs):
+        service = Service.objects.get(pk=self.kwargs.get('pk'))
+        data = dict()
+        type_service = self.verify_type(service)
+        context = {'service': service,
+                   'type_service': type_service}
+        template_name = 'show_service.html'
+        data['html_show'] = render_to_string(template_name, context, request=request)
+        return JsonResponse(data)
+
+    def verify_type(self, service):
+        is_nail = hasattr(service, 'servicenail')
+        is_combo = hasattr(service, 'combo')
+        is_makeup = hasattr(service, 'servicemakeup')
+        is_hair = hasattr(service, 'servicehair')
+        is_beard = hasattr(service, 'servicebeard')
+
+        if is_nail:
+            return 'servicenail'
+        elif is_combo:
+            return 'combo'
+        elif is_makeup:
+            return 'servicemakeup'
+        elif is_hair:
+            return 'servicehair'
+        elif is_beard:
+            return 'services_beard'
+        else:
+            pass
