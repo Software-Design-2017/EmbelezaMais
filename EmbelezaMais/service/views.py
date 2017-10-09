@@ -255,6 +255,71 @@ class ServiceComboEdit(UpdateView):
             return super(ServiceComboCreate, self).form_invalid(form)
 
 
+class ServiceEdit(UpdateView):
+    form_class = None
+    model = None
+    template_name = 'service_form.html'
+    success_url = '/service/list/'
+
+    def get(self, request, *args, **kwargs):
+        service = Service.objects.get(pk=self.kwargs.get('pk'))
+        self.model = self.type_model(service)
+        self.form_class = self.type_form(service)
+        return super(ServiceEdit, self).post(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        service = Service.objects.get(pk=self.kwargs.get('pk'))
+        self.model = self.type_model(service)
+        self.form_class = self.type_form(service)
+        return super(ServiceEdit, self).post(request, *args, **kwargs)
+
+    def type_model(self, service):
+        is_nail = hasattr(service, 'servicenail')
+        is_combo = hasattr(service, 'combo')
+        is_makeup = hasattr(service, 'servicemakeup')
+        is_hair = hasattr(service, 'servicehair')
+        is_beard = hasattr(service, 'servicebeard')
+
+        if is_nail:
+            return ServiceNail
+        elif is_makeup:
+            return ServiceMakeUp
+        elif is_combo:
+            # TODO Fixing model combo
+            return Combo
+        elif is_hair:
+            return ServiceHair
+        elif is_beard:
+            return ServiceBeard
+        else:
+            pass
+
+    def type_form(self, service):
+        is_nail = hasattr(service, 'servicenail')
+        is_combo = hasattr(service, 'combo')
+        is_makeup = hasattr(service, 'servicemakeup')
+        is_hair = hasattr(service, 'servicehair')
+        is_beard = hasattr(service, 'servicebeard')
+
+        if is_nail:
+            serviceNail = ServiceNailForm
+            return serviceNail
+        elif is_makeup:
+            serviceMakeUp = ServiceMakeUpForm
+            return serviceMakeUp
+        elif is_combo:
+            self.template_name = "combo_service_form.html"
+            return ComboForm
+        elif is_hair:
+            serviceHair = ServiceHairForm
+            return serviceHair
+        elif is_beard:
+            serviceBeard = ServiceBeardForm
+            return serviceBeard
+        else:
+            pass
+
+
 class ServiceNailEdit(UpdateView):
     model = ServiceNail
     template_name = 'service_form.html'

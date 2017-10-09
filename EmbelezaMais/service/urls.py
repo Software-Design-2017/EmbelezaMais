@@ -6,7 +6,7 @@ from .views import (
     ServiceBeardCreate,
     ServiceMakeUpCreate,
     ServiceHairCreate,
-    ServiceNailEdit,
+    ServiceEdit,
 )
 
 urlpatterns = (
@@ -17,5 +17,5 @@ urlpatterns = (
         url(r'^create/hair/$', ServiceHairCreate.as_view(), name='hair_service_create'),
         url(r'^list/$', ServiceList.as_view(), name='service_list'),
         url(r'^delete/(?P<id>[0-9]+)/$', ServiceList.delete_service, name='delete_service'),
-        url(r'^edit/(?P<pk>[0-9]+)/$', ServiceNailEdit.as_view(), name='edit_service'),
+        url(r'^edit/(?P<pk>[0-9]+)/$', ServiceEdit.as_view(), name='edit_service'),
 )
