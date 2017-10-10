@@ -29,7 +29,7 @@ from .forms import (
     ClientEditForm,
 )
 from .models import (
-    Client, Company, UserProfile
+    Client, Company, UserProfile, User
 )
 
 from . import constants
@@ -194,7 +194,6 @@ class ClientProfile(View):
 
 
 class CompanyAction(View):
-
     def show_edit_button(visitor_email, current_user_email):
 
         editable_profile = False
@@ -220,6 +219,15 @@ class CompanyAction(View):
 
         return render(request, 'company_profile.html', {'company': company,
                                                         'editable_profile': editable_profile})
+
+    @login_required
+    def delete_company_view(request, email):
+        company = User.objects.get(email=email)
+        logger.debug("Chegou aqui")
+        company.delete()
+
+        # TODO (Thiago)Create confirm delete page
+        return redirect('/')
 
     @login_required
     def company_edit_profile_view(request, email):

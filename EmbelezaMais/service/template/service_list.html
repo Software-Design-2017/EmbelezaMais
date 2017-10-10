@@ -27,7 +27,7 @@
                 <td>{{ service.name }}</td>
                 <td>{{ service.description }}</td>
                 <td>{{ service.price }}</td>
-                <td><a href="{% url 'delete_service' service.id %}" data-confirm="true"></a></td>
+                <td><a href="{% url 'edit_service' service.id %}" data-confirm="true"><i class="fa-pencil" aria-hidden="true"></></a></td>
                 <td><a href="#" data-href="{% url 'delete_service' service.id %}" data-toggle="modal" data-target="#confirm-delete"><i class="fa fa-trash" aria-hidden="true"></i></a> </td>
               </tr>
             {% empty %}
