@@ -17,6 +17,13 @@
       <br>
       <br>
       <br>
+      <div class="form" >
+        <div id="center-image">
+          <a class="" href="/"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
+        </div>
+        <br>
+        <br>
+        <br>
 
       <form style="text-align:left" method="post" action=".">
         {% csrf_token %}
@@ -70,11 +77,13 @@
           <label for="{{ form.location.id_for_label }}">Localização:</label> {{ form.location }}
         </div>
 
-        <input type="hidden" name="next" value="/" />
-        <input type="submit" value="Register" />
-      </form>
-
-    </div>
+            <input type="hidden" name="next" value="/" />
+            <input type="submit" value="Register" />
+        </form>
+        <div class="link">
+          <a href="{% url 'login_view' %} ">Sua empresa já está cadastrada? Entre aqui.</a>
+        </div>
+      </div>
   </div>
 
 
