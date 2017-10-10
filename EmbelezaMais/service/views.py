@@ -261,12 +261,16 @@ class ServiceEdit(UpdateView):
     template_name = 'service_form.html'
     success_url = '/service/list/'
 
+    @method_decorator(login_required)
+    @method_decorator(user_is_company)
     def get(self, request, *args, **kwargs):
         service = Service.objects.get(pk=self.kwargs.get('pk'))
         self.model = self.type_model(service)
         self.form_class = self.type_form(service)
         return super(ServiceEdit, self).post(request, *args, **kwargs)
 
+    @method_decorator(login_required)
+    @method_decorator(user_is_company)
     def post(self, request, *args, **kwargs):
         service = Service.objects.get(pk=self.kwargs.get('pk'))
         self.model = self.type_model(service)
@@ -285,8 +289,8 @@ class ServiceEdit(UpdateView):
         elif is_makeup:
             return ServiceMakeUp
         elif is_combo:
-            # TODO Fixing model combo
-            return Combo
+            # TODO fixing correct combo
+            pass
         elif is_hair:
             return ServiceHair
         elif is_beard:
@@ -308,8 +312,8 @@ class ServiceEdit(UpdateView):
             serviceMakeUp = ServiceMakeUpForm
             return serviceMakeUp
         elif is_combo:
-            self.template_name = "combo_service_form.html"
-            return ComboForm
+            # TODO fixing correct combo
+            pass
         elif is_hair:
             serviceHair = ServiceHairForm
             return serviceHair
@@ -318,31 +322,3 @@ class ServiceEdit(UpdateView):
             return serviceBeard
         else:
             pass
-
-
-class ServiceNailEdit(UpdateView):
-    model = ServiceNail
-    template_name = 'service_form.html'
-    form_class = ServiceNailForm
-    success_url = '/service/list/'
-
-
-class ServiceMakeUpEdit(UpdateView):
-    model = ServiceMakeUp
-    template_name = 'service_form.html'
-    form_class = ServiceMakeUpForm
-    success_url = '/service/list/'
-
-
-class ServiceBeardEdit(UpdateView):
-    model = ServiceBeard
-    template_name = 'service_form.html'
-    form_class = ServiceBeardForm
-    success_url = '/service/list/'
-
-
-class ServiceHairEdit(UpdateView):
-    model = ServiceHair
-    template_name = 'service_form.html'
-    form_class = ServiceHairForm
-    success_url = '/service/list/'
