@@ -1,0 +1,33 @@
+{% extends "landing/template.html" %} {% block content %}
+{% load staticfiles %}
+{% load static %}
+
+ <div class="card" style="margin:20px">
+  <div class="header">
+    <h4 class="title" style="margin:20px"><center>Edit Client</center></h4>
+  </div>
+  <div class="content table-responsive ">
+    <form method="post" action=".">
+        {% csrf_token %}
+         <div class="form-group" style="margin-left:40px; margin-right:40px">
+          {% for error in form.name.errors %}
+          <div class="alert alert-danger"role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.name.id_for_label }}">Nome:</label>
+          {{ form.name }}
+        </div>
+
+        <div class="form-group" style="margin-left:40px; margin-right:40px">
+          {% for error in form.phone_number.errors %}
+          <div class="alert alert-danger"role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.phone_number.id_for_label }}">Telefone:</label>
+          {{ form.phone_number }}
+        </div>
+
+        <input type="hidden" name="next" value="/" />
+        <input type="submit" value="Confirmar" style="margin-left:40px; margin-right:580px"/>
+    </form>
+  </div>
+</div>
+{% endblock %}

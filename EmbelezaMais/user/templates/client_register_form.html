@@ -1,19 +1,72 @@
-<html>
+{% extends "landing/template.html" %}
+{% block content %} {% load staticfiles %}
+{% load static %}
 <head>
-  <title>Client Register</title>
+  <title>Company Register</title>
 </head>
 
 <body>
-  <h1>Client Register</h1>
+  <h1 style="text-align:center">Client Register</h1>
 
-  <form method="post" action=".">
-      {% csrf_token %}
-       {{ form.as_p }}
+  <div style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
+      <br>
+      <br>
+      <div class="form" >
+        <div id="center-image">
+          <a class="" href="/"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
+        </div>
+        <br>
+        <br>
+        <br>
 
-      <input type="hidden" name="next" value="/" />
-      <input type="submit" value="Register" />
-  </form>
+        <form style="text-align:left" method="post" action=".">
+            {% csrf_token %}
+            <div class="form-group">
+               {% for error in form.name.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.name.id_for_label }}">Nome:</label> {{ form.name }}
+            </div>
+
+            <div class="form-group">
+              {% for error in form.email.errors %}
+              <div class="alert alert-danger" role="alert">{{error}}</div>
+              {% endfor %}
+              <label for="{{ form.email.id_for_label }}">Email:</label> {{ form.email }}
+            </div>
+
+            <div class="form-group">
+               {% for error in form.phone_number.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.phone_number.id_for_label }}">Telefone:</label> {{ form.phone_number }}
+            </div>
+
+             <!-- {{ form.as_p }} -->
+            <div class="form-group">
+               {% for error in form.password.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.password.id_for_label }}">Senha:</label> {{ form.password }}
+            </div>
+
+            <div class="form-group">
+               {% for error in form.password_confirmation.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.password_confirmation.id_for_label }}">Confirmar Senha:</label> {{ form.password_confirmation }}
+            </div>
+
+            <input type="hidden" name="next" value="/" />
+            <input type="submit" value="Register" />
+        </form>
+        <div class="link">
+          <a href="{% url 'login_client' %} ">Já possui cadastro? Clique aqui para entrar.</a>
+        </div>
+      </div>
+  </div>
+
 
 </body>
 
-</html>
+{% endblock %}

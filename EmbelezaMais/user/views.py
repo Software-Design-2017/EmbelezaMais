@@ -13,17 +13,23 @@ from django.shortcuts import (
 from django.core.mail import send_mail
 from django.utils import timezone
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib import auth
 from django.views.generic import (
     FormView, View
 )
 
+
 # local Django
 from .forms import (
-    ClientRegisterForm, CompanyRegisterForm, CompanyLoginForm
+    ClientRegisterForm,
+    CompanyRegisterForm,
+    CompanyLoginForm,
+    CompanyEditForm,
+    ClientEditForm,
 )
 from .models import (
-    Client, Company, UserProfile
+    Client, Company, UserProfile, User
 )
 
 from . import constants
@@ -61,7 +67,8 @@ def register_company_view(request):
         description = form.cleaned_data.get('description')
         target_genre = form.cleaned_data.get('target_genre')
         location = form.cleaned_data.get('location')
-        Company.objects.create_user(email=email, password=password, name=name, target_genre=target_genre,
+        Company.objects.create_user(email=email, password=password, name=name,
+                                    target_genre=target_genre,
                                     description=description, location=location)
 
         user = Company.objects.get(email=email)
@@ -120,7 +127,8 @@ def register_confirm(request, activation_key):
     if user_profile.key_expires < timezone.now():
         user_profile.delete()
 
-        return HttpResponse("Tempo para confirmar conta expirou. Crie sua conta novamente")
+        return HttpResponse("Tempo para confirmar conta expirou." +
+                            "Crie sua conta novamente")
     else:
         # Nothing to do.
         pass
@@ -131,6 +139,155 @@ def register_confirm(request, activation_key):
     user.is_active = True
     user.save()
 
+    return redirect('/')
+
+
+class ClientProfile(View):
+    @login_required
+    def client_profile(request, email):
+        if request.method == "GET":
+            client = Client.objects.get(email=email)
+            logger.debug(client)
+        else:
+            client = Client()
+        # args = {'company': company}
+        return render(request, 'client_profile.html', {'client': client})
+
+    @login_required
+    def client_edit_profile_view(request, email):
+        logger.info("Entering edit client profile page.")
+        client = Client.objects.get(email=email)
+        form = ClientEditForm(request.POST or None, instance=request.user.client)
+
+        if request.user.email == client.email:
+            if request.method == "POST":
+                logger.debug("Edit profile view request is POST.")
+                if form.is_valid():
+                    logger.debug("Valid edit form.")
+                    name = form.cleaned_data.get('name')
+                    phone_number = form.cleaned_data.get('phone_number')
+
+                    if len(name) != 0:
+                        client.name = name
+                    else:
+                        pass
+
+                    if len(phone_number) != 0:
+                        client.phone_number = phone_number
+                    else:
+                        pass
+
+                    client.save()
+
+                    return redirect('client_profile', email=email)
+
+                else:
+                    logger.debug("Invalid edit form.")
+                    pass
+            else:
+                logger.debug("Edit profile view request is GET.")
+                pass
+        else:
+            logger.debug("User can't edit other users information.")
+            return HttpResponse("Oops! You don't have acess to this page.")
+        return render(request, 'client_edit_profile_form.html', {'form': form, 'client': client})
+
+
+class CompanyAction(View):
+    def show_edit_button(visitor_email, current_user_email):
+
+        editable_profile = False
+
+        if current_user_email == visitor_email:
+            logger.debug("Profile page should be editable")
+            editable_profile = True
+
+        else:
+            logger.debug("Profile page shouldn't be editable.")
+            # Nothing to do.
+
+        return editable_profile
+
+    @login_required
+    def company_profile(request, email):
+        if request.method == "GET":
+            company = Company.objects.get(email=email)
+            editable_profile = CompanyAction.show_edit_button(company.email, request.user.email)
+            logger.debug(company)
+        else:
+            company = Company()
+
+        return render(request, 'company_profile.html', {'company': company,
+                                                        'editable_profile': editable_profile})
+
+    @login_required
+    def delete_company_view(request, email):
+        company = User.objects.get(email=email)
+        logger.debug("Chegou aqui")
+        company.delete()
+
+        # TODO (Thiago)Create confirm delete page
+        return redirect('/')
+
+    @login_required
+    def company_edit_profile_view(request, email):
+        logger.info("Entering edit profile page.")
+        company = Company.objects.get(email=email)
+        form = CompanyEditForm(request.POST or None, instance=request.user.company)
+
+        if request.user.email == company.email:
+            if request.method == "POST":
+                logger.debug("Edit profile view request is POST.")
+                if form.is_valid():
+                    logger.debug("Valid edit form.")
+                    name = form.cleaned_data.get('name')
+                    description = form.cleaned_data.get('description')
+                    target_genre = form.cleaned_data.get('target_genre')
+                    location = form.cleaned_data.get('location')
+
+                    if len(name) != 0:
+                        company.name = name
+                    else:
+                        pass
+
+                    if len(target_genre) != 0:
+                        company.target_genre = target_genre
+                    else:
+                        pass
+
+                    if len(location) != 0:
+                        company.location = location
+                    else:
+                        pass
+
+                    if len(description) != 0:
+                        company.description = description
+                    else:
+                        pass
+
+                    company.save()
+
+                    return redirect('profile', email=email)
+                else:
+                    logger.debug("Invalid edit form.")
+                    pass
+            else:
+                logger.debug("Edit profile view request is GET.")
+                pass
+        else:
+            logger.debug("User can't edit other users information.")
+            return HttpResponse("Oops! You don't have acess to this page.")
+        return render(request, 'company_edit_profile_form.html', {'form': form, 'company': company})
+
+
+def show_client_view(request):
+    client = request.user
+    return render(request, 'show_client_view.html', {'client': client})
+
+
+def remove_client_view(request):
+    client = request.user
+    client.delete()
     return redirect('/')
 
 
@@ -201,7 +358,8 @@ class LoginClientView(LoginView):
                 return HttpResponse('User is not active')
         else:
             message = 'Hey, parece que você não é um cliente.'
-            return render(request, self.template_name, {'form': form, 'message': message})
+            return render(request, self.template_name, {'form': form,
+                                                        'message': message})
 
 
 class LogoutView(View):

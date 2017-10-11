@@ -1,0 +1,77 @@
+{% extends "search.html" %} {% block search_content %}
+{% load staticfiles %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static "company/company_list.css" %}">
+{% for company in companies %}
+
+<div class="col-md-10 col-md-offset-1">
+      <div class="row">
+        {%if company.target_genre == "Masculino"%}
+				    <div class="offer offer-primary hoverDiv" data-href="{% url 'show_company' company.id %}">
+        {% elif company.target_genre == "Feminino" %}
+            <div class="offer offer-warning hoverDiv" data-href="{% url 'show_company' company.id %}">
+        {% elif company.target_genre == "Unissex"  %}
+            <div class="offer offer-default hoverDiv" data-href="{% url 'show_company' company.id %}">
+        {% endif %}
+					<div class="shape">
+						<div class="shape-text">
+							{{ company.target_genre }}
+						</div>
+					</div>
+					<div class="offer-content">
+						<h2 class="lead">
+							{{ company.name }}
+						</h3>
+						<p>
+							<b>Descrição: </b>{{ company.description }}
+							<br><br>
+              <b>Localização: </b>{{ company.location }}
+						</p>
+					</div>
+				</div>
+			</div>
+</div>
+{% empty %}
+<li>Não existe empresas.</li>
+{% endfor %}
+
+        {% if is_paginated %}
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+              <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+            {% else %}
+              <li class="disabled"><span>&laquo;</span></li>
+            {% endif %}
+            {% for i in paginator.page_range %}
+              {% if page_obj.number == i %}
+                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+              {% else %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+            {% endfor %}
+            {% if page_obj.has_next %}
+              <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+            {% else %}
+              <li class="disabled"><span>&raquo;</span></li>
+            {% endif %}
+            </div>
+          </ul>
+      {% endif %}
+
+      <script type="text/javascript">
+          $(document).ready(function(){
+            $(".hoverDiv").hover(function(){
+                $(this).css("background", "#d8d8d8");
+            }, function(){
+                $(this).css("background", "#fff");
+            });
+          });
+
+          $(document).ready(function($) {
+              $(".hoverDiv").click(function() {
+                  window.location = $(this).data("href");
+              });
+          });
+      </script>
+{% endblock %}

@@ -4,6 +4,25 @@ from django.shortcuts import (
 )
 from django.core.exceptions import PermissionDenied
 
+from service.models import (
+    Service
+)
+
+
+def define_author_service(method):
+    """
+    Verify if user is author service.
+    """
+    def wrap(request, id, *args, **kwargs):
+        service = Service.objects.get(id=id)
+        is_author_service = request.user.email == service.company.email
+        if is_author_service:
+            return method(request, id, *args, **kwargs)
+        else:
+            return redirect('/')
+
+    return wrap
+
 
 def user_is_company(method):
     """
@@ -30,8 +49,7 @@ def user_is_logged(method):
             elif is_client:
                 return redirect('/search')  # TODO make dashboard client
             else:
-                # Nothing to do.
-                pass
+                return redirect('/search')
         else:
             return method(request, *args, **kwargs)
 

@@ -1,1 +1,10 @@
 /* your styles go here */
+.container {
+03         width: 100vw;
+04         height: 100vh;
+05         background: #6C7A89;
+06         display: flex;
+07         flex-direction: row;
+08         justify-content: center;
+09         align-items: center
+10 }

@@ -50,7 +50,14 @@ INSTALLED_APPS = [
     'landing',
     'companyDashboard',
     'search',
+    'service',
+    'promotion',
 ]
+
+GEOPOSITION_MAP_OPTIONS = {
+    'minZoom': 15,
+    'maxZoom': 18,
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -67,7 +74,9 @@ ROOT_URLCONF = 'EmbelezaMais.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['templates', 'landing/template', 'companyDashboard/template', 'search/template', 'user/templates'],
+        'DIRS': ['templates', 'landing/template', 'companyDashboard/template',
+                 'search/template', 'user/templates', 'service/template',
+                 'promotion/template', ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -114,7 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

@@ -1,0 +1,228 @@
+{% extends "landing/template.html" %} {% block content %}
+{% load staticfiles %}
+
+<head>
+  {% load static %}
+    <script src="{% static "service/configure_show_service.js" %}" type="text/javascript"></script>
+    <script src="{% static "service/show_services.js" %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static "service/show_services.css" %}">
+    <link rel="stylesheet" href="{% static "service/list_service.css" %}">
+</head>
+
+<header id="home" class="home" style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
+    <div class="header-title">
+      <div class="title">
+          <h1 > {{ company.name }} </h1>
+      </div>
+    </div>
+  <br>
+</header>
+<br>
+
+<div class="row">
+
+  <div class="col-xs-3 col-md-3">
+    <div class="sidebar">
+      <div class="panel panel-default">
+        <div class="panel-heading">{{ company.name }}</div>
+        <div class="panel-body">
+            <b>Descrição: </b>{{ company.description }}<br>
+            <b>Gênero Alvo: </b>{{ company.target_genre }}<br>
+            <b>Localização: </b>{{ company.location }}<br>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
+<div class="col-md-8">
+      <div class="panel"  id="service-table">
+        <ul class="nav nav-tabs row">
+                      <li class="btn btn-secondary active"><a href="#faq-cat-1" data-toggle="tab">Cabelo <span class="badge">{{services_hair|length}}</span></a></li>
+                      <li class="btn btn-secondary"><a href="#faq-cat-2" data-toggle="tab">Unha <span class="badge">{{services_nail|length}}</a></li>
+                      <li class="btn btn-secondary"><a href="#faq-cat-3" data-toggle="tab">Maquiagem <span class="badge">{{services_makeup|length}}</a></li>
+                      <li class="btn btn-secondary"><a href="#faq-cat-4" data-toggle="tab">Barba <span class="badge">{{services_beard|length}}</a></li>
+                      <li class="btn btn-secondary"><a href="#faq-cat-5" data-toggle="tab">Combo <span class="badge">{{services_combo|length}}</a></li>
+        </ul>
+        <div class="tab-content faq-cat-content">
+
+
+        {% for number in "12345" %}
+        {% if number == "1" %}
+          <div class="tab-pane active in fade" id="faq-cat-{{number}}">
+        {% else %}
+          <div class="tab-pane fade" id="faq-cat-{{number}}">
+        {% endif %}
+        <span class="def-ag">
+
+              {% if number == "1" %}
+
+                {% for service in services_hair %}
+
+                <div class="col-md-4">
+                              <div class="thumbnail">
+                              <div class="caption">
+                                  <h4 class="pull-right">R$ {{service.price}}</h4>
+                                  <h4>{{service.name}}</h4>
+                                  <p>{{service.description}}</p>
+                                </div>
+                                <div class="ratings">
+                                  <p>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                  </p>
+                                </div>
+                                <div class="space-ten"></div>
+                                <div class="btn-ground text-center">
+                                    <a class="btn btn-success btn-sm btn-fill js-show-service"
+                                       data-url="{% url 'show_service' service.id%}"> Visualizar</a>
+                                </div>
+                          <div class="space-ten"></div>
+                      </div>
+                </div>
+
+                {% empty %}
+                <h3 colspan="3">Não existe serviços cadastrados.</h3>
+                {% endfor %}
+
+            {% elif number == "2"%}
+                {% for service in services_nail%}
+                <div class="col-md-4">
+                              <div class="thumbnail">
+                              <div class="caption">
+                                  <h4 class="pull-right">R$ {{service.price}}</h4>
+                                  <h4>{{service.name}}</h4>
+                                  <p>{{service.description}}</p>
+                                </div>
+                                <div class="ratings">
+                                  <p>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                  </p>
+                                </div>
+                                <div class="space-ten"></div>
+                                <div class="btn-ground text-center">
+                                    <a class="btn btn-success btn-sm btn-fill js-show-service"
+                                       data-url="{% url 'show_service' service.id%}"> Visualizar</a>
+                                </div>
+                          <div class="space-ten"></div>
+                      </div>
+                </div>
+                {% empty %}
+                  <h3 colspan="3">Não existe serviços cadastrados.</h3>
+                {% endfor %}
+            {% elif number == "3"%}
+                {% for service in services_makeup %}
+                <div class="col-md-4">
+                              <div class="thumbnail">
+                              <div class="caption">
+                                  <h4 class="pull-right">R$ {{service.price}}</h4>
+                                  <h4>{{service.name}}</h4>
+                                  <p>{{service.description}}</p>
+                                </div>
+                                <div class="ratings">
+                                  <p>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star"></span>
+                                  </p>
+                                </div>
+                                <div class="space-ten"></div>
+                                <div class="btn-ground text-center">
+                                    <a class="btn btn-success btn-sm btn-fill js-show-service"
+                                       data-url="{% url 'show_service' service.id%}"> Visualizar</a>
+                                </div>
+                          <div class="space-ten"></div>
+                      </div>
+                </div>
+                {% empty %}
+                  <h3 colspan="3">Não existe serviços cadastrados.</h3>
+                {% endfor %}
+                {% elif number == "4"%}
+                    {% for service in services_beard %}
+                    <div class="col-md-4">
+                                  <div class="thumbnail">
+                                  <div class="caption">
+                                      <h4 class="pull-right">R$ {{service.price}}</h4>
+                                      <h4>{{service.name}}</h4>
+                                      <p>{{service.description}}</p>
+                                    </div>
+                                    <div class="ratings">
+                                      <p>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
+                                      </p>
+                                    </div>
+                                    <div class="space-ten"></div>
+                                    <div class="btn-ground text-center">
+                                        <a class="btn btn-success btn-sm btn-fill js-show-service"
+                                           data-url="{% url 'show_service' service.id%}"> Visualizar</a>
+                                    </div>
+                              <div class="space-ten"></div>
+                          </div>
+                    </div>
+                    {% empty %}
+                      <h3 colspan="3">Não existe serviços cadastrados.</h3>
+                    {% endfor %}
+                    {% elif number == "5"%}
+                        {% for service in services_combo %}
+                        <div class="col-md-4">
+                                      <div class="thumbnail">
+                                      <div class="caption">
+                                          <h4 class="pull-right">R$ {{service.price}}</h4>
+                                          <h4>{{service.name}}</h4>
+                                          <p>{{service.description}}</p>
+                                        </div>
+                                        <div class="ratings">
+                                          <p>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                            <span class="glyphicon glyphicon-star"></span>
+                                          </p>
+                                        </div>
+                                        <div class="space-ten"></div>
+                                        <div class="btn-ground text-center">
+                                            <a class="btn btn-success btn-sm btn-fill js-show-service"
+                                               data-url="{% url 'show_service' service.id%}"> Visualizar</a>
+                                        </div>
+                                  <div class="space-ten"></div>
+                              </div>
+                        </div>
+                        {% empty %}
+                          <h3 colspan="3">Não existe serviços cadastrados.</h3>
+                        {% endfor %}
+            {% endif %}
+      </span>
+    </div>
+
+    {% endfor%}
+
+    </div>
+  </div>
+</div>
+</div>
+</div>
+
+<div class="modal fade" id="modal-service">
+    <div class="modal-dialog">
+      <div class="modal-content">
+
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

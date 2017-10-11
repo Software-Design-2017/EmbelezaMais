@@ -1,3 +1,5 @@
+
+import logging
 # Django.
 from django import forms
 from django.utils.translation import ugettext_lazy as _
@@ -6,6 +8,9 @@ from django.core.exceptions import ValidationError
 # Local Django.
 from .models import Client, Company
 from . import constants
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('EmbelezaMais')
 
 
 class ClientRegisterForm(forms.ModelForm):
@@ -30,9 +35,9 @@ class ClientRegisterForm(forms.ModelForm):
             'name',
             'email',
             'phone_number'
-            ]
+        ]
 
-    # Front-end validation function for company register page.
+    # Front-end validation function for client register page.
     def clean(self, *args, **kwargs):
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
@@ -44,9 +49,11 @@ class ClientRegisterForm(forms.ModelForm):
         if email_from_database.exists():
             raise forms.ValidationError(('Email already registered'))
         elif len(password) < 8:
-            raise forms.ValidationError(('Password must be between 8 and 12 characters'))
+            raise forms.ValidationError(
+                ('Password must be between 8 and 12 characters'))
         elif len(password) > 12:
-            raise forms.ValidationError(('Password must be between 8 and 12 characters'))
+            raise forms.ValidationError(
+                ('Password must be between 8 and 12 characters'))
         elif password != password_confirmation:
             raise forms.ValidationError(('Passwords do not match.'))
         elif len(phone_number) > 14:
@@ -84,23 +91,81 @@ class CompanyRegisterForm(forms.ModelForm):
         if email_from_database.exists():
             raise ValidationError(_("This Email has been already registered"))
         elif len(password) < 8:
-            raise forms.ValidationError(('Password must be 8 or more characters'))
+            raise forms.ValidationError(
+                ('Password must be 8 or more characters'))
         elif password != password_confirmation:
             raise forms.ValidationError(_("Passwords don't match."))
         return super(CompanyRegisterForm, self).clean(*args, **kwargs)
 
+    def __init__(self, *args, **kwargs):
+        super(CompanyRegisterForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
+
+
+class ClientEditForm(forms.ModelForm):
+
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           label=_('Name'), max_length=constants.NAME_FIELD_LENGTH, required=False)
+
+    phone_number = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                   label=_('Phone'), max_length=14, required=False)
+
+    class Meta:
+        model = Client
+        fields = [
+            'name',
+            'phone_number',
+        ]
+
+    def clean(self, *args, **kwargs):
+
+        return super(ClientEditForm, self).clean(*args, **kwargs)
+
+
+class CompanyEditForm(forms.ModelForm):
+
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                           label=_('Name'), max_length=60, required=False)
+
+    description = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                  label=_('Description'), max_length=60, required=False)
+
+    target_genre = forms.ChoiceField(choices=(constants.GENRE_CHOICES),
+                                     widget=forms.Select(attrs={'class': 'form-control'}),
+                                     label=_('Target Genre'), required=False)
+
+    location = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                               label=_('Location'), max_length=60, required=False)
+
+    class Meta:
+        model = Company
+        fields = [
+            'name',
+            'description',
+            'target_genre',
+            'location',
+        ]
+
+    def clean(self, *args, **kwargs):
+
+        return super(CompanyEditForm, self).clean(*args, **kwargs)
+
 
 class CompanyLoginForm(forms.Form):
     email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput, label=_(constants.PASSWORD))
+    password = forms.CharField(
+        widget=forms.PasswordInput, label=_(constants.PASSWORD))
 
     def clean(self, *args, **kwargs):
         password = self.cleaned_data.get("password")
 
         if len(password) < constants.PASSWORD_MIN_LENGTH:
-            raise forms.ValidationError({'password': [_(constants.PASSWORD_SIZE)]})
+            raise forms.ValidationError(
+                {'password': [_(constants.PASSWORD_SIZE)]})
         elif len(password) > constants.PASSWORD_MAX_LENGTH:
-            raise forms.ValidationError({'password': [_(constants.PASSWORD_SIZE)]})
+            raise forms.ValidationError(
+                {'password': [_(constants.PASSWORD_SIZE)]})
         else:
             pass
 

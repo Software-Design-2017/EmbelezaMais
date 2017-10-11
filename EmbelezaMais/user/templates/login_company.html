@@ -7,7 +7,7 @@
       <br>
       <div class="form" >
         <div id="center-image">
-          <a class="" href="#"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
+          <a class="" href="/"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
         </div>
         <br>
         <br>
@@ -17,7 +17,7 @@
           <div class="alert alert-warning">
             <strong>Ops!</strong>
             <p>{{ message }}</p>
-            <p>Caso seja não seja um estabelecimento se logue clicando: <a href="{% url 'register_view' %}"> aqui </a></p>
+            <p>Caso seja não seja um estabelecimento se logue clicando: <a href=""> aqui </a></p>
           </div>
 
           {% endif %}
@@ -45,7 +45,7 @@
             <a href="">Esqueceu sua Senha?</a>
           </div>
           <div class="link">
-            <a href="{% url 'register_view' %}">Cadastre já seu estabelecimento !</a>
+            <a href="{% url 'register_view' %} ">Cadastre já seu estabelecimento !</a>
           </div>
         </div>
       </div>
