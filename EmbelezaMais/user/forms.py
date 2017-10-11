@@ -70,6 +70,10 @@ class CompanyRegisterForm(forms.ModelForm):
     password_confirmation = forms.CharField(widget=forms.PasswordInput,
                                             label=_('Password Confirmation'))
 
+    latitude = forms.CharField(label='Latitude')
+
+    longitude = forms.CharField(label='Longitude')
+
     class Meta:
         model = Company
         fields = [
@@ -88,12 +92,11 @@ class CompanyRegisterForm(forms.ModelForm):
         email_from_database = Company.objects.filter(email=email)
 
         if email_from_database.exists():
-            raise ValidationError(_("This Email has been already registered"))
+            raise ValidationError({'email': _("This Email has been already registered")})
         elif len(password) < 8:
-            raise forms.ValidationError(
-                ('Password must be 8 or more characters'))
+            raise forms.ValidationError({'password': _("Password must be 8 or more characters")})
         elif password != password_confirmation:
-            raise forms.ValidationError(_("Passwords don't match."))
+            raise forms.ValidationError({'password': _("Passwords don't match.")})
         return super(CompanyRegisterForm, self).clean(*args, **kwargs)
 
     def __init__(self, *args, **kwargs):

@@ -63,7 +63,20 @@
            <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label>
              {{form.target_genre}}
         </div>
+        <div class="form-group">
+          {% for error in form.latitude.errors %}
+          <div class="alert alert-danger" role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.latitude.id_for_label }}">Latitude:</label> {{ form.latitude }}
+        </div>
 
+        <div class="form-group">
+          {% for error in form.logitude.errors %}
+          <div class="alert alert-danger" role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.logitude.id_for_label }}">Longitude:</label> {{ form.longitude }}
+        </div>
+        
         <input id="pac-input" class="controls" type="text" placeholder="Search Box">
         <div id="map_canvas" class="map_canvas" style="1500px; 1000px"></div>
 

@@ -22,8 +22,8 @@ var position = [40.748774, -73.985763];
       google.maps.event.addListener(map, 'click', function(event) {
           var result = [event.latLng.lat(), event.latLng.lng()];
           transition(result);
-          document.getElementById("id_latitude") = position[0];
-          document.getElementById("id_longitude") = position[1];
+          document.getElementById("id_latitude").value  = position[0];
+          document.getElementById("id_longitude").value  = position[1];
       });
 
       google.maps.event.addListener(searchBox, 'places_changed', function() {
@@ -42,6 +42,9 @@ var position = [40.748774, -73.985763];
           document.getElementById("id_latitude").value = position[0];
           document.getElementById("id_longitude").value = position[1];
       });
+
+      document.getElementById("id_latitude").value  = position[0];
+      document.getElementById("id_longitude").value  = position[1];
       }
 
       //Load google map
