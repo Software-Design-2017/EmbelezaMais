@@ -1,0 +1,12 @@
+{% extends "search.html" %} {% block search_content %}
+{% load staticfiles %}
+
+{% for employee in employee_list %}
+    <div class="employee">
+        <p>{{ employee.name }}</p>
+        <p>{{ employee.specialty }}</p>
+        <p>{{ employee.opening_time }}</p>
+        <p>{{ employee.closing_time }}</p>
+    </div>
+{% endfor %}
+{% endblock %}

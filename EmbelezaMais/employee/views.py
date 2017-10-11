@@ -41,3 +41,7 @@ def register_employee(request):
         logger.debug("Register form was invalid.")
 
     return render(request, "employee_register_form.html", {"form": form})
+
+def employee_list(request):
+    employee_list = Employee.objects.all()
+    return render(request, 'employee_list.html', {'employee_list': employee_list})
