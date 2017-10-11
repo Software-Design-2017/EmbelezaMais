@@ -9,7 +9,6 @@ var position = [40.748774, -73.985763];
       };
       map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-
       var input = document.getElementById('pac-input');
       var searchBox = new google.maps.places.SearchBox(input);
       map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
