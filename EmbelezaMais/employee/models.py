@@ -25,6 +25,9 @@ class Name(models.CharField):
         kwargs['default'] = ''
         super(models.CharField, self).__init__(*args, **kwargs)
 
+    def __str__(self):
+        return self.name
+
 
 class Specialty(models.CharField):
     validator_max_length = validators.MaxLengthValidator(constants.SPECIALTY_FIELD_LENGTH,
@@ -59,7 +62,6 @@ class EmployeeManager(BaseUserManager):
         if not name:
             raise ValueError('The given name must be set')
 
-        name = self.name
         operating_hours = OperatingHours(opening_time, closing_time)
         employee = Employee(name=name, specialty=specialty, opening_time=opening_time, closing_time=closing_time)
         employee.save()

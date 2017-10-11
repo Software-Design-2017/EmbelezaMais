@@ -1,19 +1,62 @@
-<html>
+{% extends "landing/template.html" %}
+{% block content %} {% load staticfiles %}
+{% load static %}
 <head>
   <title>Employee Register</title>
 </head>
 
 <body>
-  <h1>Employee Register</h1>
+  <h1 style="text-align:center">Registrar empregado</h1>
 
-  <form method="post" action=".">
-      {% csrf_token %}
-       {{ form.as_p }}
+  <div style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
+      <br>
+      <br>
+      <div class="form" >
+        <div id="center-image">
+          <a class="" href="/"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
+        </div>
+        <br>
+        <br>
+        <br>
 
-      <input type="hidden" name="next" value="/" />
-      <input type="submit" value="Register" />
-  </form>
+        <form style="text-align:left" method="post" action=".">
+            {% csrf_token %}
+            <div class="form-group">
+               {% for error in form.name.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.name.id_for_label }}">Nome:</label> {{ form.name }}
+            </div>
+
+            <div class="form-group">
+               {% for error in form.specialty.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.specialty.id_for_label }}">Especialidade:</label> {{ form.specialty }}
+            </div>
+
+             <!-- {{ form.as_p }} -->
+            <div class="form-group">
+               {% for error in form.opening_time.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.opening_time.id_for_label }}">Começo de atendimento:</label> {{ form.opening_time }}
+            </div>
+
+            <div class="form-group">
+               {% for error in form.closing_time.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.closing_time.id_for_label }}">Fim de atendimento:</label> {{ form.closing_time }}
+            </div>
+
+            <input type="hidden" name="next" value="/" />
+            <input type="submit" value="Register" />
+        </form>
+      </div>
+  </div>
+
 
 </body>
 
-</html>
+{% endblock %}

@@ -26,7 +26,6 @@ urlpatterns = [
     url('^service/', include('service.urls')),
     url('^search/', include('search.urls')),
     url(r'dashboard/', dashboardRender, name="dashboard"),
-    url(r'search/', searchPageRender, name="search"),
     url(r'employee/', include('employee.urls'), name="employee.urls"),
     url('^promotion/', include('promotion.urls')),
 ]
