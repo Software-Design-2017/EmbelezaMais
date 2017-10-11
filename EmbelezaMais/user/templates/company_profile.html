@@ -9,7 +9,30 @@
           <div class="col-md-12 lead"><b><font size="8" class="text">Company Profile</font></b>
                 {% if company.is_authenticated %}
                   {% ifequal editable_profile 1 %}
-                    <a href="{% url 'edit' company.email %}" class="btn btn-primary pull-right">Edit </a>
+                  <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                              <div class="modal-content">
+                                <br>
+                                  <div class="modal-header">
+                                      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                      <h4 class="modal-title" id="myModalLabel">Confirmar Exclusão</h4>
+                                  </div>
+
+                                  <div class="modal-body">
+                                      <p>Está é uma ação irreversível</p>
+                                      <p>Você quer excluir sua conta?</p>
+                                  </div>
+
+                                  <div class="modal-footer">
+                                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                      <a class="btn btn-danger btn-ok">Excluir</a>
+                                  </div>
+                              </div>
+                          </div>
+
+                  </div>
+                  <a href="#" data-href="{% url 'delete_company_view' company.email %}" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger pull-right">Excluir</a>
+                  <a href="{% url 'edit' company.email %}" class="btn btn-primary pull-right">Edit</a>
                   {% endifequal %}
                 {% endif %}  <hr>
             <div class="col-md-12">
@@ -31,5 +54,10 @@
       </div>
     </div>
   <!-- </body> -->
-
+  <!--TODO Ver com a professora onde é melhor local pra isso-->
+  <script>
+      $('#confirm-delete').on('show.bs.modal', function(e) {
+          $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+      });
+  </script>
 {% endblock %}

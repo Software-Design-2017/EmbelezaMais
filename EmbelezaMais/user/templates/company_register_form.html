@@ -17,6 +17,13 @@
       <br>
       <br>
       <br>
+      <div class="form" >
+        <div id="center-image">
+          <a class="" href="/"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
+        </div>
+        <br>
+        <br>
+        <br>
 
       <form style="text-align:left" method="post" action=".">
         {% csrf_token %}
@@ -55,19 +62,28 @@
           <label for="{{ form.description.id_for_label }}">Descrição:</label> {{ form.description }}
         </div>
 
+            <div class="form-group">
+               {% for error in form.target_genre.errors %}
+               <div class="alert alert-danger" role="alert">{{error}}</div>
+               {% endfor %}
+               <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label>
+                 {{form.target_genre}}
+            </div>
+
         <div class="form-group">
-           {% for error in form.target_genre.errors %}
-           <div class="alert alert-danger" role="alert">{{error}}</div>
-           {% endfor %}
-           <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label>
-             {{form.target_genre}}
+          {% for error in form.location.errors %}
+          <div class="alert alert-danger" role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.location.id_for_label }}">Localização:</label> {{ form.location }}
         </div>
 
-        <input type="hidden" name="next" value="/" />
-        <input type="submit" value="Register" />
-      </form>
-
-    </div>
+            <input type="hidden" name="next" value="/" />
+            <input type="submit" value="Register" />
+        </form>
+        <div class="link">
+          <a href="{% url 'login_view' %} ">Sua empresa já está cadastrada? Entre aqui.</a>
+        </div>
+      </div>
   </div>
 
 

@@ -1,0 +1,61 @@
+<div>
+<div class="modal-header">
+    <a href="#" data-dismiss="modal" class="class pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+    <h3 class="modal-title">{{service.name}}</h3>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <div class="col-md-4 product_img">
+        </div>
+        <div class="col-md-8 product_content">
+            <h4>{{service.name}}</h4>
+            <div class="rating">
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                <span class="glyphicon glyphicon-star"></span>
+                (10 reviews)
+            </div>
+            <p>{{service.description}}</p>
+
+            {% if type_service == "servicehair" %}
+
+            <p><b>Estilo:</b> {{service.servicehair.style}} </p>
+            <p><b>Tipo de Cabelo:</b> {{service.servicehair.specific_hair}} </p>
+
+            {% elif type_service == "combo" %}
+
+            <p><b>Especificação:</b> {{service.combo.specification}} </p>
+            <p><b>Serviços:</b>
+              {% for service in service.combo.services.all%}
+              <br>
+                {{service.name}}
+              {%endfor%}
+              </p>
+
+            {% elif type_service == "servicemakeup" %}
+
+            <p><b>Parte:</b> {{service.servicemakeup.face_part}} </p>
+
+            {% elif type_service == "servicenail" %}
+
+            <p><b>Parte:</b> {{service.servicenail.part}} </p>
+
+            {% elif type_service == "servicebeard" %}
+
+            <p><b>Estilo:</b> {{service.servicebeard.style}} </p>
+
+            {% endif %}
+
+            <h3 class="cost"><span class="glyphicon glyphicon-usd"></span> {{service.price}} <small class="pre-cost"><span class="glyphicon glyphicon-usd"></span> {{service.price}} </small></h3>
+
+            <div class="space-ten"></div>
+        </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-success btn-sm btn-fill "><span class="glyphicon glyphicon-shopping-cart"></span> Reservar </button>
+      <button type="button" class="btn btn-primary "><span class="glyphicon glyphicon-heart"></span> Favoritar </button>
+    </div>
+</div>
+</div>

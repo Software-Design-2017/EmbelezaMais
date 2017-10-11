@@ -2,30 +2,35 @@
 {% load staticfiles %}
 
 {% load static %}
+<link rel="stylesheet" href="{% static "company/company_list.css" %}">
 {% for company in companies %}
-<div class='clickable-row' data-href="{% url 'show_company' company.id %}">
+
 <div class="col-md-10 col-md-offset-1">
-      <div class="panel panel-default panel-table">
-          <div class="panel-heading">
-            <div class="row">
-              <div class="col col-xs-6">
-                <h3 class="panel-title">{{ company.name }}</h3>
-              </div>
-          </div>
-        </div>
-
-        <div class="panel-body">
-          <table class="table table-striped table-bordered table-hover">
-
-               <tr>
-                  <td>{{ company.description }}</td>
-                  <td>{{ company.target_genre }}</td>
-                  <td>{{ company.location }}</td>
-              </tr>
-        </table>
-      </div>
-    </div>
-</div>
+      <div class="row">
+        {%if company.target_genre == "Masculino"%}
+				    <div class="offer offer-primary hoverDiv" data-href="{% url 'show_company' company.id %}">
+        {% elif company.target_genre == "Feminino" %}
+            <div class="offer offer-warning hoverDiv" data-href="{% url 'show_company' company.id %}">
+        {% elif company.target_genre == "Unissex"  %}
+            <div class="offer offer-default hoverDiv" data-href="{% url 'show_company' company.id %}">
+        {% endif %}
+					<div class="shape">
+						<div class="shape-text">
+							{{ company.target_genre }}
+						</div>
+					</div>
+					<div class="offer-content">
+						<h2 class="lead">
+							{{ company.name }}
+						</h3>
+						<p>
+							<b>Descrição: </b>{{ company.description }}
+							<br><br>
+              <b>Localização: </b>{{ company.location }}
+						</p>
+					</div>
+				</div>
+			</div>
 </div>
 {% empty %}
 <li>Não existe empresas.</li>
@@ -55,8 +60,16 @@
       {% endif %}
 
       <script type="text/javascript">
+          $(document).ready(function(){
+            $(".hoverDiv").hover(function(){
+                $(this).css("background", "#d8d8d8");
+            }, function(){
+                $(this).css("background", "#fff");
+            });
+          });
+
           $(document).ready(function($) {
-              $(".clickable-row").click(function() {
+              $(".hoverDiv").click(function() {
                   window.location = $(this).data("href");
               });
           });
