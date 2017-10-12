@@ -3,46 +3,60 @@
 
 {% load static %}
 
+<head>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB6kb6lLG73sKceqxRWleXZyA6UGUFuhcY"></script>
+  <script src="{% static "company/map_canvas.js" %}" type="text/javascript"></script>
+  <link rel="stylesheet" href="{% static "company/map_canvas.css" %}">
+</head>
+
+
 <!--Home page style-->
 <header id="home" class="home" style="background-image:url({% static 'landing/assets/images/homebg.jpg' %})">
     <div class="overlay-fluid-block">
         <div class="container text-center">
-            <div class="row">
-                <div class="home-wrapper">
                     <div class="col-md-10 col-md-offset-1">
                         <div class="home-content">
-
+                            <div class="home-contact">
+                              <div class="col-md-12 ">
                             <h1>Encontre os serviços de beleza mais próximos de você</h1>
                             <!-- <p>Encontre o serviço desejado!</p> -->
 
-                            <div class="row">
-                              <div class="home-contact">
-                                <div class="col-md-12 ">
 
-                                      <div class="col-md-3">
-                                        <button type="submit" class="btn">
-                                                <i class="fa fa-map-marker "></i>
-                                        </button>
-                                      </div>
 
-                                      <div class="col-md-1">
-                                          <p> ou </p>
-                                      </div>
+                                    <form style="text-align:left" method="post" action=".">
+                                    {% csrf_token %}
 
-                                      <div class="col-md-5">
-                                          <input type="text" class="form-control" placeholder="Digite a sua localização!">
-                                      </div><!-- /input-group -->
+                                        <div class="form-group">
+                                          {% for error in form.latitude.errors %}
+                                          <div class="alert alert-danger" role="alert">{{error}}</div>
+                                          {% endfor %}
+                                          <label for="{{ form.latitude.id_for_label }}"></label> {{ form.latitude }}
+                                        </div>
 
-                                      <div class="col-md-3">
+                                        <div class="form-group">
+                                          {% for error in form.logitude.errors %}
+                                          <div class="alert alert-danger" role="alert">{{error}}</div>
+                                          {% endfor %}
+                                          <label for="{{ form.logitude.id_for_label }}"></label> {{ form.longitude }}
+                                        </div>
+
+                                        <input id="pac-input" class="controls" type="text" placeholder="Digite o local desejado.">
+                                        <div id="map_canvas" class="map_canvas_landing" style="1500px; 1000px"></div>
+
+                                        <div class="spacing-lg"></div>
+
+                                        <div class="col text-center">
                                             <input type="submit" class="btn" value="Buscar">
-                                      </div>
+                                        </div>
+
+                                        <div class="spacing-lg"></div>
+
+                                    </form>
+
                                 </div>
                              </div>
-                          </div>
                         </div>
                     </div>
-                </div>
-            </div>
         </div>
     </div>
 </header>
