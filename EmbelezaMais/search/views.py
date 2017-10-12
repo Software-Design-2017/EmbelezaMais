@@ -8,13 +8,13 @@ from django.views.generic import ListView, DetailView
 from django.template.loader import render_to_string
 
 # third part
-from geoposition.fields import Geoposition
+# from geoposition.fields import Geoposition
 
 # local Django
 from user.models import Company
 from service.models import ServiceNail, Combo, ServiceMakeUp, ServiceHair, ServiceBeard, Service
 from search.forms import SearchForm
-from . import constants
+# from . import constants
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('EmbelezaMais')
@@ -22,6 +22,11 @@ logger = logging.getLogger('EmbelezaMais')
 
 # Create your views here.
 def searchPageRender(request):
+    form = SearchForm(request.POST or None)
+    latitude = float(str(form.get('latitude')))
+    longitude = float(str(form.get('longitude')))
+    print(str(latitude))
+    print(str(longitude))
     return render(request, 'search.html')
 
 
@@ -90,24 +95,31 @@ class ServiceDetail(DetailView):
         else:
             pass
 
-
-class Search:
-    latitude = constants.STANDARD_LATITUDE
-    longitude = constants.STANDARD_LONGITUDE
-    position = Geoposition(latitude, longitude)
-    has_parking = False
-
-    def get_search_informations(request):
-        form = SearchForm(request.POST or None)
-
-        if form.is_valid():
-            # latitude = float(str(form.cleaned_data.get('latitude')))
-            # longitude = float(str(form.cleaned_data.get('longitude')))
-            # position = Geoposition(latitude, longitude)
-
-            return render(request, "search.html", {"form": form})
-
-        else:
-            pass
-
-        return render(request, "landing.html", {"form": form})
+#
+# class Search(ListView):
+#     form = SearchForm(request.POST or None)
+#     latitude = constants.STANDARD_LATITUDE
+#     longitude = constants.STANDARD_LONGITUDE
+#     position = Geoposition(latitude, longitude)
+#     model = Company
+#     template_name = 'client_view_companies.html'
+#     context_object_name = 'companies'
+#     paginate_by = 10
+#
+#     def get_queryset(self):
+#         return Company.objects.all()
+#
+#     # def get_search_location(request):
+#     #     form = SearchForm(request.POST or None)
+#     #
+#     #     if form.is_valid():
+#     #         # latitude = float(str(form.cleaned_data.get('latitude')))
+#     #         # longitude = float(str(form.cleaned_data.get('longitude')))
+#     #         # position = Geoposition(latitude, longitude)
+#     #
+#     #         return render(request, "search.html", {"form": form})
+#     #
+#     #     else:
+#     #         pass
+#     #
+#     #     return render(request, "landing.html", {"form": form})

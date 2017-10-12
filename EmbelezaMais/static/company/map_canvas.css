@@ -1,6 +1,6 @@
 /* Map canvas CSSs for diferent places. */
-.map_canvas {
-        height: 600px;
+.map_canvas_register {
+        height: 550px;
         width: 100%;
         position: static;
     }

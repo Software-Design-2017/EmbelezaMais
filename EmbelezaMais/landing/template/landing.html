@@ -21,7 +21,7 @@
                       <div class="col-md-12 ">
                             <h1>Encontre os estabelecimentos de beleza mais próximos de você</h1>
 
-                            <form style="text-align:left" method="post" action=".">
+                            <form style="text-align:left" method="post" action="{% url 'search' %}">
                                 {% csrf_token %}
 
                                 <div class="form-group">

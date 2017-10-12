@@ -10,15 +10,15 @@
   <h1 style="text-align:center">Registrar Empresa</h1>
 
   <div style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
-    <br>
-    <br>
+
+    <div class="spacing-xlg"></div>
+
     <div class="form">
       <div id="center-image">
         <a class="" href="#"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
       </div>
-      <br>
-      <br>
-      <br>
+
+      <div class="spacing-xlg"></div>
 
       <form style="text-align:left" method="post" action=".">
         {% csrf_token %}
@@ -77,15 +77,21 @@
           <label for="{{ form.logitude.id_for_label }}">Longitude:</label> {{ form.longitude }}
         </div>
 
-        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
-        <div id="map_canvas" class="map_canvas" style="1500px; 1000px"></div>
+        <input id="pac-input" class="controls" type="text" placeholder="Digite o local desejado.">
+        <div id="map_canvas" class="map_canvas_register" style="1500px; 1000px"></div>
+
+        <div class="spacing-lg"></div>
 
         <input type="hidden" name="next" value="/" />
-        <input type="submit" value="Register" />
+        <input type="submit" value="Registrar" />
         </form>
         <div class="link">
           <a href="{% url 'login_view' %} ">Sua empresa já está cadastrada? Entre aqui.</a>
         </div>
+    </div>
+
+    <div class="spacing-lg"></div>
+
     </div>
 
 
