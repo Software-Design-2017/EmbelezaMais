@@ -1,17 +1,27 @@
+# standard library
+import logging
+
+# Django
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
 from django.http import JsonResponse
+from django.views.generic import ListView, DetailView
 from django.template.loader import render_to_string
 
+# third part
+from geoposition.fields import Geoposition
 
+# local Django
 from user.models import Company
-
 from service.models import ServiceNail, Combo, ServiceMakeUp, ServiceHair, ServiceBeard, Service
+from search.forms import SearchForm
+from . import constants
+
+logging.basicConfig(level=logging.DEBUG)
+logger = logging.getLogger('EmbelezaMais')
 
 
 # Create your views here.
 def searchPageRender(request):
-
     return render(request, 'search.html')
 
 
@@ -79,3 +89,25 @@ class ServiceDetail(DetailView):
             return 'services_beard'
         else:
             pass
+
+
+class Search:
+    latitude = constants.STANDARD_LATITUDE
+    longitude = constants.STANDARD_LONGITUDE
+    position = Geoposition(latitude, longitude)
+    has_parking = False
+
+    def get_search_informations(request):
+        form = SearchForm(request.POST or None)
+
+        if form.is_valid():
+            # latitude = float(str(form.cleaned_data.get('latitude')))
+            # longitude = float(str(form.cleaned_data.get('longitude')))
+            # position = Geoposition(latitude, longitude)
+
+            return render(request, "search.html", {"form": form})
+
+        else:
+            pass
+
+        return render(request, "landing.html", {"form": form})

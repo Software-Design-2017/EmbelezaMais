@@ -64,6 +64,28 @@ function transition(result) {
     moveMarker();
 }
 
+navigator.geolocation.getCurrentPosition(function(position, html5Error) {
+
+    geo_loc = processGeolocationResult(position);
+    currLatLong = geo_loc.split(",");
+    position[0] = currLatLong[0];
+    position[1] = currLatLong[1];
+    document.getElementById("id_latitude").value = position[0];
+    document.getElementById("id_longitude").value = position[1];
+    marker.setPosition(new google.maps.LatLng(position[0], position[1]))
+    map.setZoom(15);
+    map.setCenter(new google.maps.LatLng(position[0], position[1]));
+    map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
+});
+
+function processGeolocationResult(position) {
+    html5Lat = position.coords.latitude; //Get latitude
+    html5Lon = position.coords.longitude; //Get longitude
+    html5TimeStamp = position.timestamp; //Get timestamp
+    html5Accuracy = position.coords.accuracy; //Get accuracy in meters
+    return (html5Lat).toFixed(8) + ", " + (html5Lon).toFixed(8);
+}
+
 function moveMarker() {
     position[0] += deltaLat;
     position[1] += deltaLng;
