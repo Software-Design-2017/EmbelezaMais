@@ -22,12 +22,34 @@ logger = logging.getLogger('EmbelezaMais')
 
 # Create your views here.
 def searchPageRender(request):
-    form = SearchForm(request.POST or None)
-    latitude = float(str(form.get('latitude')))
-    longitude = float(str(form.get('longitude')))
-    print(str(latitude))
-    print(str(longitude))
+    form = SearchForm(request.POST or request.GET)
+    if form.is_valid():
+        latitude = float(str(form.cleaned_data.get('latitude')))
+        longitude = float(str(form.cleaned_data.get('longitude')))
+        print(str(latitude))
+        print(str(longitude))
     return render(request, 'search.html')
+
+
+class SearchList(ListView):
+    model = Company
+    template_name = 'client_view_companies.html'
+    context_object_name = 'companies'
+    paginate_by = 10
+
+    def get_queryset(self):
+        return Company.objects.all()
+
+    def post(self, request, *args, **kwargs):
+        form = SearchForm(request.POST or request.GET)
+        if form.is_valid():
+            latitude = float(str(form.cleaned_data.get('latitude')))
+            longitude = float(str(form.cleaned_data.get('longitude')))
+            print(str(latitude))
+            print(str(longitude))
+        return render(request, self.template_name, {'companies': self.get_queryset(),
+                                                    'latitude': latitude,
+                                                    'longitude': longitude})
 
 
 class CompaniesList(ListView):
