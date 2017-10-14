@@ -38,6 +38,21 @@ class SearchList(ListView):
         if form.is_valid():
             latitude = float(str(form.cleaned_data.get('latitude')))
             longitude = float(str(form.cleaned_data.get('longitude')))
+            target_genre = form.cleaned_data.get('target_genre')
+            have_parking_availability = form.cleaned_data.get('have_parking_availability')
+
+            local = SearchLocation(latitude=latitude, longitude=longitude)
+            genre = SearchTargetGenre(target_genre=target_genre)
+            parking = SearchParking(have_parking_availability=have_parking_availability)
+
+            test_search = SearchMany()
+            test_search.add(genre)
+            test_search.add(parking)
+
+            test_search.get_type_search()
+
+            self.search = test_search.researches
+            print(self.search)
 
         return render(request, self.template_name, {'companies': self.get_queryset(),
                                                     'latitude': latitude,
