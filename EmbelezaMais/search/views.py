@@ -1,5 +1,6 @@
 # standard library
 import logging
+import abc
 
 # Django
 from django.shortcuts import render
@@ -20,36 +21,52 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('EmbelezaMais')
 
 
-# Create your views here.
-def searchPageRender(request):
-    form = SearchForm(request.POST or request.GET)
-    if form.is_valid():
-        latitude = float(str(form.cleaned_data.get('latitude')))
-        longitude = float(str(form.cleaned_data.get('longitude')))
-        print(str(latitude))
-        print(str(longitude))
-    return render(request, 'search.html')
-
-
 class SearchList(ListView):
     model = Company
     template_name = 'client_view_companies.html'
     context_object_name = 'companies'
     paginate_by = 10
+    search = {}
 
     def get_queryset(self):
-        return Company.objects.all()
+
+        return Company.objects.filter(**self.search)
 
     def post(self, request, *args, **kwargs):
         form = SearchForm(request.POST or request.GET)
+
         if form.is_valid():
             latitude = float(str(form.cleaned_data.get('latitude')))
             longitude = float(str(form.cleaned_data.get('longitude')))
-            print(str(latitude))
-            print(str(longitude))
+
         return render(request, self.template_name, {'companies': self.get_queryset(),
                                                     'latitude': latitude,
                                                     'longitude': longitude})
+
+
+class Search():
+    @abc.abstractmethod
+    def __init__(self, **kwargs):
+        return
+
+    @abc.abstractmethod
+    def get_type_search(self):
+        return
+
+
+class SearchLocation(Search):
+    latitude = None
+    longitude = None
+
+    def __init__(self, **kwargs):
+        self.latitude = kwargs.get('latitude')
+        self.longitude = kwargs.get('longitude')
+
+    def get_type_search(self):
+        if self.longitude is not None and self.latitude is not None:
+            return {'longitude': self.longitude}  # TODO(Ronyell) Change to real search.
+        else:
+            return {}
 
 
 class CompaniesList(ListView):
@@ -116,32 +133,3 @@ class ServiceDetail(DetailView):
             return 'services_beard'
         else:
             pass
-
-#
-# class Search(ListView):
-#     form = SearchForm(request.POST or None)
-#     latitude = constants.STANDARD_LATITUDE
-#     longitude = constants.STANDARD_LONGITUDE
-#     position = Geoposition(latitude, longitude)
-#     model = Company
-#     template_name = 'client_view_companies.html'
-#     context_object_name = 'companies'
-#     paginate_by = 10
-#
-#     def get_queryset(self):
-#         return Company.objects.all()
-#
-#     # def get_search_location(request):
-#     #     form = SearchForm(request.POST or None)
-#     #
-#     #     if form.is_valid():
-#     #         # latitude = float(str(form.cleaned_data.get('latitude')))
-#     #         # longitude = float(str(form.cleaned_data.get('longitude')))
-#     #         # position = Geoposition(latitude, longitude)
-#     #
-#     #         return render(request, "search.html", {"form": form})
-#     #
-#     #     else:
-#     #         pass
-#     #
-#     #     return render(request, "landing.html", {"form": form})

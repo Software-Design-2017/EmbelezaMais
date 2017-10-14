@@ -38,6 +38,20 @@
                                     <label for="{{ form.logitude.id_for_label }}"></label> {{ form.longitude }}
                                 </div>
 
+                                <div class="form-group">
+                                    {% for error in form.target_genre.errors %}
+                                    <div class="alert alert-danger" role="alert">{{error}}</div>
+                                    {% endfor %}
+                                    <label for="{{ form.target_genre.id_for_label }}"></label> {{ form.target_genre }}
+                                </div>
+
+                                <div class="form-group">
+                                    {% for error in form.have_parking_availability.errors %}
+                                    <div class="alert alert-danger" role="alert">{{error}}</div>
+                                    {% endfor %}
+                                    <label for="{{ form.have_parking_availability.id_for_label }}"></label> {{ form.have_parking_availability }}
+                                </div>
+
                                 <input id="pac-input" class="controls" type="text" placeholder="Digite o local desejado.">
                                 <div id="map_canvas" class="map_canvas_landing" style="1500px; 1000px"></div>
 
