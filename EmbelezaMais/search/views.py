@@ -69,6 +69,30 @@ class SearchLocation(Search):
             return {}
 
 
+class SearchTargetGenre(Search):
+    target_genre = None
+
+    def __init__(self, **kwargs):
+        self.target_genre = kwargs.get('target_genre')
+
+    def get_type_search(self):
+        if self.target_genre is not None:
+            return {'target_genre': self.target_genre}
+        else:
+            return {}
+
+
+class SearchParking(Search):
+    have_parking_availability = None
+
+    def __init__(self, **kwargs):
+        self.have_parking_availability = kwargs.get('have_parking_availability')
+
+    def get_type_search(self):
+        if self.have_parking_availability is not None:
+            return {'have_parking_availability': self.have_parking_availability}
+        else:
+            return {}
 class CompaniesList(ListView):
     model = Company
     template_name = 'client_view_companies.html'
