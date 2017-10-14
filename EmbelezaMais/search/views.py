@@ -95,6 +95,24 @@ class SearchParking(Search):
             return {}
 
 
+class SearchMany(Search):
+    list_search = []
+    researches = {}
+
+    def add(self, search):
+        self.list_search.append(search)
+
+    def remove(self, search):
+        self.list_search.remove(search)
+
+    def verify_types_search(self, **kwargs):
+        self.set_if_not_none(self.search, 'location', kwargs.get('local'))
+
+    def get_type_search(self):
+        for search in self.list_search:
+            self.researches.update(search.get_type_search())
+
+
 class CompaniesList(ListView):
     model = Company
     template_name = 'client_view_companies.html'
