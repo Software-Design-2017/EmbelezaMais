@@ -93,6 +93,8 @@ class SearchParking(Search):
             return {'have_parking_availability': self.have_parking_availability}
         else:
             return {}
+
+
 class CompaniesList(ListView):
     model = Company
     template_name = 'client_view_companies.html'
