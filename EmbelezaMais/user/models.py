@@ -1,4 +1,5 @@
 import datetime
+from geoposition.fields import GeopositionField
 
 # Django.
 from django.db import models
@@ -116,7 +117,10 @@ class Company(User):
 
     target_genre = models.CharField(choices=constants.GENRE_CHOICES, max_length=100)
 
-    location = models.CharField(max_length=100)
+    position = GeopositionField(verbose_name=u'Geolocalização',
+                                help_text="Não altere os valores calculados automaticamente de latitude e longitude")
+
+    have_parking_availability = models.BooleanField(default=False)
 
     objects = UserManager()
 

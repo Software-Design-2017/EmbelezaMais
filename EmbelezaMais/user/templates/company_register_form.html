@@ -1,29 +1,24 @@
 {% extends "landing/template.html" %} {% block content %} {% load staticfiles %} {% load static %}
 
 <head>
-  <title>Company Register</title>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyB6kb6lLG73sKceqxRWleXZyA6UGUFuhcY"></script>
+  <script src="{% static "company/map_canvas.js" %}" type="text/javascript"></script>
+  <link rel="stylesheet" href="{% static "company/map_canvas.css" %}">
 </head>
 
 <body>
   <h1 style="text-align:center">Registrar Empresa</h1>
 
   <div style="background-image: url({% static 'landing/assets/images/homebg.jpg' %})">
-    <br>
-    <br>
+
+    <div class="spacing-xlg"></div>
+
     <div class="form">
       <div id="center-image">
         <a class="" href="#"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
       </div>
-      <br>
-      <br>
-      <br>
-      <div class="form" >
-        <div id="center-image">
-          <a class="" href="/"><img src="{% static "landing/assets/images/logo.png" %}"  height="42" width="150" alt="Logo" /></a>
-        </div>
-        <br>
-        <br>
-        <br>
+
+      <div class="spacing-xlg"></div>
 
       <form style="text-align:left" method="post" action=".">
         {% csrf_token %}
@@ -33,7 +28,6 @@
           {% endfor %}
           <label for="{{ form.email.id_for_label }}">Email:</label> {{ form.email }}
         </div>
-        <!-- {{ form.as_p }} -->
         <div class="form-group">
           {% for error in form.password.errors %}
           <div class="alert alert-danger" role="alert">{{error}}</div>
@@ -62,29 +56,52 @@
           <label for="{{ form.description.id_for_label }}">Descrição:</label> {{ form.description }}
         </div>
 
-            <div class="form-group">
-               {% for error in form.target_genre.errors %}
-               <div class="alert alert-danger" role="alert">{{error}}</div>
-               {% endfor %}
-               <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label>
-                 {{form.target_genre}}
-            </div>
-
         <div class="form-group">
-          {% for error in form.location.errors %}
-          <div class="alert alert-danger" role="alert">{{error}}</div>
-          {% endfor %}
-          <label for="{{ form.location.id_for_label }}">Localização:</label> {{ form.location }}
+           {% for error in form.target_genre.errors %}
+           <div class="alert alert-danger" role="alert">{{error}}</div>
+           {% endfor %}
+           <label for="{{ form.target_genre.id_for_label }}">Público Alvo:</label>
+             {{form.target_genre}}
         </div>
 
-            <input type="hidden" name="next" value="/" />
-            <input type="submit" value="Register" />
+        <div class="form-group">
+           {% for error in form.have_parking_availability.errors %}
+           <div class="alert alert-danger" role="alert">{{error}}</div>
+           {% endfor %}
+           <label for="{{ form.target_genre.id_for_label }}">Possui Estacionamento:</label>
+             {{form.have_parking_availability}}
+        </div>
+
+        <div class="form-group">
+          {% for error in form.latitude.errors %}
+          <div class="alert alert-danger" role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.latitude.id_for_label }}">Latitude:</label> {{ form.latitude }}
+        </div>
+
+        <div class="form-group">
+          {% for error in form.logitude.errors %}
+          <div class="alert alert-danger" role="alert">{{error}}</div>
+          {% endfor %}
+          <label for="{{ form.logitude.id_for_label }}">Longitude:</label> {{ form.longitude }}
+        </div>
+
+        <input id="pac-input" class="controls" type="text" placeholder="Digite o local desejado.">
+        <div id="map_canvas" class="map_canvas_register" style="1500px; 1000px"></div>
+
+        <div class="spacing-lg"></div>
+
+        <input type="hidden" name="next" value="/" />
+        <input type="submit" value="Registrar" />
         </form>
         <div class="link">
           <a href="{% url 'login_view' %} ">Sua empresa já está cadastrada? Entre aqui.</a>
         </div>
-      </div>
-  </div>
+    </div>
+
+    <div class="spacing-lg"></div>
+
+    </div>
 
 
 </body>

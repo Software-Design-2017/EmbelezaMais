@@ -1,0 +1,89 @@
+/* Map canvas CSSs for diferent places. */
+.map_canvas_register {
+        height: 550px;
+        width: 100%;
+        position: static;
+    }
+
+.map_canvas_landing {
+    height: 500px;
+    width: 100%;
+    position: static;
+}
+
+/* Spacings with diferent sizes for divs. */
+.spacing-sm {
+  width: 100%;
+  height: 5px;
+}
+
+.spacing-md {
+  width: 100%;
+  height: 10px;
+}
+
+.spacing-lg {
+  width: 100%;
+  height: 30px;
+}
+
+.spacing-xlg {
+  width: 100%;
+  height: 60px;
+}
+
+.box-sm {
+  padding: 5px;
+  margin: 5px;
+}
+
+.box-md {
+  padding: 10px;
+  margin: 10px;
+}
+
+/* To change maps search box. */
+.controls {
+  margin-top: 10px;
+  border: 1px solid transparent;
+  border-radius: 2px 0 0 2px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  height: 30px;
+  outline: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#pac-input {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 12px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 70%;
+}
+
+#pac-input:focus {
+  border-color: #4d90fe;
+}
+
+.pac-container {
+  font-family: Roboto;
+}
+
+#type-selector {
+  color: #fff;
+  background-color: #4d90fe;
+  padding: 5px 11px 0px 11px;
+}
+
+#type-selector label {
+  font-family: Roboto;
+  font-size: 13px;
+  font-weight: 300;
+}
+#target {
+  width: 345px;
+}

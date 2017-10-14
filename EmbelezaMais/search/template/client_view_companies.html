@@ -7,6 +7,8 @@
 
 <div class="col-md-10 col-md-offset-1">
       <div class="row">
+        <p>{{latitude}}</p>
+        <p>{{longitude}}</p>
         {%if company.target_genre == "Masculino"%}
 				    <div class="offer offer-primary hoverDiv" data-href="{% url 'show_company' company.id %}">
         {% elif company.target_genre == "Feminino" %}

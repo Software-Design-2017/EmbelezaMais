@@ -19,6 +19,8 @@ from django.views.generic import (
     FormView, View
 )
 
+# third part
+from geoposition.fields import Geoposition
 
 # local Django
 from .forms import (
@@ -66,10 +68,13 @@ def register_company_view(request):
         name = form.cleaned_data.get('name')
         description = form.cleaned_data.get('description')
         target_genre = form.cleaned_data.get('target_genre')
-        location = form.cleaned_data.get('location')
+        have_parking_availability = form.cleaned_data.get('have_parking_availability')
+        latitude = float(str(form.cleaned_data.get('latitude')))
+        longitude = float(str(form.cleaned_data.get('longitude')))
+        position = Geoposition(latitude, longitude)
         Company.objects.create_user(email=email, password=password, name=name,
-                                    target_genre=target_genre,
-                                    description=description, location=location)
+                                    target_genre=target_genre, have_parking_availability=have_parking_availability,
+                                    description=description, position=position)
 
         user = Company.objects.get(email=email)
 
