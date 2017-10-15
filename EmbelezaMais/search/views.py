@@ -36,23 +36,32 @@ class SearchList(ListView):
         form = SearchForm(request.POST or request.GET)
 
         if form.is_valid():
+            logger.debug("Search form was valid.")
+            logger.debug("Search form: " + str(form.cleaned_data))
+
             latitude = float(str(form.cleaned_data.get('latitude')))
             longitude = float(str(form.cleaned_data.get('longitude')))
             target_genre = form.cleaned_data.get('target_genre')
-            have_parking_availability = form.cleaned_data.get('have_parking_availability')
+            has_parking_availability = form.cleaned_data.get('has_parking_availability')
 
-            local = SearchLocation(latitude=latitude, longitude=longitude)
+            # local = SearchLocation(latitude=latitude, longitude=longitude)
             genre = SearchTargetGenre(target_genre=target_genre)
-            parking = SearchParking(have_parking_availability=have_parking_availability)
+            parking = SearchParking(has_parking_availability=has_parking_availability)
 
-            test_search = SearchMany()
-            test_search.add(genre)
-            test_search.add(parking)
+            search_many = SearchMany()
 
-            test_search.get_type_search()
+            # Cleaning list of searchs to have just one of each one.
+            search_many.list_search = []
+            search_many.add(genre)
+            search_many.add(parking)
 
-            self.search = test_search.researches
-            print(self.search)
+            search_many.get_type_search()
+
+            self.search = search_many.researches
+            logger.debug("Search in Compnay DB: " + str(self.search))
+
+        else:
+            logger.debug("Search form was invalid.")
 
         return render(request, self.template_name, {'companies': self.get_queryset(),
                                                     'latitude': latitude,
@@ -92,20 +101,27 @@ class SearchTargetGenre(Search):
 
     def get_type_search(self):
         if self.target_genre is not None:
-            return {'target_genre': self.target_genre}
+            if self.target_genre != 'All':
+                return {'target_genre': self.target_genre}
+            else:
+                return {}
         else:
             return {}
 
 
 class SearchParking(Search):
-    have_parking_availability = None
+    has_parking_availability = None
 
     def __init__(self, **kwargs):
-        self.have_parking_availability = kwargs.get('have_parking_availability')
+        self.has_parking_availability = kwargs.get('has_parking_availability')
 
     def get_type_search(self):
-        if self.have_parking_availability is not None:
-            return {'have_parking_availability': self.have_parking_availability}
+        if self.has_parking_availability is not None:
+
+            if self.has_parking_availability is True:
+                return {'has_parking_availability': self.has_parking_availability}
+            else:
+                return{}
         else:
             return {}
 
@@ -120,10 +136,8 @@ class SearchMany(Search):
     def remove(self, search):
         self.list_search.remove(search)
 
-    def verify_types_search(self, **kwargs):
-        self.set_if_not_none(self.search, 'location', kwargs.get('local'))
-
     def get_type_search(self):
+        self.researches = {}
         for search in self.list_search:
             self.researches.update(search.get_type_search())
 

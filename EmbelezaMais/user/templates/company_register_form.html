@@ -65,11 +65,11 @@
         </div>
 
         <div class="form-group">
-           {% for error in form.have_parking_availability.errors %}
+           {% for error in form.has_parking_availability.errors %}
            <div class="alert alert-danger" role="alert">{{error}}</div>
            {% endfor %}
            <label for="{{ form.target_genre.id_for_label }}">Possui Estacionamento:</label>
-             {{form.have_parking_availability}}
+             {{form.has_parking_availability}}
         </div>
 
         <div class="form-group">
