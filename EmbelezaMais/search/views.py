@@ -29,12 +29,14 @@ class SearchList(ListView):
     search = {}
 
     def get_queryset(self):
-
         return Company.objects.filter(**self.search)
 
-    def post(self, request, *args, **kwargs):
-        form = SearchForm(request.POST or request.GET)
+    def get(self, request, *args, **kwargs):
+        form = SearchForm(request.GET or None)
+        return render(request, self.template_name, {'companies': self.get_queryset(), 'form': form})
 
+    def post(self, request, *args, **kwargs):
+        form = SearchForm(request.POST or None)
         if form.is_valid():
             logger.debug("Search form was valid.")
             logger.debug("Search form: " + str(form.cleaned_data))
@@ -46,7 +48,9 @@ class SearchList(ListView):
 
             # local = SearchLocation(latitude=latitude, longitude=longitude)
             genre = SearchTargetGenre(target_genre=target_genre)
+            logger.debug("Search Genre: "+str(genre.get_type_search()))
             parking = SearchParking(has_parking_availability=has_parking_availability)
+            logger.debug("Search parking: "+str(parking.get_type_search()))
 
             search_many = SearchMany()
 
@@ -64,7 +68,7 @@ class SearchList(ListView):
             logger.debug("Search form was invalid.")
             logger.debug("Search form: " + str(form.cleaned_data))
 
-        return render(request, self.template_name, {'companies': self.get_queryset()})
+        return render(request, self.template_name, {'companies': self.get_queryset(), 'form': form})
 
 
 class Search():
@@ -87,7 +91,8 @@ class SearchLocation(Search):
 
     def get_type_search(self):
         if self.longitude is not None and self.latitude is not None:
-            return {'longitude': self.longitude}  # TODO(Ronyell) Change to real search.
+            if self.longitude is not '' and self.latitude is not '':
+                return {'longitude': self.longitude}  # TODO(Ronyell) Change to real search.
         else:
             return {}
 
@@ -100,7 +105,7 @@ class SearchTargetGenre(Search):
 
     def get_type_search(self):
         if self.target_genre is not None:
-            if self.target_genre != 'All':
+            if self.target_genre != 'All' and self.target_genre != '':
                 return {'target_genre': self.target_genre}
             else:
                 return {}
