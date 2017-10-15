@@ -39,8 +39,8 @@ class SearchList(ListView):
             logger.debug("Search form was valid.")
             logger.debug("Search form: " + str(form.cleaned_data))
 
-            latitude = float(str(form.cleaned_data.get('latitude')))
-            longitude = float(str(form.cleaned_data.get('longitude')))
+            # latitude = float(str(form.cleaned_data.get('latitude')))
+            # longitude = float(str(form.cleaned_data.get('longitude')))
             target_genre = form.cleaned_data.get('target_genre')
             has_parking_availability = form.cleaned_data.get('has_parking_availability')
 
@@ -62,10 +62,9 @@ class SearchList(ListView):
 
         else:
             logger.debug("Search form was invalid.")
+            logger.debug("Search form: " + str(form.cleaned_data))
 
-        return render(request, self.template_name, {'companies': self.get_queryset(),
-                                                    'latitude': latitude,
-                                                    'longitude': longitude})
+        return render(request, self.template_name, {'companies': self.get_queryset()})
 
 
 class Search():
