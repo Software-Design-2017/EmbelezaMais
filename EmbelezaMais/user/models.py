@@ -120,7 +120,7 @@ class Company(User):
     position = GeopositionField(verbose_name=u'Geolocalização',
                                 help_text="Não altere os valores calculados automaticamente de latitude e longitude")
 
-    have_parking_availability = models.BooleanField(default=False)
+    has_parking_availability = models.BooleanField(default=False)
 
     objects = UserManager()
 

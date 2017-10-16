@@ -43,7 +43,6 @@ logger = logging.getLogger('EmbelezaMais')
 class ClientRegisterView(View):
     def register_client(request):
         form = ClientRegisterForm(request.POST or None)
-
         if form.is_valid():
             logger.debug("Register form was valid.")
             email = form.cleaned_data.get('email')
@@ -250,7 +249,6 @@ class CompanyAction(View):
                     name = form.cleaned_data.get('name')
                     description = form.cleaned_data.get('description')
                     target_genre = form.cleaned_data.get('target_genre')
-                    location = form.cleaned_data.get('location')
 
                     if len(name) != 0:
                         company.name = name
@@ -261,12 +259,6 @@ class CompanyAction(View):
                         company.target_genre = target_genre
                     else:
                         pass
-
-                    if len(location) != 0:
-                        company.location = location
-                    else:
-                        pass
-
                     if len(description) != 0:
                         company.description = description
                     else:

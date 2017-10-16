@@ -81,7 +81,7 @@ class CompanyRegisterForm(forms.ModelForm):
             'email',
             'description',
             'target_genre',
-            'have_parking_availability'
+            'has_parking_availability'
         ]
 
     # Front-end validation function for company register page.

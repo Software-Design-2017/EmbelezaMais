@@ -37,4 +37,4 @@ PASSWORD_SIZE = 'Password must be between 8 and 12 characters'
 MESSAGE_LOGIN_COMPANY_ERROR = 'You are not registered as a company.'
 MESSAGE_LOGIN_ERROR = 'Password and/or Email invalid.'
 
-GENRE_CHOICES = (('Masculino', 'Masculino'), ('Feminino', 'Feminino'), ('Unissex', 'Unissex'))
+GENRE_CHOICES = (('Unissex', 'Unissex'), ('Masculino', 'Masculino'), ('Feminino', 'Feminino'))

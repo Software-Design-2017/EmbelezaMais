@@ -42,7 +42,7 @@ function initialize() {
         document.getElementById("id_latitude").value = position[0];
         document.getElementById("id_longitude").value = position[1];
     });
-
+    console.log(position);
     document.getElementById("id_latitude").value = position[0];
     document.getElementById("id_longitude").value = position[1];
 }
@@ -64,17 +64,21 @@ function transition(result) {
     moveMarker();
 }
 
-navigator.geolocation.getCurrentPosition(function(position, html5Error) {
-
-    geo_loc = processGeolocationResult(position);
+navigator.geolocation.getCurrentPosition(function(positionA, html5Error) {
+    geo_loc = processGeolocationResult(positionA);
     currLatLong = geo_loc.split(",");
-    position[0] = currLatLong[0];
-    position[1] = currLatLong[1];
+    position[0] = parseFloat(currLatLong[0]);
+    position[1] = parseFloat(currLatLong[1]);
+
     document.getElementById("id_latitude").value = position[0];
     document.getElementById("id_longitude").value = position[1];
-    marker.setPosition(new google.maps.LatLng(position[0], position[1]))
+
+    latlng = new google.maps.LatLng(position[0], position[1]);
+
+    marker.setPosition(latlng)
+
+    map.setCenter(latlng);
     map.setZoom(15);
-    map.setCenter(new google.maps.LatLng(position[0], position[1]));
     map.setMapTypeId(google.maps.MapTypeId.ROADMAP);
 });
 
