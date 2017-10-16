@@ -1,5 +1,5 @@
 [run]
 branch = True
 
-source = user
+source = user, service, search, promotion
 omit = */apps.py, */migrations/*, */__init__.py
