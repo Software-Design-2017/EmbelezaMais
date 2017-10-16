@@ -11,6 +11,12 @@
     position: static;
 }
 
+.map_canvas_search {
+    height: 400px;
+    width: 100%;
+    position: static;
+}
+
 /* Spacings with diferent sizes for divs. */
 .spacing-sm {
   width: 100%;
@@ -63,6 +69,18 @@
   padding: 0 11px 0 13px;
   text-overflow: ellipsis;
   width: 70%;
+}
+
+#pac-input-search {
+  background-color: #fff;
+  font-family: Roboto;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 12px;
+  margin-bottom: 8px;
+  padding: 0 11px 0 13px;
+  text-overflow: ellipsis;
+  width: 60%;
 }
 
 #pac-input:focus {
