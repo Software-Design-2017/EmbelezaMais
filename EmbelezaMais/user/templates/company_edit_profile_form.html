@@ -32,14 +32,6 @@
           {{ form.target_genre }}
         </div>
 
-        <div class="form-group" style="margin-left:40px; margin-right:40px">
-          {% for error in form.location.errors %}
-          <div class="alert alert-danger"role="alert">{{error}}</div>
-          {% endfor %}
-          <label for="{{ form.location.id_for_label }}">Localização:</label>
-          {{ form.location }}
-        </div>
-
         <input type="hidden" name="next" value="/" />
         <input type="submit" value="Comfirmar" style="margin-left:40px; margin-right:580px"/>
     </form>
