@@ -4,7 +4,7 @@ coverage==4.4.1
 coveralls==1.2.0
 dj-database-url==0.4.2
 dj-static==0.0.6
-Django==1.10.4
+Django==1.11.28
 django-geoposition==0.3.0
 docopt==0.6.2
 flake8==3.4.1
